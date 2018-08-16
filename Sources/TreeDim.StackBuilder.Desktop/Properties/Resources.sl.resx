@@ -1,0 +1,742 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ID_LOADHEIGHT" xml:space="preserve">
+    <value>Višina naklada</value>
+  </data>
+  <data name="ID_MAXLOWERTHANMIN" xml:space="preserve">
+    <value>Nekonsistentnost: Največja vrednost {0} je nižja od najmanjše {1}.</value>
+  </data>
+  <data name="ID_PALLETHEIGHT" xml:space="preserve">
+    <value>Višina palete ({0})</value>
+  </data>
+  <data name="ID_FILENOTFOUND" xml:space="preserve">
+    <value>Datoteke {0} ni bilo mogoče najti</value>
+  </data>
+  <data name="ID_PALLETCOUNT" xml:space="preserve">
+    <value>Število palet</value>
+  </data>
+  <data name="ID_NODE_BOXES" xml:space="preserve">
+    <value>Škatle</value>
+  </data>
+  <data name="ID_ALLOWALIGNEDORALTERNATELAYERS" xml:space="preserve">
+    <value>Dovoli poravnane in/ali nadomestne sloje</value>
+  </data>
+  <data name="ID_SENDTODATABASE" xml:space="preserve">
+    <value>Pošlji v bazo podatkov</value>
+  </data>
+  <data name="ID_DEFINEATLEASTONEVERTICALAXIS" xml:space="preserve">
+    <value>Določite vsaj eno navpično os</value>
+  </data>
+  <data name="ID_DELETE" xml:space="preserve">
+    <value>Briši</value>
+  </data>
+  <data name="ID_ADDNEWCASEANALYSIS" xml:space="preserve">
+    <value>Dodaj novo analizo zaboja...</value>
+  </data>
+  <data name="ID_SELECTED" xml:space="preserve">
+    <value>Izbrano</value>
+  </data>
+  <data name="ID_AREA" xml:space="preserve">
+    <value>Površina</value>
+  </data>
+  <data name="ID_CASECOUNT" xml:space="preserve">
+    <value>Število zabojev</value>
+  </data>
+  <data name="ID_CASESPALLET" xml:space="preserve">
+    <value>Zaboji/Paleta</value>
+  </data>
+  <data name="ID_ADDNEWBOX" xml:space="preserve">
+    <value>Dodaj novo škatlo...</value>
+  </data>
+  <data name="ID_FIELDNAMEEMPTY" xml:space="preserve">
+    <value>Polje z imenom je prazno</value>
+  </data>
+  <data name="ID_EFFICIENCY" xml:space="preserve">
+    <value>Učinkovitost</value>
+  </data>
+  <data name="ID_INVALIDINSIDELENGTH" xml:space="preserve">
+    <value>Notranja dolžina ({0}) mora biti daljša od ({1})</value>
+  </data>
+  <data name="ID_A3" xml:space="preserve">
+    <value>A3</value>
+  </data>
+  <data name="ID_DATABASEEMPTY" xml:space="preserve">
+    <value>Baza podatkov o rešitvi palete je prazna.
+Zapiranje forme...</value>
+  </data>
+  <data name="ID_LAYOUT" xml:space="preserve">
+    <value>Postavitev</value>
+  </data>
+  <data name="ID_ADDNEWINTERLAYER" xml:space="preserve">
+    <value>Add new interlayer...</value>
+  </data>
+  <data name="ID_UNSELECTSOLUTION" xml:space="preserve">
+    <value>Prekliči izbor {0}</value>
+  </data>
+  <data name="ID_ADDNEWTRUCKANALYSIS" xml:space="preserve">
+    <value>Dodaj novo analizo tovornega vozila...</value>
+  </data>
+  <data name="ID_INVALIDINSIDEHEIGHT" xml:space="preserve">
+    <value>Notranja višina ({0}) mora biti nižja od ({1})</value>
+  </data>
+  <data name="ID_ADDNEWANALYSIS" xml:space="preserve">
+    <value>Dodaj novo analizo...</value>
+  </data>
+  <data name="ID_LAYERPATTERN" xml:space="preserve">
+    <value>Vzorec sloja</value>
+  </data>
+  <data name="ID_USEATLEASTONESTOPSTACKINGCRITERION" xml:space="preserve">
+    <value>Določite vsaj en kriterij za zlaganje</value>
+  </data>
+  <data name="ID_NODE_CASES" xml:space="preserve">
+    <value>Zaboji</value>
+  </data>
+  <data name="ID_NODE_PALLETS" xml:space="preserve">
+    <value>Palete</value>
+  </data>
+  <data name="ID_INVALIDNAME" xml:space="preserve">
+    <value>Ime ({0}) ni veljavno</value>
+  </data>
+  <data name="ID_A2" xml:space="preserve">
+    <value>A2</value>
+  </data>
+  <data name="ID_LAYERS" xml:space="preserve">
+    <value>Sloji</value>
+  </data>
+  <data name="ID_INVALIDINSIDEWIDTH" xml:space="preserve">
+    <value>Notranja širina ({0}) mora biti nižja od ({1})</value>
+  </data>
+  <data name="ID_ABOUT" xml:space="preserve">
+    <value>O {0}</value>
+  </data>
+  <data name="ID_DEFINEATLEASTONEPATTERN" xml:space="preserve">
+    <value>Določite vsaj en vzorec zlaganja</value>
+  </data>
+  <data name="ID_A1" xml:space="preserve">
+    <value>A1</value>
+  </data>
+  <data name="ID_LOADWEIGHT" xml:space="preserve">
+    <value>Teža naklada</value>
+  </data>
+  <data name="ID_GENERATEREPORTMSWORD" xml:space="preserve">
+    <value>Ustvari poročilo Word</value>
+  </data>
+  <data name="ID_NODE_TRUCKS" xml:space="preserve">
+    <value>Tovorna vozila</value>
+  </data>
+  <data name="ID_NODE_BUNDLES" xml:space="preserve">
+    <value>Snopi</value>
+  </data>
+  <data name="ID_FIELDDESCRIPTIONEMPTY" xml:space="preserve">
+    <value>Polje za opis je prazno</value>
+  </data>
+  <data name="ID_READY" xml:space="preserve">
+    <value>Pripravljen</value>
+  </data>
+  <data name="ID_ADDNEWBUNDLE" xml:space="preserve">
+    <value>Dodaj nov snop...</value>
+  </data>
+  <data name="ID_INDEX" xml:space="preserve">
+    <value>Indeks</value>
+  </data>
+  <data name="ID_EDIT" xml:space="preserve">
+    <value>Uredi {0}...</value>
+  </data>
+  <data name="ID_ADDNEWBUNDLEANALYSIS" xml:space="preserve">
+    <value>Dodaj novo analizo snopa...</value>
+  </data>
+  <data name="ID_CASESLAYER" xml:space="preserve">
+    <value>Zaboji/Sloj</value>
+  </data>
+  <data name="ID_NODE_INTERLAYERS" xml:space="preserve">
+    <value>Vmesni sloji</value>
+  </data>
+  <data name="ID_NODE_ANALYSES" xml:space="preserve">
+    <value>Analize</value>
+  </data>
+  <data name="ID_SAVEMODIFIEDFILE" xml:space="preserve">
+    <value>Shrani datoteko {0}?</value>
+  </data>
+  <data name="ID_PALLETWEIGHT" xml:space="preserve">
+    <value>Teža palete ({0})</value>
+  </data>
+  <data name="ID_ADDNEWPALLET" xml:space="preserve">
+    <value>Dodaj novo paleto...</value>
+  </data>
+  <data name="ID_INSUFFICIENTVOLUME" xml:space="preserve">
+    <value>Največji volumen ni dovolj za pakiranje {0} {1}.</value>
+  </data>
+  <data name="ID_ADDNEWTRUCK" xml:space="preserve">
+    <value>Dodaj novo tovorno vozilo...</value>
+  </data>
+  <data name="ID_VERSION" xml:space="preserve">
+    <value>Verzija: {0}</value>
+  </data>
+  <data name="ID_PALLETCAPTIONEDIT" xml:space="preserve">
+    <value>Uredi paleto {0}...</value>
+  </data>
+  <data name="ID_GENERATEREPORTHTML" xml:space="preserve">
+    <value>Ustvari poročilo HTML</value>
+  </data>
+  <data name="ID_ADDNEWECTANALYSIS" xml:space="preserve">
+    <value>Dodaj novo analizo ECT...</value>
+  </data>
+  <data name="ID_ECT" xml:space="preserve">
+    <value>ECT</value>
+  </data>
+  <data name="ID_CASEANALYSIS_INVALIDCONSTRAINTSET" xml:space="preserve">
+    <value>Ni mogoče ustvariti analize zabojev, ker se zdi, da je nastavitev omejitve neveljavna.</value>
+  </data>
+  <data name="ID_DESELECT" xml:space="preserve">
+    <value>Prekliči izbor</value>
+  </data>
+  <data name="ID_BOXCASECOUNT" xml:space="preserve">
+    <value>Število škatel/zabojev</value>
+  </data>
+  <data name="ID_CASEDIMENSIONS" xml:space="preserve">
+    <value>Dimenzije zaboja</value>
+  </data>
+  <data name="ID_CASEINSIDEDIMENSIONS" xml:space="preserve">
+    <value>Notranje dimenzije zaboja</value>
+  </data>
+  <data name="ID_CASEPERPALLET" xml:space="preserve">
+    <value>Zaboj/Paleta</value>
+  </data>
+  <data name="ID_LAYERPATTERNS" xml:space="preserve">
+    <value>Vzorci sloja</value>
+  </data>
+  <data name="ID_ORIENTATION" xml:space="preserve">
+    <value>Orientacija</value>
+  </data>
+  <data name="ID_WEIGHT" xml:space="preserve">
+    <value>Teža</value>
+  </data>
+  <data name="ID_CHROMEISNOTINSTALLED" xml:space="preserve">
+    <value>Brskalnik Google Chrome mora biti nameščen za vizualizacijo animacije collada / webGL.</value>
+  </data>
+  <data name="ID_GENERATECOLLADA" xml:space="preserve">
+    <value>Ustvarite 3D animacijsko datoteko za {0}</value>
+  </data>
+  <data name="ID_GENERATEREPORT" xml:space="preserve">
+    <value>Ustvari poročilo za {0}</value>
+  </data>
+  <data name="ID_CLOSE" xml:space="preserve">
+    <value>Zapri</value>
+  </data>
+  <data name="ID_ADDNEWCASE" xml:space="preserve">
+    <value>Dodaj nov zaboj...</value>
+  </data>
+  <data name="ID_CASE" xml:space="preserve">
+    <value>Zaboj</value>
+  </data>
+  <data name="ID_WIDTH" xml:space="preserve">
+    <value>Širina</value>
+  </data>
+  <data name="ID_HEIGHT" xml:space="preserve">
+    <value>Višina</value>
+  </data>
+  <data name="ID_LENGTH" xml:space="preserve">
+    <value>Dolžina</value>
+  </data>
+  <data name="ID_EDGECRUSHTEST" xml:space="preserve">
+    <value>Analiza preizkusa robov</value>
+  </data>
+  <data name="ID_SELECT" xml:space="preserve">
+    <value>Izberi</value>
+  </data>
+  <data name="ID_EFFICIENCYPERCENTAGE" xml:space="preserve">
+    <value>Učinkovitost (%)</value>
+  </data>
+  <data name="ID_NAME" xml:space="preserve">
+    <value>Ime</value>
+  </data>
+  <data name="ID_PALLETMAXWEIGHT" xml:space="preserve">
+    <value>Teža</value>
+  </data>
+  <data name="ID_PALLETMAXNUMBER" xml:space="preserve">
+    <value>Število</value>
+  </data>
+  <data name="ID_PALLETMAXHEIGHT" xml:space="preserve">
+    <value>Višina</value>
+  </data>
+  <data name="ID_CASEWEIGHT" xml:space="preserve">
+    <value>Zaboj teža ({0})</value>
+  </data>
+  <data name="ID_CYLINDERCOUNT" xml:space="preserve">
+    <value>Število valjev</value>
+  </data>
+  <data name="ID_NODE_CYLINDERS" xml:space="preserve">
+    <value>Valji</value>
+  </data>
+  <data name="ID_BOXCOUNT" xml:space="preserve">
+    <value>Škatla/zaboj</value>
+  </data>
+  <data name="ID_FIELDNAMEINVALID" xml:space="preserve">
+    <value>Ime že obstaja.</value>
+  </data>
+  <data name="ID_CYLINDER" xml:space="preserve">
+    <value>Valj</value>
+  </data>
+  <data name="ID_WEIGHT_WU" xml:space="preserve">
+    <value>Teža ({0})</value>
+  </data>
+  <data name="ID_TRUCK" xml:space="preserve">
+    <value>Tovorno vozilo</value>
+  </data>
+  <data name="ID_NOPALLETSOLUTIONSELECTED" xml:space="preserve">
+    <value>Paleta ni izbrana</value>
+  </data>
+  <data name="ID_PALLETLIMIT" xml:space="preserve">
+    <value>Dosežena meja</value>
+  </data>
+  <data name="ID_ANALYSIS" xml:space="preserve">
+    <value>Analiza</value>
+  </data>
+  <data name="ID_INTERLAYER" xml:space="preserve">
+    <value>Vmesni sloj</value>
+  </data>
+  <data name="ID_BOX" xml:space="preserve">
+    <value>Škatla</value>
+  </data>
+  <data name="ID_FILTER_MSWORD" xml:space="preserve">
+    <value>Microsoft Office Word (*.doc;*.docx)|*.doc;*.docx|vse datoteke (*.*)|*.*</value>
+  </data>
+  <data name="ID_BUNDLE" xml:space="preserve">
+    <value>Snop</value>
+  </data>
+  <data name="ID_BOXDOESNOTFITINCASE" xml:space="preserve">
+    <value>Škatla {0} ne paše v zaboj {1}.</value>
+  </data>
+  <data name="ID_INVALIDDIAMETER" xml:space="preserve">
+    <value>Notranji premer mora biti manjši od zunanjega premera.</value>
+  </data>
+  <data name="ID_VOLUMEEFFICIENCY" xml:space="preserve">
+    <value>Učinkovitost (%)</value>
+  </data>
+  <data name="ID_DELETEITEM" xml:space="preserve">
+    <value>Brisanje {0}</value>
+  </data>
+  <data name="ID_ADDNEWBOXCASEANALYSIS" xml:space="preserve">
+    <value>Dodaj novo analizo škatla/zaboj...</value>
+  </data>
+  <data name="ID_ANALYSISHASNOVALIDSOLUTION" xml:space="preserve">
+    <value>Analiza {0} nima veljavne rešitve.</value>
+  </data>
+  <data name="ID_INSUFFICIENTPALLETHEIGHT" xml:space="preserve">
+    <value>Največja višina palete ({0} {1}) mora presegati {2} {3}</value>
+  </data>
+  <data name="ID_CASEOFBOXES" xml:space="preserve">
+    <value>Zaboj škatel</value>
+  </data>
+  <data name="ID_ADDNEWCYLINDER" xml:space="preserve">
+    <value>Dodaj nov valj...</value>
+  </data>
+  <data name="ID_ADDNEWCYLINDERANALYSIS" xml:space="preserve">
+    <value>Dodaj novo analizo valja...</value>
+  </data>
+  <data name="ID_CASELIMIT" xml:space="preserve">
+    <value>Dosežena meja</value>
+  </data>
+  <data name="ID_MAXIMUMCASEWEIGHTSHOULDEXCEED" xml:space="preserve">
+    <value>Največja dovoljena teža zaboja je {0} {1}.</value>
+  </data>
+  <data name="ID_CANNOTUSEWEIGHTLIMIT" xml:space="preserve">
+    <value>Omejitev teže ni mogoče uporabiti, ker {0} nima mase.</value>
+  </data>
+  <data name="ID_INVALIDMASS" xml:space="preserve">
+    <value>Masa mora biti pozitivno število</value>
+  </data>
+  <data name="ID_ADDNEWPALLETCAP" xml:space="preserve">
+    <value>Dodaj nov pokrov palete...</value>
+  </data>
+  <data name="ID_ADDNEWPALLETCORNERS" xml:space="preserve">
+    <value>Dodaj nove vogale palet...</value>
+  </data>
+  <data name="ID_ADDNEWPALLETFILM" xml:space="preserve">
+    <value>Dodaj nov paletni ovoj...</value>
+  </data>
+  <data name="ID_NODE_PALLETCAPS" xml:space="preserve">
+    <value>Pokrov palete</value>
+  </data>
+  <data name="ID_NODE_PALLETCORNERS" xml:space="preserve">
+    <value>Paletni vogali</value>
+  </data>
+  <data name="ID_NODE_PALLETFILMS" xml:space="preserve">
+    <value>Paletni ovoji</value>
+  </data>
+  <data name="ID_PALLETCAP" xml:space="preserve">
+    <value>Pokrov</value>
+  </data>
+  <data name="ID_PALLETCORNERS" xml:space="preserve">
+    <value>Robovi</value>
+  </data>
+  <data name="ID_PALLETFILM" xml:space="preserve">
+    <value>Ovoj</value>
+  </data>
+  <data name="ID_USETRANSPARENCYORHATCHING" xml:space="preserve">
+    <value>Uporabite prosojnost in/ali valjenje</value>
+  </data>
+  <data name="ID_PALLETCAPNOTLONGENOUGH" xml:space="preserve">
+    <value>Dolžina pokrova palete mora presegati dolžino palete + previs X ...</value>
+  </data>
+  <data name="ID_PALLETCAPNOTWIDEENOUGH" xml:space="preserve">
+    <value>Širina pokrova palete mora presegati širino palete + previs Y ...</value>
+  </data>
+  <data name="ID_INVALIDTHICKNESSWIDTHPAIR" xml:space="preserve">
+    <value>Debelina ne sme presegati širine</value>
+  </data>
+  <data name="ID_INVALIDNETWEIGHT" xml:space="preserve">
+    <value>Neto teža ({0}) ne sme presegati ({1})</value>
+  </data>
+  <data name="ID_PACK" xml:space="preserve">
+    <value>Paket</value>
+  </data>
+  <data name="ID_NODE_PACKS" xml:space="preserve">
+    <value>Paketi</value>
+  </data>
+  <data name="ID_INVALIDOUTERDIMENSION" xml:space="preserve">
+    <value>Zunanje mere morajo presegati razsežnosti vsebine...</value>
+  </data>
+  <data name="ID_CONSUMERSALESUNITS" xml:space="preserve">
+    <value># CSU</value>
+  </data>
+  <data name="ID_LAYERWEIGHT" xml:space="preserve">
+    <value>Teža sloja ({0})</value>
+  </data>
+  <data name="ID_MAXIMUMSPACE" xml:space="preserve">
+    <value>Maximum space ({0})</value>
+  </data>
+  <data name="ID_PACKCOUNT" xml:space="preserve">
+    <value># Paketov</value>
+  </data>
+  <data name="ID_ADDNEWPACKANALYSIS" xml:space="preserve">
+    <value>Dodaj novo analizo paket/paleta...</value>
+  </data>
+  <data name="ID_ANALYSISHASNOSOLUTION" xml:space="preserve">
+    <value>Analiza nima rešitev?\nPreveč omejitev?</value>
+  </data>
+  <data name="ID_CASEPERLAYERCOUNT" xml:space="preserve">
+    <value># Zaboj/Sloj</value>
+  </data>
+  <data name="ID_LAYERCOUNT" xml:space="preserve">
+    <value># Slojev</value>
+  </data>
+  <data name="ID_BOXES" xml:space="preserve">
+    <value>Škatel</value>
+  </data>
+  <data name="ID_CASES" xml:space="preserve">
+    <value>Zaboji</value>
+  </data>
+  <data name="ID_CYLINDERS" xml:space="preserve">
+    <value>Valji</value>
+  </data>
+  <data name="ID_INTERLAYERS" xml:space="preserve">
+    <value>Vmesni sloji</value>
+  </data>
+  <data name="ID_PALLETCAPS" xml:space="preserve">
+    <value>Pokrovi palet</value>
+  </data>
+  <data name="ID_PALLETFILMS" xml:space="preserve">
+    <value>Paletni ovoj</value>
+  </data>
+  <data name="ID_PALLETS" xml:space="preserve">
+    <value>Palete</value>
+  </data>
+  <data name="ID_DISPLAYDEBUGGING" xml:space="preserve">
+    <value>Razhroščevanje</value>
+  </data>
+  <data name="ID_DISPLAYDIMENSIONSCASEPALLET" xml:space="preserve">
+    <value>Dimenzije zaboja/palete</value>
+  </data>
+  <data name="ID_DISPLAYMEASUREMENTSYSTEM" xml:space="preserve">
+    <value>Jezik in merski sistem</value>
+  </data>
+  <data name="ID_DISPLAYPLUGINS" xml:space="preserve">
+    <value>Razširitve</value>
+  </data>
+  <data name="ID_DISPLAYREPORTING" xml:space="preserve">
+    <value>Poročanje</value>
+  </data>
+  <data name="ID_OPTIONSDEBUGGING" xml:space="preserve">
+    <value>Options\\Debugging</value>
+  </data>
+  <data name="ID_OPTIONSDIMENSIONS" xml:space="preserve">
+    <value>Options\\Dimensions\\Case/Palette</value>
+  </data>
+  <data name="ID_OPTIONSMEASUREMENTSYSTEM" xml:space="preserve">
+    <value>Options\\Language &amp; Einheitensystem</value>
+  </data>
+  <data name="ID_OPTIONSPLUGINS" xml:space="preserve">
+    <value>Options\\Plugins</value>
+  </data>
+  <data name="ID_OPTIONSREPORTING" xml:space="preserve">
+    <value>Options\\Reporting</value>
+  </data>
+  <data name="ID_SELECTATLEASTONELAYOUT" xml:space="preserve">
+    <value>Izberi vsaj en sloj</value>
+  </data>
+  <data name="ID_AUTOIMPORT" xml:space="preserve">
+    <value>Samodejni uvoz</value>
+  </data>
+  <data name="ID_DESCRIPTION" xml:space="preserve">
+    <value>Opis</value>
+  </data>
+  <data name="ID_DIMENSIONS" xml:space="preserve">
+    <value>Dimenzije ({0})</value>
+  </data>
+  <data name="ID_NAMEALREADYEXISTSINDB" xml:space="preserve">
+    <value>{0} z imenom {1} že obstaja v bazi podatkov.</value>
+  </data>
+  <data name="ID_DIAMETERINNER_WU" xml:space="preserve">
+    <value>Notranji premer ({0})</value>
+  </data>
+  <data name="ID_DIAMETEROUTER_WU" xml:space="preserve">
+    <value>Zunanji premer ({0})</value>
+  </data>
+  <data name="ID_HEIGHT_WU" xml:space="preserve">
+    <value>Višina ({0})</value>
+  </data>
+  <data name="ID_DIMEXT_WU" xml:space="preserve">
+    <value>Zunanja dim. ({0}).</value>
+  </data>
+  <data name="ID_DIMINT_WU" xml:space="preserve">
+    <value>Notranja dim. ({0})</value>
+  </data>
+  <data name="ID_LENGTH_WU" xml:space="preserve">
+    <value>Dolžina ({0})</value>
+  </data>
+  <data name="ID_NUMBER" xml:space="preserve">
+    <value>Število</value>
+  </data>
+  <data name="ID_THICKNESS_WU" xml:space="preserve">
+    <value>Debelina ({0})</value>
+  </data>
+  <data name="ID_WIDTH_WU" xml:space="preserve">
+    <value>Širina ({0})</value>
+  </data>
+  <data name="ID_HATCHINGANGLE" xml:space="preserve">
+    <value>Hatching angle</value>
+  </data>
+  <data name="ID_HATCHINGSPACING" xml:space="preserve">
+    <value>Hatching space</value>
+  </data>
+  <data name="ID_TRANSPARENCY" xml:space="preserve">
+    <value>Uporabi prosojnost</value>
+  </data>
+  <data name="ID_CASENAME" xml:space="preserve">
+    <value>Caisse</value>
+  </data>
+  <data name="ID_NOCASESELECTED" xml:space="preserve">
+    <value>Noben zaboj ni izbran!</value>
+  </data>
+  <data name="ID_NOORIENTATIONSELECTED" xml:space="preserve">
+    <value>Orientacija ni izbrana!</value>
+  </data>
+  <data name="ID_DOUBLECLICKALAYER" xml:space="preserve">
+    <value>Dvokliknite sloj!</value>
+  </data>
+  <data name="ID_INTERLAYERNUMBER" xml:space="preserve">
+    <value># Vmesnih slojev</value>
+  </data>
+  <data name="ID_LAYER" xml:space="preserve">
+    <value>Sloj</value>
+  </data>
+  <data name="ID_LAYERNUMBER" xml:space="preserve">
+    <value># Slojev</value>
+  </data>
+  <data name="ID_LOADDIMENSIONS" xml:space="preserve">
+    <value>Dimenzije naklada ({0})</value>
+  </data>
+  <data name="ID_LOADWEIGHT_WU" xml:space="preserve">
+    <value>Teža naklada ({0})</value>
+  </data>
+  <data name="ID_NETWEIGHT_WU" xml:space="preserve">
+    <value>Neto teža ({0})</value>
+  </data>
+  <data name="ID_OUTERDIMENSIONS" xml:space="preserve">
+    <value>Zunanje dimenzije ({0})</value>
+  </data>
+  <data name="ID_PALLET" xml:space="preserve">
+    <value>Paleta</value>
+  </data>
+  <data name="ID_SELECTEDLAYER" xml:space="preserve">
+    <value>Izbrani sloj: {0}</value>
+  </data>
+  <data name="ID_TOTALWEIGHT_WU" xml:space="preserve">
+    <value>Skupna teža ({0})</value>
+  </data>
+  <data name="ID_INTERLAYERCOUNT" xml:space="preserve">
+    <value># Vmesnih slojev</value>
+  </data>
+  <data name="ID_SPACES_WU" xml:space="preserve">
+    <value>Prostori ({0})</value>
+  </data>
+  <data name="ID_LOAD" xml:space="preserve">
+    <value>Naklad</value>
+  </data>
+  <data name="ID_REGISTEREDUSERCOUNT" xml:space="preserve">
+    <value>Število uporabnikov = {0}</value>
+  </data>
+  <data name="ID_GENERATEREPORTPDF" xml:space="preserve">
+    <value>Ustvari poročilo PDF</value>
+  </data>
+  <data name="ID_DEPENDINGANALYSES" xml:space="preserve">
+    <value>{0} ima naslednje odvisnosti:
+{1}
+Če nadaljujete s spremembami, se bodo ponovno preučile analize in odstranile vse izbrane rešitve.
+Nadaljuj?</value>
+  </data>
+  <data name="ID_DONE" xml:space="preserve">
+    <value>Končano!</value>
+  </data>
+  <data name="ID_EXCELSHEETUNITSYSTEM" xml:space="preserve">
+    <value>Ali lahko potrdite, da so vrednosti v Excel dokumentu ({0}) izražene z uporabo trenutno nastavljenega sistema StackBuilder, npr. {1}?</value>
+  </data>
+  <data name="ID_IMPORTLOADING" xml:space="preserve">
+    <value>Nalaganje {0}...</value>
+  </data>
+  <data name="ID_IMPORTSKIPPING" xml:space="preserve">
+    <value>Preskakovanje {0}...</value>
+  </data>
+  <data name="ID_REMOVINGEXISTINGTYPE" xml:space="preserve">
+    <value>Odstranjevanje obstoječega tipa {0}...</value>
+  </data>
+  <data name="ID_TASKCANCELED" xml:space="preserve">
+    <value>Prekinjeno!</value>
+  </data>
+  <data name="ID_UNEXPECTEDTYPE" xml:space="preserve">
+    <value>Nepričakovan tip: {0}</value>
+  </data>
+  <data name="ID_UNITSYSTEM" xml:space="preserve">
+    <value>Merski sistem...</value>
+  </data>
+  <data name="ID_DEFINEVALIDFILEPATH" xml:space="preserve">
+    <value>Določite veljavno pot do datoteke.</value>
+  </data>
+  <data name="ID_DISPLAYPALLETEDITION" xml:space="preserve">
+    <value>Parametri izdaje palete</value>
+  </data>
+  <data name="ID_OPTIONSPALLETEDITION" xml:space="preserve">
+    <value>Options\\Pallet Ausgabe</value>
+  </data>
+  <data name="ID_CASECOUNTFORMATSTRING" xml:space="preserve">
+    <value>{0} {1} x {2}</value>
+  </data>
+</root>
