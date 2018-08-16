@@ -8,7 +8,7 @@ using System.Reflection;
 using System.Resources;
 using treeDiM.StackBuilder.Desktop.Properties;
 
-using treeDiM.PLMPack.DBClient;
+//using treeDiM.PLMPack.DBClient;
 
 using log4net;
 #endregion
@@ -148,11 +148,11 @@ namespace treeDiM.StackBuilder.Desktop
             {
                 try
                 {
-                    int userCount = 0;
-                    using (WCFClient wcfClient = new WCFClient())
-                    {
-                        userCount = wcfClient.Client.get_PLMPackRegisteredUserCount();
-                    }
+                    int userCount = 1;
+                    //using (WCFClient wcfClient = new WCFClient())
+                    //{
+                    //    userCount = wcfClient.Client.get_PLMPackRegisteredUserCount();
+                    //}
                     return string.Format(Resources.ID_REGISTEREDUSERCOUNT, userCount);
                 }
                 catch (Exception ex)

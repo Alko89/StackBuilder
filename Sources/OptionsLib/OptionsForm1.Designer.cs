@@ -90,7 +90,7 @@ namespace OptionsLib {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Point similar to {X=186,Y=347}.
+        ///   Looks up a localized resource of type System.Drawing.Point similar to {X=185,Y=347}.
         /// </summary>
         public static System.Drawing.Point ApplyBtn_Location {
             get {
@@ -168,7 +168,7 @@ namespace OptionsLib {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Size similar to {Width=52, Height=23}.
+        ///   Looks up a localized resource of type System.Drawing.Size similar to {Width=338, Height=23}.
         /// </summary>
         public static System.Drawing.Size AppRestartLabel_Size {
             get {
@@ -226,7 +226,7 @@ namespace OptionsLib {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Point similar to {X=267,Y=347}.
+        ///   Looks up a localized resource of type System.Drawing.Point similar to {X=266,Y=347}.
         /// </summary>
         public static System.Drawing.Point CancelBtn_Location {
             get {
@@ -660,7 +660,7 @@ namespace OptionsLib {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Size similar to {Width=340, Height=69}.
+        ///   Looks up a localized resource of type System.Drawing.Size similar to {Width=340, Height=73}.
         /// </summary>
         public static System.Drawing.Size DescriptionPanel_Size {
             get {
@@ -710,7 +710,7 @@ namespace OptionsLib {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Size similar to {Width=339, Height=2}.
+        ///   Looks up a localized resource of type System.Drawing.Size similar to {Width=338, Height=2}.
         /// </summary>
         public static System.Drawing.Size label2_Size {
             get {
@@ -749,7 +749,7 @@ namespace OptionsLib {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Point similar to {X=105,Y=347}.
+        ///   Looks up a localized resource of type System.Drawing.Point similar to {X=104,Y=347}.
         /// </summary>
         public static System.Drawing.Point OKBtn_Location {
             get {
@@ -878,7 +878,7 @@ namespace OptionsLib {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Int32 similar to 46.
+        ///   Looks up a localized resource of type System.Int32 similar to 35.
         /// </summary>
         public static int OptDescrSplit_SplitterDistance {
             get {
@@ -1205,7 +1205,7 @@ namespace OptionsLib {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Size similar to {Width=339, Height=32}.
+        ///   Looks up a localized resource of type System.Drawing.Size similar to {Width=338, Height=32}.
         /// </summary>
         public static System.Drawing.Size OptionsPanelPath_Size {
             get {

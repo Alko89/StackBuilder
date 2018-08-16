@@ -465,7 +465,7 @@ namespace treeDiM.StackBuilder.Desktop
         }
         private void OnGenerateReport(object sender, EventArgs e)
         {
-            FormMain.GetInstance().GenerateReport(_analysis);
+            FormMain.GenerateReport(_analysis);
         }
         #endregion
  

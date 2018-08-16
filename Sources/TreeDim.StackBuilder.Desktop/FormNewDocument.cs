@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 using log4net;
 
-using treeDiM.PLMPack.DBClient;
+//using treeDiM.PLMPack.DBClient;
 using treeDiM.StackBuilder.Desktop.Properties;
 #endregion
 
@@ -51,8 +51,9 @@ namespace treeDiM.StackBuilder.Desktop
             {
                 try
                 {
-                    using (WCFClient wcfClient = new WCFClient())
-                    { return wcfClient.User.Name; }
+                    /*using (WCFClient wcfClient = new WCFClient())
+                    { return wcfClient.User.Name; }*/
+                    return "Infotrans";
                 }
                 catch (Exception ex)
                 {

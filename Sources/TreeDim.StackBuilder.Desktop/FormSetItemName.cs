@@ -3,8 +3,8 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 
-using treeDiM.PLMPack.DBClient;
-using treeDiM.PLMPack.DBClient.PLMPackSR;
+//using treeDiM.PLMPack.DBClient;
+//using treeDiM.PLMPack.DBClient.PLMPackSR;
 #endregion
 
 namespace treeDiM.StackBuilder.Desktop
@@ -44,11 +44,11 @@ namespace treeDiM.StackBuilder.Desktop
         {
             string message = string.Empty;
 
-            using (WCFClient wcfClient = new WCFClient())
+            /*using (WCFClient wcfClient = new WCFClient())
             {
                 if (wcfClient.Client.ItemExists(DCSBTypeEnum.TTruck, ItemName))
                     message = string.Format(Properties.Resources.ID_NAMEALREADYEXISTSINDB, TypeName, ItemName);
-            }
+            }*/
 
             statusLbl.ForeColor = string.IsNullOrEmpty(message) ? Color.Black : Color.Red;
             statusLbl.Text = string.IsNullOrEmpty(message) ? Properties.Resources.ID_READY : message;

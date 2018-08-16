@@ -506,9 +506,9 @@ Global
 		{D5FBE9D8-DFAE-49F0-B9DA-0795B98D887F} = {36E4D3C5-28FD-46B9-8763-C3316F67C6BE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		RESX_PrefixTranslations = False
-		RESX_AutoCreateNewLanguageFiles = True
-		SolutionGuid = {A8385DDB-1893-4CF8-83DF-F57C7AB7069B}
 		RESX_ConfirmAddLanguageFile = False
+		SolutionGuid = {A8385DDB-1893-4CF8-83DF-F57C7AB7069B}
+		RESX_AutoCreateNewLanguageFiles = True
+		RESX_PrefixTranslations = False
 	EndGlobalSection
 EndGlobal

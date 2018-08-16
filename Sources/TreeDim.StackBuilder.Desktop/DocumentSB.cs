@@ -371,7 +371,11 @@ namespace treeDiM.StackBuilder.Desktop
                 MessageBox.Show("Unexepected analysis type!");
                 return;
             }
-            if (DialogResult.OK == form.ShowDialog()) { }
+            if (DialogResult.OK == form.ShowDialog())
+            {
+                DockContentView formAnalysis = CreateViewAnalysis(analysis);
+                formAnalysis.Show();
+            }
         }
         #endregion
 

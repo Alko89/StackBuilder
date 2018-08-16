@@ -17,8 +17,8 @@ using treeDiM.StackBuilder.Basics;
 using treeDiM.StackBuilder.Engine;
 using treeDiM.StackBuilder.Reporting;
 using treeDiM.StackBuilder.Plugin;
-using treeDiM.PLMPack.DBClient;
-using treeDiM.PLMPack.DBClient.PLMPackSR;
+//using treeDiM.PLMPack.DBClient;
+//using treeDiM.PLMPack.DBClient.PLMPackSR;
 using treeDiM.StackBuilder.Exporters;
 
 using treeDiM.StackBuilder.Desktop.Properties;
@@ -143,8 +143,8 @@ namespace treeDiM.StackBuilder.Desktop
             // connection/disconnection event handling
             if (!Program.UseDisconnected)
             {
-                WCFClient.Connected += OnConnected;
-                WCFClient.Disconnected += OnDisconnected;
+                //WCFClient.Connected += OnConnected;
+                //WCFClient.Disconnected += OnDisconnected;
             }
             else
             {
@@ -284,13 +284,13 @@ namespace treeDiM.StackBuilder.Desktop
             try
             {
                 // show login form
-                if (!WCFClient.IsConnected && !Program.UseDisconnected)
+                /*if (!WCFClient.IsConnected && !Program.UseDisconnected)
                 {
                     using (WCFClient wcfClient = new WCFClient())
                     {
                         wcfClient.Client.Connect();
                     }
-                }
+                }*/
                 // note : CreateBasicLayout now called by OnConnected()
             }
             catch (Exception ex)
@@ -552,7 +552,7 @@ namespace treeDiM.StackBuilder.Desktop
             return true;
         }
 
-        public void GenerateReport(Analysis analysis)
+        public static void GenerateReport(Analysis analysis)
         {
             try
             {
@@ -567,11 +567,13 @@ namespace treeDiM.StackBuilder.Desktop
                 _log.Error(ex.ToString()); Program.SendCrashReport(ex);
             }
         }
-        public void GenerateExport(Analysis analysis, string extension)
+        public static void GenerateExport(Analysis analysis, string extension)
         {
             try
             {
                 Exporter exporter = ExporterFactory.GetExporterByExt(extension);
+
+                SaveFileDialog saveFileDialogExportXML = new System.Windows.Forms.SaveFileDialog();
                 saveFileDialogExportXML.FileName = analysis.Name + "." + exporter.Extension;
                 saveFileDialogExportXML.Filter = exporter.Filter;
                 saveFileDialogExportXML.DefaultExt = exporter.Extension;
@@ -945,7 +947,7 @@ namespace treeDiM.StackBuilder.Desktop
         #region Connection / disconnection
         private void OnConnected()
         {
-            if (!Program.UseDisconnected && WCFClient.IsConnected)
+            /*if (!Program.UseDisconnected && WCFClient.IsConnected)
             {
                 using (WCFClient wcfClient = new WCFClient())
                 {
@@ -957,7 +959,7 @@ namespace treeDiM.StackBuilder.Desktop
                 // create basic layout
                 CreateBasicLayout();
                 UpdateDisconnectButton();
-            }
+            }*/
          }
         private void OnDisconnected()
         {
@@ -1178,11 +1180,11 @@ namespace treeDiM.StackBuilder.Desktop
                 if (Program.UseDisconnected)
                     return;
                 // Form show database
-                FormShowDatabase form = new FormShowDatabase()
+                /*FormShowDatabase form = new FormShowDatabase()
                 {
                     Document = ActiveDocument as Document
                 };
-                form.ShowDialog();
+                form.ShowDialog();*/
                 // update toolbar state as database may now be empty
                 UpdateToolbarState();
             }
@@ -1335,7 +1337,7 @@ namespace treeDiM.StackBuilder.Desktop
         {
             try
             {
-                WCFClient.Disconnect();
+                //WCFClient.Disconnect();
                 // start login again
                 timerLogin.Start();
             }

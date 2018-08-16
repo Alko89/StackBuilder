@@ -114,6 +114,7 @@ namespace treeDiM.StackBuilder.Desktop
         #region Handlers
         private void onButtonNext(object sender, EventArgs e)
         {
+            this.DialogResult = DialogResult.OK;
             OnNext();
         }
         #endregion

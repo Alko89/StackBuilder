@@ -17,7 +17,7 @@
     <IsWebBootstrapper>true</IsWebBootstrapper>
     <StartupObject>treeDiM.StackBuilder.Desktop.Program</StartupObject>
     <ApplicationIcon>treeDim.ico</ApplicationIcon>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
     <NuGetPackageImportStamp>
@@ -134,7 +134,7 @@
   </Target>
   <ItemGroup>
     <Reference Include="CrashReporter.NET, Version=1.5.5.0, Culture=neutral, PublicKeyToken=7828e0fd88cab698, processorArchitecture=MSIL">
-      <HintPath>..\packages\CrashReporter.NET.Official.1.5.5\lib\net452\CrashReporter.NET.dll</HintPath>
+      <HintPath>..\packages\CrashReporter.NET.Official.1.5.5\lib\net40\CrashReporter.NET.dll</HintPath>
     </Reference>
     <Reference Include="Cureos.Measures">
       <HintPath>..\ThirdPartyAssemblies\Cureos.Measures.dll</HintPath>
@@ -159,8 +159,8 @@
     <Reference Include="SourceGrid, Version=4.40.4580.29115, Culture=neutral, PublicKeyToken=df6f5e538749e85d, processorArchitecture=MSIL">
       <HintPath>..\packages\SourceGrid.4.4.0\lib\net35\SourceGrid.dll</HintPath>
     </Reference>
-    <Reference Include="Syroot.KnownFolders, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Syroot.Windows.IO.KnownFolders.1.1.0\lib\net452\Syroot.KnownFolders.dll</HintPath>
+    <Reference Include="Syroot.Windows.IO.KnownFolders, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syroot.Windows.IO.KnownFolders.1.0.2\lib\net40\Syroot.Windows.IO.KnownFolders.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -462,12 +462,6 @@
     <Compile Include="FormSetItemName.Designer.cs">
       <DependentUpon>FormSetItemName.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormShowDatabase.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormShowDatabase.Designer.cs">
-      <DependentUpon>FormShowDatabase.cs</DependentUpon>
-    </Compile>
     <Compile Include="FormValidTypeName.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -681,6 +675,9 @@
     <EmbeddedResource Include="DockContentAnalysisCasePallet.ru.resx">
       <DependentUpon>DockContentAnalysisCasePallet.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="DockContentAnalysisCasePallet.sl.resx">
+      <DependentUpon>DockContentAnalysisCasePallet.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DockContentAnalysisCasePallet.sv.resx">
       <DependentUpon>DockContentAnalysisCasePallet.cs</DependentUpon>
     </EmbeddedResource>
@@ -811,6 +808,9 @@
       <DependentUpon>DockContentAnalysisEdit.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DockContentAnalysisEdit.ru.resx">
+      <DependentUpon>DockContentAnalysisEdit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DockContentAnalysisEdit.sl.resx">
       <DependentUpon>DockContentAnalysisEdit.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DockContentAnalysisEdit.sv.resx">
@@ -1154,6 +1154,9 @@
     <EmbeddedResource Include="FormNewAnalysis.ru.resx">
       <DependentUpon>FormNewAnalysis.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormNewAnalysis.sl.resx">
+      <DependentUpon>FormNewAnalysis.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormNewAnalysis.sv.resx">
       <DependentUpon>FormNewAnalysis.cs</DependentUpon>
     </EmbeddedResource>
@@ -1212,6 +1215,9 @@
       <DependentUpon>FormNewAnalysisCasePallet.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormNewAnalysisCasePallet.ru.resx">
+      <DependentUpon>FormNewAnalysisCasePallet.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormNewAnalysisCasePallet.sl.resx">
       <DependentUpon>FormNewAnalysisCasePallet.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormNewAnalysisCasePallet.sv.resx">
@@ -1921,39 +1927,6 @@
     <EmbeddedResource Include="FormSetItemName.zh.resx">
       <DependentUpon>FormSetItemName.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormShowDatabase.de.resx">
-      <DependentUpon>FormShowDatabase.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormShowDatabase.es.resx">
-      <DependentUpon>FormShowDatabase.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormShowDatabase.fr.resx">
-      <DependentUpon>FormShowDatabase.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormShowDatabase.it.resx">
-      <DependentUpon>FormShowDatabase.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormShowDatabase.ja.resx">
-      <DependentUpon>FormShowDatabase.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormShowDatabase.nl.resx">
-      <DependentUpon>FormShowDatabase.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormShowDatabase.pl.resx">
-      <DependentUpon>FormShowDatabase.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormShowDatabase.resx">
-      <DependentUpon>FormShowDatabase.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormShowDatabase.ru.resx">
-      <DependentUpon>FormShowDatabase.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormShowDatabase.sv.resx">
-      <DependentUpon>FormShowDatabase.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormShowDatabase.zh.resx">
-      <DependentUpon>FormShowDatabase.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="FormSplashScreen.de.resx">
       <DependentUpon>FormSplashScreen.cs</DependentUpon>
     </EmbeddedResource>
@@ -2137,6 +2110,9 @@
       <DependentUpon>OptionPanelDimensions.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="OptionPanels\OptionPanelDimensions.ru.resx">
+      <DependentUpon>OptionPanelDimensions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OptionPanels\OptionPanelDimensions.sl.resx">
       <DependentUpon>OptionPanelDimensions.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="OptionPanels\OptionPanelDimensions.sv.resx">
@@ -2360,6 +2336,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.ru.resx</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.sl.resx" />
     <EmbeddedResource Include="Properties\Resources.sv.resx">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

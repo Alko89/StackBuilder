@@ -13,8 +13,8 @@ using treeDiM.StackBuilder.Basics;
 using treeDiM.StackBuilder.Graphics;
 using treeDiM.StackBuilder.Graphics.Controls;
 using treeDiM.StackBuilder.Engine;
-using treeDiM.PLMPack.DBClient;
-using treeDiM.PLMPack.DBClient.PLMPackSR;
+//using treeDiM.PLMPack.DBClient;
+//using treeDiM.PLMPack.DBClient.PLMPackSR;
 using treeDiM.StackBuilder.Desktop.Properties;
 #endregion
 
@@ -51,7 +51,7 @@ namespace treeDiM.StackBuilder.Desktop
             try
             {
                 // load cases
-                using (WCFClient wcfClient = new WCFClient())
+                /*using (WCFClient wcfClient = new WCFClient())
                 {
                     int rangeIndex = 0, number = 0;
                     bool endReached = false;
@@ -60,7 +60,7 @@ namespace treeDiM.StackBuilder.Desktop
                         _listCases.AddRange( wcfClient.Client.GetAllCases(rangeIndex++, ref number) );
                         endReached = (rangeIndex * 20 > number);
                     }
-                }
+                }*/
                 OnFillListCases(this, null);
             }
             catch (Exception ex)
@@ -406,7 +406,7 @@ namespace treeDiM.StackBuilder.Desktop
         private void OnFillListCases(object sender, EventArgs e)
         {
             // sanity check
-            if (_listCases.Count < 1) return;
+            /*if (_listCases.Count < 1) return;
             // clear check list
             chklbCases.Items.Clear();
             // fill list of cases
@@ -456,7 +456,7 @@ namespace treeDiM.StackBuilder.Desktop
                 {
                     _log.Error(ex.Message);
                 }
-            }
+            }*/
             OnCaseChecked(this, null);
         }
         #endregion
@@ -466,7 +466,7 @@ namespace treeDiM.StackBuilder.Desktop
         private List<Analysis> _analyses = new List<Analysis>();
         private List<int> _checkedIndices = new List<int>();
         private Analysis _selectedAnalysis;
-        private List<DCSBCase> _listCases = new List<DCSBCase>();
+        //private List<DCSBCase> _listCases = new List<DCSBCase>();
         protected static ILog _log = LogManager.GetLogger(typeof(FormOptimiseMultiCase));
         #endregion
     }

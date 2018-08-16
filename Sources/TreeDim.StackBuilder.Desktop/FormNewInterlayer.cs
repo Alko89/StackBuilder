@@ -14,8 +14,8 @@ using treeDiM.StackBuilder.Basics;
 using treeDiM.StackBuilder.Graphics;
 using treeDiM.StackBuilder.Desktop.Properties;
 
-using treeDiM.PLMPack.DBClient;
-using treeDiM.PLMPack.DBClient.PLMPackSR;
+//using treeDiM.PLMPack.DBClient;
+//using treeDiM.PLMPack.DBClient.PLMPackSR;
 #endregion
 
 namespace treeDiM.StackBuilder.Desktop
@@ -148,7 +148,7 @@ namespace treeDiM.StackBuilder.Desktop
                 };
                 if (DialogResult.OK == form.ShowDialog())
                 {
-                    using (WCFClient wcfClient = new WCFClient())
+                    /*using (WCFClient wcfClient = new WCFClient())
                     {
                         wcfClient.Client.CreateNewInterlayer(new DCSBInterlayer()
                         {
@@ -161,7 +161,7 @@ namespace treeDiM.StackBuilder.Desktop
                             AutoInsert = false
                         }
                             );
-                    }
+                    }*/
                     Close();
                 }
             }

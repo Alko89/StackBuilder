@@ -15,6 +15,7 @@ namespace treeDiM.StackBuilder.Engine
         // This is OK as long as LayerPatternBox objects are immutable
         public static IReadOnlyList<LayerPatternBox> All => ImmutableList.CreateRange(new LayerPatternBox[] {
             new LayerPatternColumn()
+            , new LayerPatternColumnInverted()
             , new LayerPatternInterlocked()
             , new LayerPatternInterlockedSymetric()
             , new LayerPatternInterlockedFilled()

@@ -17,8 +17,8 @@ using Syroot.Windows.IO;
 using treeDiM.StackBuilder.Basics;
 using treeDiM.StackBuilder.ExcelReader;
 
-using treeDiM.PLMPack.DBClient;
-using treeDiM.PLMPack.DBClient.PLMPackSR;
+//using treeDiM.PLMPack.DBClient;
+//using treeDiM.PLMPack.DBClient.PLMPackSR;
 #endregion
 
 namespace treeDiM.StackBuilder.Desktop
@@ -161,7 +161,7 @@ namespace treeDiM.StackBuilder.Desktop
         {
             try
             {
-                using (WCFClient wcfClient = new WCFClient())
+                /*using (WCFClient wcfClient = new WCFClient())
                 {
                     // does item already exist?
                     if (!CanWrite(wcfClient.Client, dt))
@@ -372,7 +372,7 @@ namespace treeDiM.StackBuilder.Desktop
                     }
                     else
                         throw new Exception(string.Format(Properties.Resources.ID_UNEXPECTEDTYPE, dt.Name));
-                }
+                }*/
             }
             catch (Exception ex)
             {
@@ -382,7 +382,7 @@ namespace treeDiM.StackBuilder.Desktop
             {
             }
         }
-        private bool CanWrite(PLMPackServiceClient client, DataType dt)
+        /*private bool CanWrite(PLMPackServiceClient client, DataType dt)
         {
             DCSBTypeEnum eType = DataTypeToDCSBEnum(dt);
             int itemID = -1;
@@ -407,7 +407,7 @@ namespace treeDiM.StackBuilder.Desktop
             else if (dt is DataPalletFilm) return DCSBTypeEnum.TPalletFilm;
             else if (dt is DataTruck) return DCSBTypeEnum.TTruck;
             else throw new Exception(string.Format(Properties.Resources.ID_UNEXPECTEDTYPE, dt.Name));
-        }
+        }*/
         /// <summary>
         /// On completed do the appropriate task
         /// </summary>
