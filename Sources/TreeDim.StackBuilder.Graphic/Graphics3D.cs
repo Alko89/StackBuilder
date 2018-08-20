@@ -889,6 +889,38 @@ namespace treeDiM.StackBuilder.Graphics
                         g.DrawLine(penPathThick, pts[j - 1], pts[j]);
                     g.DrawLine(penPathThick, pts[ptCount - 1], pts[0]);
                 }
+
+                // drav custom text on boxes
+                if (CameraPosition.X < 0.1 && CameraPosition.Y < 0.1 && CameraPosition.Z == 100000 && box.ShowTopLabel)
+                {
+                    //Draw box text
+                    double elipseSize = (box.Length < box.Width ? box.Length : box.Width) / 2;
+
+                    Brush brushElipse = new SolidBrush(Color.White);
+                    Cylinder c = new Cylinder(Int32.MaxValue, elipseSize, elipseSize, box.TopFace.Center.Z, Color.White, Color.White, Color.White);
+                    Vector3D[] elipseVectors = c.TopPoints;
+                    for (int i = 0; i < elipseVectors.Length; i++)
+                    {
+                        elipseVectors[i].X += (int)box.TopFace.Center.X;
+                        elipseVectors[i].Y += (int)box.TopFace.Center.Y;
+                    }
+                    Point[] elipsePoints = TransformPoint(GetCurrentTransformation(), elipseVectors);
+                    g.FillPolygon(brushElipse, elipsePoints);
+
+                    Font fW = GetAdjustedFont(g, box.Weight.ToString(), new Font("Arial", 12, FontStyle.Bold), (int)(elipsePoints[0].X - elipsePoints[elipsePoints.Length / 2].X), 40, 3, true);
+
+                    Point ptId = TransformPoint(GetCurrentTransformation(), box.TopFace.Center);
+
+                    // draw box weight
+                    SizeF adjustedSizeNew = g.MeasureString(box.Weight.ToString(), fW);
+
+                    g.DrawString(
+                        box.Weight.ToString()
+                        , fW
+                        , Brushes.Black
+                        , new Point((int)(ptId.X - adjustedSizeNew.Width / 2), (int)(ptId.Y - adjustedSizeNew.Height / 2))
+                        , StringFormat.GenericDefault);
+                }
             }
             if (ShowBoxIds)
             {
@@ -907,7 +939,38 @@ namespace treeDiM.StackBuilder.Graphics
                     , new Rectangle(ptId.X + 5, ptId.Y - 10, 30, 20)
                     , StringFormat.GenericDefault);
             }
+
             ++_boxDrawingCounter;
+        }
+
+        public Font GetAdjustedFont(System.Drawing.Graphics graphicRef, string graphicString, Font originalFont, int containerWidth, int maxFontSize, int minFontSize, bool smallestOnFail)
+        {
+            Font testFont = null;
+            // We utilize MeasureString which we get via a control instance
+            for (int adjustedSize = maxFontSize; adjustedSize >= minFontSize; adjustedSize--)
+            {
+                testFont = new Font(originalFont.Name, adjustedSize, originalFont.Style);
+
+                // Test the string with the new size
+                SizeF adjustedSizeNew = graphicRef.MeasureString(graphicString, testFont);
+
+                if (containerWidth > Convert.ToInt32(adjustedSizeNew.Width))
+                {
+                    // Good font, return it
+                    return testFont;
+                }
+            }
+
+            // If you get here there was no fontsize that worked
+            // return minimumSize or original?
+            if (smallestOnFail)
+            {
+                return testFont;
+            }
+            else
+            {
+                return originalFont;
+            }
         }
 
         internal void DrawWireFrame(Box box)

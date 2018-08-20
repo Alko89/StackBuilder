@@ -248,6 +248,11 @@ namespace treeDiM.StackBuilder.Basics
         public OptDouble TapeWidth { get; set; }
         public Color TapeColor { get; set; }
 
+        /// <summary>
+        /// Flag to display a label on the top of the box
+        /// </summary>
+        public bool ShowTopLabel { get; set; }
+
         public override bool IsBundle => false;
 
         #region Non-Public Members

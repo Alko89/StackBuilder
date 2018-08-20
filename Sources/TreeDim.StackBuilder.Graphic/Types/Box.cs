@@ -31,6 +31,11 @@ namespace treeDiM.StackBuilder.Graphics
         private OptDouble _tapeWidth;
         private Color _tapeColor;
         /// <summary>
+        ///
+        /// </summary>
+        private double _weight;
+        private bool _showTopLabel;
+        /// <summary>
         /// Packable object replacable with in memory built image
         /// </summary>
         private Packable _packable; 
@@ -87,6 +92,8 @@ namespace treeDiM.StackBuilder.Graphics
             _dim[0] = packable.Length;
             _dim[1] = packable.Width;
             _dim[2] = packable.Height;
+            // weight
+            _weight = packable.Weight;
             // box position
             _boxPosition = new BoxPosition(Vector3D.Zero, HalfAxis.HAxis.AXIS_X_P, HalfAxis.HAxis.AXIS_Y_P);
             // colors & textures
@@ -121,6 +128,8 @@ namespace treeDiM.StackBuilder.Graphics
                         // tape
                         _tapeWidth = boxProperties.TapeWidth;
                         _tapeColor = boxProperties.TapeColor;
+
+                        _showTopLabel = boxProperties.ShowTopLabel;
                     }
                 }
             }
@@ -147,6 +156,8 @@ namespace treeDiM.StackBuilder.Graphics
             _dim[0] = packable.Length;
             _dim[1] = packable.Width;
             _dim[2] = packable.Height;
+            // weight
+            _weight = packable.Weight;
             // set position
             _boxPosition = bPosition;
             // colors
@@ -172,6 +183,8 @@ namespace treeDiM.StackBuilder.Graphics
                 }
                 _tapeWidth = boxProperties.TapeWidth;
                 _tapeColor = boxProperties.TapeColor;
+
+                _showTopLabel = boxProperties.ShowTopLabel;
             }
             // is bundle ?
             else if (bProperties.IsBundle)
@@ -191,6 +204,8 @@ namespace treeDiM.StackBuilder.Graphics
             _dim[0] = packable.Length;
             _dim[1] = packable.Width;
             _dim[2] = packable.Height;
+            // weight
+            _weight = packable.Weight;
             // set position
             _boxPosition = new BoxPosition( bPosition.Position, bPosition.LengthAxis, bPosition.WidthAxis);
             // colors
@@ -214,6 +229,8 @@ namespace treeDiM.StackBuilder.Graphics
                     }
                     _tapeWidth = boxProperties.TapeWidth;
                     _tapeColor = boxProperties.TapeColor;
+
+                    _showTopLabel = boxProperties.ShowTopLabel;
                 }
                 // IsBundle ?
                 IsBundle = bProperties.IsBundle;
@@ -317,6 +334,9 @@ namespace treeDiM.StackBuilder.Graphics
         public double Length => _dim[0];
         public double Width => _dim[1];
         public double Height => _dim[2];
+        public double Weight => _weight;
+        public bool ShowTopLabel => _showTopLabel;
+
         public Vector3D Position
         {
             get { return _boxPosition.Position; }
