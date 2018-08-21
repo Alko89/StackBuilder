@@ -14,7 +14,18 @@ namespace treeDiM.StackBuilder.Basics
         {
             _container = container;
         }
-        public override bool AllowOrientation(HalfAxis.HAxis axisOrtho) => axisOrtho == HalfAxis.HAxis.AXIS_Z_P;
+        public override bool AllowOrientation(HalfAxis.HAxis axisOrtho)
+        {
+            switch (axisOrtho)
+            {
+                case HalfAxis.HAxis.AXIS_Z_N:
+                case HalfAxis.HAxis.AXIS_Z_P:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
         public override string AllowedOrientationsString
         {
             get => "0,0,1";
