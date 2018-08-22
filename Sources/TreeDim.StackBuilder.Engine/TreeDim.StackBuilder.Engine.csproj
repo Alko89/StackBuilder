@@ -89,7 +89,6 @@
     <Compile Include="LayerPatterns\HCylinderLoadPatternDefault.cs" />
     <Compile Include="LayerPatterns\HCylinderLoadPatternStaggered.cs" />
     <Compile Include="LayerPatterns\LayerPatternBox.cs" />
-    <Compile Include="LayerPatterns\LayerPatternColumnInverted.cs" />
     <Compile Include="LayerPatterns\LayerPatternInterlockedFilled.cs" />
     <Compile Include="LayerPatterns\LayerPatternInterlockedSymetric.cs" />
     <Compile Include="LayerPatterns\LayerPatternInterlockedSymetric2.cs" />
