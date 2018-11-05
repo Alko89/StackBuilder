@@ -30,4 +30,7 @@
       <Filter>Fichiers sources</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="Samples\dpp06.txt" />
+  </ItemGroup>
 </Project>

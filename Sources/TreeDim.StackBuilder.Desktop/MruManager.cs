@@ -47,8 +47,6 @@ namespace Utilities
 
         private int maxDisplayLength = 40;      // maximum length of file name for display
 
-        private string currentDirectory;        // current directory
-
         private ArrayList mruList;              // MRU list (file names)
 
         private const string regEntryName = "file";  // entry name to keep MRU (file0, file1...)
@@ -132,18 +130,7 @@ namespace Utilities
         /// Set this property to change default value (optional)
         /// after call to Initialize.
         /// </summary>
-        public string CurrentDir
-        {
-            set
-            {
-                currentDirectory = value;
-            }
-
-            get
-            {
-                return currentDirectory;
-            }
-        }
+        public string CurrentDir { set; get; }
 
         #endregion
 
@@ -182,7 +169,7 @@ namespace Utilities
 
 
             // keep current directory in the time of initialization
-            currentDirectory = Directory.GetCurrentDirectory();
+            CurrentDir = Directory.GetCurrentDirectory();
 
             // subscribe to MRU parent Popup event
             menuItemParent.DropDownOpening += new EventHandler(this.OnMRUParentPopup);
@@ -415,7 +402,7 @@ namespace Utilities
             // if file is in current directory, show only file name
             FileInfo fileInfo = new FileInfo(fullName);
 
-            if (fileInfo.DirectoryName == currentDirectory)
+            if (fileInfo.DirectoryName == CurrentDir)
                 return GetShortDisplayName(fileInfo.Name, maxDisplayLength);
 
             return GetShortDisplayName(fullName, maxDisplayLength);
@@ -454,7 +441,6 @@ namespace Utilities
 
     public class MruFileOpenEventArgs : System.EventArgs
     {
-        private string fileName;
 
         /// <summary>
         /// Constructor
@@ -462,18 +448,12 @@ namespace Utilities
         /// <param name="fileName"></param>
         public MruFileOpenEventArgs(string fileName)
         {
-            this.fileName = fileName;
+            FileName = fileName;
         }
         /// <summary>
         /// return inner file name
         /// </summary>
-        public string FileName
-        {
-            get
-            {
-                return fileName;
-            }
-        }
+        public string FileName { get; }
     }
 }
 

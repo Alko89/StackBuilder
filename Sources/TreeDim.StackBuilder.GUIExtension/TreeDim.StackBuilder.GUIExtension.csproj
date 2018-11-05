@@ -59,7 +59,6 @@
   <ItemGroup>
     <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="Sharp3D.Math, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Sharp3D.Math.1.0.3\lib\net45\Sharp3D.Math.dll</HintPath>
@@ -78,9 +77,9 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="treeDiM.PLMPack.DBClient, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="treeDiM.PLMPack.DBClient, Version=9.0.0.64, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\ThirdPartyAssemblies\treeDiM.PLMPack.DBClient.dll</HintPath>
+      <HintPath>..\..\..\PLMPack\Sources\treeDiM.PLMPack.DBClient\bin\Release\treeDiM.PLMPack.DBClient.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -186,6 +185,9 @@
     <EmbeddedResource Include="CtrlComboDBPallet.sv.resx">
       <DependentUpon>CtrlComboDBPallet.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="CtrlComboDBPallet.tr.resx">
+      <DependentUpon>CtrlComboDBPallet.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CtrlComboDBPallet.zh.resx">
       <DependentUpon>CtrlComboDBPallet.cs</DependentUpon>
     </EmbeddedResource>
@@ -196,6 +198,9 @@
       <DependentUpon>FormBrowseSolution.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormBrowseSolution.sv.resx">
+      <DependentUpon>FormBrowseSolution.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormBrowseSolution.tr.resx">
       <DependentUpon>FormBrowseSolution.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormBrowseSolution.zh.resx">
@@ -228,6 +233,9 @@
     <EmbeddedResource Include="FormDefineAnalysisBundleCase.sv.resx">
       <DependentUpon>FormDefineAnalysisBundleCase.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormDefineAnalysisBundleCase.tr.resx">
+      <DependentUpon>FormDefineAnalysisBundleCase.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormDefineAnalysisBundleCase.zh.resx">
       <DependentUpon>FormDefineAnalysisBundleCase.cs</DependentUpon>
     </EmbeddedResource>
@@ -241,6 +249,9 @@
       <DependentUpon>FormDefineAnalysisCasePallet.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormDefineAnalysisCasePallet.sv.resx">
+      <DependentUpon>FormDefineAnalysisCasePallet.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormDefineAnalysisCasePallet.tr.resx">
       <DependentUpon>FormDefineAnalysisCasePallet.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormDefineAnalysisCasePallet.zh.resx">
@@ -276,6 +287,9 @@
     <EmbeddedResource Include="FormDefineCaseOptimization.sv.resx">
       <DependentUpon>FormDefineCaseOptimization.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormDefineCaseOptimization.tr.resx">
+      <DependentUpon>FormDefineCaseOptimization.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormDefineCaseOptimization.zh.resx">
       <DependentUpon>FormDefineCaseOptimization.cs</DependentUpon>
     </EmbeddedResource>
@@ -293,6 +307,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.ru.resx" />
     <EmbeddedResource Include="Properties\Resources.sv.resx" />
+    <EmbeddedResource Include="Properties\Resources.tr.resx" />
     <EmbeddedResource Include="Properties\Resources.zh.resx" />
     <EmbeddedResource Include="UCtrlBundle.resx">
       <DependentUpon>UCtrlBundle.cs</DependentUpon>
@@ -301,6 +316,9 @@
       <DependentUpon>UCtrlBundle.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UCtrlBundle.sv.resx">
+      <DependentUpon>UCtrlBundle.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCtrlBundle.tr.resx">
       <DependentUpon>UCtrlBundle.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UCtrlBundle.zh.resx">
@@ -315,6 +333,9 @@
     <EmbeddedResource Include="UCtrlCase.sv.resx">
       <DependentUpon>UCtrlCase.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UCtrlCase.tr.resx">
+      <DependentUpon>UCtrlCase.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UCtrlCase.zh.resx">
       <DependentUpon>UCtrlCase.cs</DependentUpon>
     </EmbeddedResource>
@@ -325,6 +346,9 @@
       <DependentUpon>UCtrlPackable.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UCtrlPackable.sv.resx">
+      <DependentUpon>UCtrlPackable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCtrlPackable.tr.resx">
       <DependentUpon>UCtrlPackable.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UCtrlPackable.zh.resx">
@@ -357,11 +381,13 @@ copy "$(TargetPath)" "$(SolutionDir)..\PLMPack\Sources\ThirdPartyLibraries\$(Tar
   <Target Name="PostBuildEvent" Condition=" '$(PostBuildEvent)' != '' " DependsOnTargets="$(PostBuildEventDependsOn)">
     <Exec WorkingDirectory="$(OutDir)" Command="$(PostBuildEvent)" IgnoreExitCode="true" />
   </Target>
-  <Import Project="..\packages\NuGet.Build.Tasks.Pack.4.7.0\build\NuGet.Build.Tasks.Pack.targets" Condition="Exists('..\packages\NuGet.Build.Tasks.Pack.4.7.0\build\NuGet.Build.Tasks.Pack.targets')" />
+  <Import Project="..\packages\NuGet.Build.Tasks.Pack.4.8.0\build\NuGet.Build.Tasks.Pack.targets" Condition="Exists('..\packages\NuGet.Build.Tasks.Pack.4.8.0\build\NuGet.Build.Tasks.Pack.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
+    <Error Condition="!Exists('..\packages\NuGet.Build.Tasks.Pack.4.8.0\build\NuGet.Build.Tasks.Pack.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NuGet.Build.Tasks.Pack.4.8.0\build\NuGet.Build.Tasks.Pack.targets'))" />
     <Error Condition="!Exists('..\packages\NuGet.Build.Tasks.Pack.4.7.0\build\NuGet.Build.Tasks.Pack.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NuGet.Build.Tasks.Pack.4.7.0\build\NuGet.Build.Tasks.Pack.targets'))" />
   </Target>
+  <Import Project="..\packages\NuGet.Build.Tasks.Pack.4.7.0\build\NuGet.Build.Tasks.Pack.targets" Condition="Exists('..\packages\NuGet.Build.Tasks.Pack.4.7.0\build\NuGet.Build.Tasks.Pack.targets')" />
 </Project>

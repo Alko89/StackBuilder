@@ -21,7 +21,7 @@ namespace treeDiM.StackBuilder.Graphics
             _arrangement = _packProperties.Arrangement;
             _innerBox = new Box(0, packProperties.Box);
             _forceTransparency = false;
-            _boxPosition = BoxPosition.Zero;
+            BoxPosition = BoxPosition.Zero;
         }
         public Pack(uint pickId, PackProperties packProperties, BoxPosition position)
             : base(pickId, packProperties, position)
@@ -106,9 +106,9 @@ namespace treeDiM.StackBuilder.Graphics
                 if (null != tray) height = tray.Height;
                 if (height <= 1.0)
                     height = 40.0;
-                Vector3D position = _boxPosition.Position;
-                Vector3D lengthAxis = HalfAxis.ToVector3D(_boxPosition.DirectionLength);
-                Vector3D widthAxis = HalfAxis.ToVector3D(_boxPosition.DirectionWidth);
+                Vector3D position = BoxPosition.Position;
+                Vector3D lengthAxis = HalfAxis.ToVector3D(BoxPosition.DirectionLength);
+                Vector3D widthAxis = HalfAxis.ToVector3D(BoxPosition.DirectionWidth);
                 Vector3D heightAxis = Vector3D.CrossProduct(lengthAxis, widthAxis);
                 Vector3D[] points = new Vector3D[8];
                 points[0] = position;
@@ -122,11 +122,11 @@ namespace treeDiM.StackBuilder.Graphics
                 points[7] = position + height * heightAxis + _dim[1] * widthAxis;
 
                 Face[] faces = new Face[5];
-                faces[0] = new Face(_pickId, new Vector3D[] { points[3], points[0], points[4], points[7] }, false); // AXIS_X_N
-                faces[1] = new Face(_pickId, new Vector3D[] { points[1], points[2], points[6], points[5] }, false); // AXIS_X_P
-                faces[2] = new Face(_pickId, new Vector3D[] { points[0], points[1], points[5], points[4] }, false); // AXIS_Y_N
-                faces[3] = new Face(_pickId, new Vector3D[] { points[2], points[3], points[7], points[6] }, false); // AXIS_Y_P
-                faces[4] = new Face(_pickId, new Vector3D[] { points[3], points[2], points[1], points[0] }, false); // AXIS_Z_N
+                faces[0] = new Face(PickId, new Vector3D[] { points[3], points[0], points[4], points[7] }, false); // AXIS_X_N
+                faces[1] = new Face(PickId, new Vector3D[] { points[1], points[2], points[6], points[5] }, false); // AXIS_X_P
+                faces[2] = new Face(PickId, new Vector3D[] { points[0], points[1], points[5], points[4] }, false); // AXIS_Y_N
+                faces[3] = new Face(PickId, new Vector3D[] { points[2], points[3], points[7], points[6] }, false); // AXIS_Y_P
+                faces[4] = new Face(PickId, new Vector3D[] { points[3], points[2], points[1], points[0] }, false); // AXIS_Z_N
 
                 return faces;
             }

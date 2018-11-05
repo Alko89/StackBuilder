@@ -51,18 +51,6 @@
             // 
             resources.ApplyResources(this.bnCancel, "bnCancel");
             // 
-            // lbName
-            // 
-            resources.ApplyResources(this.lbName, "lbName");
-            // 
-            // lbDescription
-            // 
-            resources.ApplyResources(this.lbDescription, "lbDescription");
-            // 
-            // tbName
-            // 
-            resources.ApplyResources(this.tbName, "tbName");
-            // 
             // tbDescription
             // 
             resources.ApplyResources(this.tbDescription, "tbDescription");
@@ -122,7 +110,8 @@
             resources.GetString("cbColor.Items24"),
             resources.GetString("cbColor.Items25"),
             resources.GetString("cbColor.Items26"),
-            resources.GetString("cbColor.Items27")});
+            resources.GetString("cbColor.Items27"),
+            resources.GetString("cbColor.Items28")});
             this.cbColor.Name = "cbColor";
             this.cbColor.SelectedColorChanged += new System.EventHandler(this.OnPalletPropertyChanged);
             // 
@@ -140,9 +129,9 @@
             // 
             // toolStripStatusLabelDef
             // 
-            resources.ApplyResources(this.toolStripStatusLabelDef, "toolStripStatusLabelDef");
             this.toolStripStatusLabelDef.ForeColor = System.Drawing.Color.Red;
             this.toolStripStatusLabelDef.Name = "toolStripStatusLabelDef";
+            resources.ApplyResources(this.toolStripStatusLabelDef, "toolStripStatusLabelDef");
             // 
             // bnSendToDB
             // 
@@ -165,6 +154,7 @@
             this.uCtrlDimensions.ValueX = 0D;
             this.uCtrlDimensions.ValueY = 0D;
             this.uCtrlDimensions.ValueZ = 0D;
+            this.uCtrlDimensions.ValueChanged += new treeDiM.StackBuilder.Basics.UCtrlTriDouble.ValueChangedDelegate(this.OnPalletPropertyChanged);
             // 
             // uCtrlWeight
             // 
@@ -177,6 +167,7 @@
             this.uCtrlWeight.Name = "uCtrlWeight";
             this.uCtrlWeight.Unit = treeDiM.StackBuilder.Basics.UnitsManager.UnitType.UT_MASS;
             this.uCtrlWeight.Value = 0D;
+            this.uCtrlWeight.ValueChanged += new treeDiM.StackBuilder.Basics.UCtrlDouble.ValueChangedDelegate(this.OnPalletPropertyChanged);
             // 
             // uCtrlAdmissibleLoad
             // 
@@ -189,6 +180,7 @@
             this.uCtrlAdmissibleLoad.Name = "uCtrlAdmissibleLoad";
             this.uCtrlAdmissibleLoad.Unit = treeDiM.StackBuilder.Basics.UnitsManager.UnitType.UT_MASS;
             this.uCtrlAdmissibleLoad.Value = 0D;
+            this.uCtrlAdmissibleLoad.ValueChanged += new treeDiM.StackBuilder.Basics.UCtrlDouble.ValueChangedDelegate(this.OnPalletPropertyChanged);
             // 
             // FormNewPallet
             // 

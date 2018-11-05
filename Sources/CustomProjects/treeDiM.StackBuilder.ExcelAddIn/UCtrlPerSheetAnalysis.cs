@@ -81,9 +81,11 @@ namespace treeDiM.StackBuilder.ExcelAddIn
                     bProperties.TapeColor = Color.Beige;
 
                     // build a pallet
-                    PalletProperties palletProperties = new PalletProperties(null, PalletTypeName, palletLength, palletWidth, palletHeight);
-                    palletProperties.Weight = palletWeight;
-                    palletProperties.Color = Color.Yellow;
+                    PalletProperties palletProperties = new PalletProperties(null, PalletTypeName, palletLength, palletWidth, palletHeight)
+                    {
+                        Weight = palletWeight,
+                        Color = Color.Yellow
+                    };
 
                     // build a constraint set
                     ConstraintSetCasePallet constraintSet = new ConstraintSetCasePallet();

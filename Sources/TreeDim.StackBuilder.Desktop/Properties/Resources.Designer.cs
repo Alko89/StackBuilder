@@ -1659,6 +1659,15 @@ namespace treeDiM.StackBuilder.Desktop.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Number of pallets.
+        /// </summary>
+        internal static string ID_NUMBEROFPALLETS {
+            get {
+                return ResourceManager.GetString("ID_NUMBEROFPALLETS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Options\\Debugging.
         /// </summary>
         internal static string ID_OPTIONSDEBUGGING {

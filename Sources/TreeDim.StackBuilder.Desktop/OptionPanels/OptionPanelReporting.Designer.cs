@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(OptionPanelReporting));
-            this.folderBrowserDlg = new System.Windows.Forms.FolderBrowserDialog();
             this.fileSelectCtrlReportTemplate = new treeDiM.UserControls.FileSelect();
             this.label1 = new System.Windows.Forms.Label();
             this.fileSelectCompanyLogo = new treeDiM.UserControls.FileSelect();
@@ -213,8 +212,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.FolderBrowserDialog folderBrowserDlg;
         private treeDiM.UserControls.FileSelect fileSelectCtrlReportTemplate;
         private System.Windows.Forms.Label label1;
         private UserControls.FileSelect fileSelectCompanyLogo;

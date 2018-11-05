@@ -395,6 +395,7 @@ namespace treeDiM.StackBuilder.Graphics
                 graphics.AddDimensions(new DimensionCube(BoundingBoxDim(DimCasePalletSol1), Color.Black, false));
                 graphics.AddDimensions(new DimensionCube(BoundingBoxDim(DimCasePalletSol2), Color.Red, true));
             }
+            // ###
         }
         public override void Draw(Graphics2D graphics)
         {
@@ -411,8 +412,7 @@ namespace treeDiM.StackBuilder.Graphics
             uint pickId = 0;
             BBox3D bbox = new BBox3D();
             // ### layer of boxes ###
-            Layer3DBox layerBox = layer as Layer3DBox;
-            if (null != layerBox)
+            if (layer is Layer3DBox layerBox)
             {
                 foreach (BoxPosition bPosition in layerBox)
                 {
@@ -447,19 +447,17 @@ namespace treeDiM.StackBuilder.Graphics
 
         #region Static properties
         public static double DistanceAboveSelectedLayer { get; set; }
-        public static int DimCasePalletSol1 { get { return _dimCasePalletSol1; } set { _dimCasePalletSol1 = value; } }
-        public static int DimCasePalletSol2 { get { return _dimCasePalletSol2; } set { _dimCasePalletSol2 = value; } }
+        public static int DimCasePalletSol1 { get; set; } = 0;
+        public static int DimCasePalletSol2 { get; set; } = 1;
         #endregion
 
         #region Helpers
         private BBox3D BoundingBoxDim(int index)
         {
             PalletProperties palletProperties = null;
-            AnalysisCasePallet analysisCasePallet = _solution.Analysis as AnalysisCasePallet;
-            if (null != analysisCasePallet)
+            if (_solution.Analysis is AnalysisCasePallet analysisCasePallet)
                 palletProperties = analysisCasePallet.PalletProperties;
-            AnalysisCylinderPallet analysisCylinderPallet = _solution.Analysis as AnalysisCylinderPallet;
-            if (null != analysisCylinderPallet)
+            if (_solution.Analysis is AnalysisCylinderPallet analysisCylinderPallet)
                 palletProperties = analysisCylinderPallet.PalletProperties;
 
             switch (index)
@@ -506,10 +504,7 @@ namespace treeDiM.StackBuilder.Graphics
                 }
             }
         }
-        #endregion
 
-        #region Static members
-        private static int _dimCasePalletSol1 = 0, _dimCasePalletSol2 = 1;
         #endregion
     }
 }

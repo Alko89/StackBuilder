@@ -857,4 +857,7 @@ Closing form...</value>
   <data name="ID_UNLOADEDCASES" xml:space="preserve">
     <value>Unloaded cases</value>
   </data>
+  <data name="ID_NUMBEROFPALLETS" xml:space="preserve">
+    <value>Number of pallets</value>
+  </data>
 </root>

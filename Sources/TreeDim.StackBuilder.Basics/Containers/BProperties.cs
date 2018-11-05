@@ -28,7 +28,6 @@ namespace treeDiM.StackBuilder.Basics
         }
 
         #region Non-Public Members
-
         protected double _length;
         protected double _width;
 

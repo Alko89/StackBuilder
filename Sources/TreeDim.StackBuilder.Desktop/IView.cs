@@ -1,8 +1,5 @@
 ﻿#region Using directives
 using System;
-using System.Windows.Forms;
-using System.Collections.Generic;
-using System.Text;
 #endregion
 
 namespace treeDiM.StackBuilder.Desktop

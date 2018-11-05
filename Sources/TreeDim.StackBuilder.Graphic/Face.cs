@@ -13,29 +13,17 @@ namespace treeDiM.StackBuilder.Graphics
     #region Segment
     public class Segment
     {
-        #region Private members
-        private uint _pickingId = 0;
-        private Vector3D[] _points = new Vector3D[2];
-        private Color _color = Color.Black;
-        #endregion
-
         #region Constructor
         public Segment(Vector3D pt0, Vector3D pt1, Color color)
         {
-            _points[0] = pt0; _points[1] = pt1; _color = color;
+            Points[0] = pt0; Points[1] = pt1; Color = color;
         }
         #endregion
 
         #region Public properties
-        public Color Color
-        {
-            get { return _color; }
-            set { _color = value; }
-        }
-        public Vector3D[] Points
-        {
-            get { return _points; }
-        }
+        public Color Color { get; set; } = Color.Black;
+        public Vector3D[] Points { get; } = new Vector3D[2];
+        public uint PickingId { get; } = 0;
         #endregion
 
         #region Public methods
@@ -45,8 +33,8 @@ namespace treeDiM.StackBuilder.Graphics
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append(string.Format("Segment => PickId : {0} Points : ", _pickingId));
-            foreach (Vector3D v in _points)
+            sb.Append(string.Format("Segment => PickId : {0} Points : ", PickingId));
+            foreach (Vector3D v in Points)
                 sb.Append(v.ToString());
             return sb.ToString();
         }
@@ -54,133 +42,31 @@ namespace treeDiM.StackBuilder.Graphics
     }
     #endregion
 
-    #region Triangle
-    public class Triangle
-    {
-        public Triangle(uint pickId, Vector3D[] vertices)
-        {
-            PickId = pickId;
-            for (int i = 0; i < 3; ++i)
-                Points[i] = vertices[i];
-        }
-        public Triangle(uint pickId, Vector3D pt0, Vector3D pt1, Vector3D pt2, Color colorFill)
-        {
-            PickId = pickId;
-            Points[0] = pt0; Points[1] = pt1; Points[2] = pt2;
-            ColorFill = colorFill;
-        }
-        public Vector3D Center
-        {
-            get
-            {
-                Vector3D vCenter = Vector3D.Zero;
-                foreach (Vector3D v in Points)
-                    vCenter += v;
-                return vCenter * (1.0 / Points.Length);
-            }
-        }
-        public Vector3D Normal
-        {
-            get
-            {
-                Vector3D vecNormal = Vector3D.CrossProduct(Points[1] - Points[0], Points[2] - Points[0]);
-                if (vecNormal.GetLength() < MathFunctions.EpsilonD)
-                    throw new GraphicsException("Triangle is degenerated");
-                vecNormal.Normalize();
-                return vecNormal;
-            }
-        }
-        public uint PickId { get; set; }
-        public bool IsSolid { get; set; } = true;
-        public Color ColorFill { get; set; } = Color.Red;
-        public Color ColorPath { get; set; } = Color.Black;
-        public Vector3D[] Points { get; } = new Vector3D[3];
-        public bool IsFlat => (Vector3D.CrossProduct(Points[1] - Points[0], Points[2] - Points[0]).GetLength() < EPS);
-        public int PointRelativePosition(Vector3D pt)
-        {
-            double dotProd = Vector3D.DotProduct(pt - Center, Normal);
-            if (Math.Abs(dotProd) < EPS)
-                return 0;
-            else
-                return (dotProd > 0 ? 1 : -1);
-        }
-        public bool IsVisible(Vector3D viewDir)
-        {
-            return Vector3D.DotProduct(viewDir, Normal) < 0.0;
-        }
-        public bool PointIsBehind(Vector3D pt, Vector3D viewDir)
-        {
-            return (Vector3D.DotProduct(pt - Center, Normal) * Vector3D.DotProduct(viewDir, Normal)) > EPS;
-        }
-        public bool PointIsInFront(Vector3D pt, Vector3D viewDir)
-        {
-            return (Vector3D.DotProduct(pt - Center, Normal) * Vector3D.DotProduct(viewDir, Normal)) < EPS;
-        }
-        public Triangle Transform(Transform3D transf)
-        {
-            Vector3D[] points = new Vector3D[3];
-            for (int i = 0; i < 3; ++i)
-                points[i] = transf.transform(Points[i]);
-            return new Triangle(PickId, points)
-            {
-                IsSolid = this.IsSolid,
-                ColorFill = this.ColorFill,
-                ColorPath = this.ColorPath
-            };
-        }
-        public void Swap12()
-        {
-            Vector3D ptTemp = Points[1];
-            Points[1] = Points[2];
-            Points[2] = ptTemp;
-        }
-
-        public override string ToString()
-        {
-            return $"({Points[0]}, {Points[1]}, {Points[2]})";
-        }
-
-        public static readonly double EPS = 0.0001;
-    }
-    #endregion
-
     #region Face
     public class Face
     {
         #region Private members
-        private uint _pickingId = 0;
-        private Vector3D[] _points;
-        /// <summary>
-        /// colors
-        /// </summary>
-        private Color _colorFill = Color.Red;
-        private Color _colorPath = Color.Black;
-        /// <summary>
-        /// textures
-        /// </summary>
-        private List<Texture> _textureList = new List<Texture>();
-        private bool _isSolid = false;
         private static readonly double eps = 0.0001;
         #endregion
 
         #region Constructor
         public Face(uint pickId, Vector3D[] vertices, bool isSolid)
         {
-            _points = vertices;
-            if (_points.Length < 3)
+            Points = vertices;
+            if (Points.Length < 3)
                 throw new GraphicsException("Face is degenerated");
-            _pickingId = pickId;
-            _isSolid = isSolid;
+            PickingId = pickId;
+            IsSolid = isSolid;
         }
         public Face(uint pickId, Vector3D[] vertices, Color colorFill, Color colorPath, bool isSolid)
         {
-            _points = vertices;
-            if (_points.Length < 3)
+            Points = vertices;
+            if (Points.Length < 3)
                 throw new GraphicsException("Face is degenerated");
-            _pickingId = pickId;
-            _colorFill = colorFill;
-            _colorPath = colorPath;
-            _isSolid = isSolid;
+            PickingId = pickId;
+            ColorFill = colorFill;
+            ColorPath = colorPath;
+            IsSolid = isSolid;
         }
         /// <summary>
         /// Face constructor
@@ -193,13 +79,13 @@ namespace treeDiM.StackBuilder.Graphics
         /// <param name="isSolid">Is solid</param>
         public Face(uint pickId, Vector3D pt0, Vector3D pt1, Vector3D pt2, Vector3D pt3, bool isSolid)
         {
-            _pickingId = pickId;
-            _points = new Vector3D[4];
-            _points[0] = pt0;
-            _points[1] = pt1;
-            _points[2] = pt2;
-            _points[3] = pt3;
-            _isSolid = isSolid;
+            PickingId = pickId;
+            Points = new Vector3D[4];
+            Points[0] = pt0;
+            Points[1] = pt1;
+            Points[2] = pt2;
+            Points[3] = pt3;
+            IsSolid = isSolid;
         }
         #endregion
 
@@ -207,31 +93,16 @@ namespace treeDiM.StackBuilder.Graphics
         /// <summary>
         /// fill color of face
         /// </summary>
-        public Color ColorFill
-        {
-            get { return _colorFill; }
-            set { _colorFill = value; }
-        }
+        public Color ColorFill { get; set; } = Color.Red;
         /// <summary>
         /// path color of face
         /// </summary>
-        public Color ColorPath
-        {
-            get { return _colorPath; }
-            set { _colorPath = value; }
-        }
-        public bool IsSolid
-        {
-            set { _isSolid = value; }
-            get { return _isSolid; }
-        }
+        public Color ColorPath { get; set; } = Color.Black;
+        public bool IsSolid { set; get; } = false;
         /// <summary>
         /// The array of 3D Points corresponding to the corners of this Face
         /// </summary>
-        public Vector3D[] Points
-        {
-            get { return _points; }
-        }
+        public Vector3D[] Points { get; }
 
         /// <summary>
         /// The center point of the face
@@ -241,9 +112,9 @@ namespace treeDiM.StackBuilder.Graphics
             get
             {
                 Vector3D vCenter = Vector3D.Zero;
-                foreach (Vector3D v in _points)
+                foreach (Vector3D v in Points)
                     vCenter += v;
-                return vCenter * (1.0 / _points.Length);
+                return vCenter * (1.0 / Points.Length);
             }
         }
         /// <summary>
@@ -253,7 +124,7 @@ namespace treeDiM.StackBuilder.Graphics
         {
             get
             {
-                Vector3D vecNormal = Vector3D.CrossProduct(_points[1] - _points[0], _points[2] - _points[0]);
+                Vector3D vecNormal = Vector3D.CrossProduct(Points[1] - Points[0], Points[2] - Points[0]);
                 if (vecNormal.GetLength() < MathFunctions.EpsilonD)
                     throw new GraphicsException("Face is degenerated");
                 vecNormal.Normalize();
@@ -264,29 +135,22 @@ namespace treeDiM.StackBuilder.Graphics
         /// Is face degenerate
         /// </summary>
         public bool IsDegenerate
-        {   get { return (Vector3D.CrossProduct(_points[1] - _points[0], _points[2] - _points[0]).GetLength() < MathFunctions.EpsilonD); } }
+        {   get { return (Vector3D.CrossProduct(Points[1] - Points[0], Points[2] - Points[0]).GetLength() < MathFunctions.EpsilonD); } }
         /// <summary>
         /// The picking id of the face
         /// </summary>
-        public uint PickingId
-        {
-            get { return _pickingId; }
-        }
+        public uint PickingId { get; } = 0;
         /// <summary>
         /// Has bitmap
         /// </summary>
         public bool HasBitmap
         {
-            get { return (null != _textureList) && (_textureList.Count > 0); }
+            get { return (null != Textures) && (Textures.Count > 0); }
         }
         /// <summary>
         /// Bitmap
         /// </summary>
-        public List<Texture> Textures
-        {
-            set { _textureList = value; }
-            get { return _textureList; }
-        }
+        public List<Texture> Textures { set; get; } = new List<Texture>();
 
         public void ExtractFaceBitmap(double dimX, double dimY, int bmpWidth, string filename)
         {
@@ -364,18 +228,18 @@ namespace treeDiM.StackBuilder.Graphics
         public bool RayIntersect(Ray ray, out Vector3D ptInter)
         {
             ptInter = Vector3D.Zero;
-            if (IntersectTriangle(ray, _points[0], _points[1], _points[2], out double u, out double v))
+            if (IntersectTriangle(ray, Points[0], Points[1], Points[2], out double u, out double v))
             {
-                Vector3D vecU = _points[1] - _points[0];
-                Vector3D vecV = _points[2] - _points[0];
-                ptInter = _points[0] + u * vecU + v * vecV;
+                Vector3D vecU = Points[1] - Points[0];
+                Vector3D vecV = Points[2] - Points[0];
+                ptInter = Points[0] + u * vecU + v * vecV;
                 return true;
             }
-            else if (IntersectTriangle(ray, _points[2], _points[3], _points[0], out u, out v))
+            else if (IntersectTriangle(ray, Points[2], Points[3], Points[0], out u, out v))
             {
-                Vector3D vecU = _points[3] - _points[2];
-                Vector3D vecV = _points[0] - _points[2];
-                ptInter = _points[2] + u * vecU + v * vecV;
+                Vector3D vecU = Points[3] - Points[2];
+                Vector3D vecV = Points[0] - Points[2];
+                ptInter = Points[2] + u * vecU + v * vecV;
                 return true;
             }
             else
@@ -422,10 +286,10 @@ namespace treeDiM.StackBuilder.Graphics
         {
             Vector3D[] points = new Vector3D[4];
             for (int i = 0; i < 4; ++i)
-                points[i] = transf.transform(_points[i]);
-            Face faceNew = new Face(_pickingId, points, _colorFill, _colorPath, _isSolid);
-            foreach (Texture t in _textureList)
-                faceNew._textureList.Add(t);
+                points[i] = transf.transform(Points[i]);
+            Face faceNew = new Face(PickingId, points, ColorFill, ColorPath, IsSolid);
+            foreach (Texture t in Textures)
+                faceNew.Textures.Add(t);
             return faceNew;
         }
         #endregion
@@ -434,8 +298,8 @@ namespace treeDiM.StackBuilder.Graphics
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append(string.Format("Face => PickId : {0} Points : ", _pickingId));
-            foreach (Vector3D point in _points)
+            sb.Append(string.Format("Face => PickId : {0} Points : ", PickingId));
+            foreach (Vector3D point in Points)
                 sb.Append(point.ToString());
             return sb.ToString();
         }

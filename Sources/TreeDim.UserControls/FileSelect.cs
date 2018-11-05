@@ -1,6 +1,4 @@
-﻿#define Net20 //remove or comment this line to remove any functionality only available in .net 2.0 (and higher)
-
-namespace treeDiM.UserControls
+﻿namespace treeDiM.UserControls
 {
     /*
     * For complete functionality, you need these 2 components (if not added allready)
@@ -9,10 +7,8 @@ namespace treeDiM.UserControls
     * 
     */
     using System;
-    using System.Text;
     using System.Windows.Forms;
     using System.ComponentModel;
-    using System.IO;
     using treeDiM.IO;
     using System.Drawing;
     /// 
@@ -448,22 +444,12 @@ namespace treeDiM.UserControls
 }
 namespace treeDiM.IO
 {
-
     using System;
-#if Net20
     using System.Collections.Generic;
-#else
-    using System.Collections;
-#endif
-    using System.Text;
     using Microsoft.Win32;
     using System.Drawing;
     using System.IO;
     using System.Windows.Forms;
-
-
-
-
 
     /// <summary>
     /// Information around a registered file extension.
@@ -495,10 +481,10 @@ namespace treeDiM.IO
         }
         #region Registry
 
-        protected override void onKeyChanged()
+        protected override void OnKeyChanged()
         {
-            setStarter();
-            base.onKeyChanged();
+            SetStarter();
+            base.OnKeyChanged();
         }
         public override void Refresh()
         {
@@ -526,7 +512,7 @@ namespace treeDiM.IO
                 if (DefaultValue != null && AssociatedName.ToLower() == value.ToLower())
                     return;
                 DefaultValue = value;
-                setStarter();
+                SetStarter();
             }
         }
         #endregion
@@ -546,12 +532,12 @@ namespace treeDiM.IO
             set
             {
                 starter = value;
-                AssociatedName = value == null ? null : value.Name;
+                AssociatedName = value?.Name;
             }
         }
 
 
-        private void setStarter()
+        private void SetStarter()
         {
             if (Exists())
             {
@@ -690,14 +676,12 @@ namespace treeDiM.IO
         }
         public RegKey(RegKey BaseDir, string Name)
         {
-            if (BaseDir == null) throw new ArgumentNullException();
-            Root = BaseDir;
+            Root = BaseDir ?? throw new ArgumentNullException();
             this.Name = Name;
         }
         public RegKey(RegistryKey BaseDir, string Name)
         {
-            if (BaseDir == null) throw new ArgumentNullException();
-            this.rootkey = BaseDir;
+            rootkey = BaseDir ?? throw new ArgumentNullException();
             this.Name = Name;
         }
         private string name;
@@ -856,7 +840,7 @@ namespace treeDiM.IO
                 }
                 if (rootkey != null)
                     regkey = rootkey.OpenSubKey(name, writable);
-                onKeyChanged();
+                OnKeyChanged();
             }
         }
         private bool writable;
@@ -881,7 +865,7 @@ namespace treeDiM.IO
             }
         }
 
-        protected virtual void onKeyChanged()
+        protected virtual void OnKeyChanged()
         {
         }
     }
@@ -925,7 +909,7 @@ namespace treeDiM.IO
                 if (value)
                     SetValue(showextValueName, 1);
                 else if (Exists())
-                    this.RegistryKey.DeleteValue(showextValueName);
+                    RegistryKey.DeleteValue(showextValueName);
             }
         }
         const string defaultIconEntry = "DefaultIcon";
@@ -951,18 +935,17 @@ namespace treeDiM.IO
         /// Loads the icon specified in <see cref=&quotIconFileName"/>
         /// </summary>
         /// <returns></returns>
-        public System.Drawing.Icon GetIcon()
+        public Icon GetIcon()
         {
             string file = IconFileName;
             if (file != null)
             {
                 if (File.Exists(file))
-                    return new System.Drawing.Icon(file);
+                    return new Icon(file);
                 else
                 {
                     int p = file.LastIndexOf(',');
-                    int i;
-                    if (p != -1 && int.TryParse(file.Substring(p + 1), out i))
+                    if (p != -1 && int.TryParse(file.Substring(p + 1), out int i))
                     {
                         return FileExtension.ExtractIcon(file.Substring(0, p), i);
                     }
@@ -974,10 +957,10 @@ namespace treeDiM.IO
         {
             return GetSubKey(defaultIconEntry);
         }
-        protected override void onKeyChanged()
+        protected override void OnKeyChanged()
         {
             shell = shellex = null;
-            base.onKeyChanged();
+            base.OnKeyChanged();
         }
         FileStarterShell shell, shellex;
         /// <summary>
@@ -1078,11 +1061,7 @@ namespace treeDiM.IO
             menus.Add(m);
             return m;
         }
-#if Net20
         List<FileStarterShellMenu> menus = new List<FileStarterShellMenu>();
-#else
-ArrayList menus = new ArrayList();
-#endif
         /// <summary>
         /// sets the commandline (application) to open the file
         /// </summary>
@@ -1102,7 +1081,7 @@ ArrayList menus = new ArrayList();
         internal FileStarterShellMenu(FileStarterShell owner, string Name)
             : base(owner, Name)
         {
-            this.Owner = owner;
+            Owner = owner;
             commandKey = new RegKey(this, "command");
         }
         protected override bool AllowNameChange()
@@ -1129,7 +1108,6 @@ ArrayList menus = new ArrayList();
     /// </summary>
     public partial class FileExtension
     {
-#if Net20
         public static IEnumerable<FileExtension> EnumerateExtensionInfo()
         {
             foreach (string subkeyname in GetRegisteredExtensions())
@@ -1167,7 +1145,6 @@ ArrayList menus = new ArrayList();
                     yield return subkeyname;
             }
         }
-#endif
         /// <summary>
         /// Characters that are allowed besides characters or digits.
         /// </summary>
@@ -1229,7 +1206,6 @@ ArrayList menus = new ArrayList();
     /// </summary>
     public class FileData
     {
-        private FileInfo file;
         public FileData() { }
         public FileData(string File)
         {
@@ -1240,23 +1216,22 @@ ArrayList menus = new ArrayList();
         /// </summary>
         public string FileName
         {
-            get { return file == null ? null : file.FullName; }
+            get { return Info?.FullName; }
             set
             {
                 if (FileName == value) return;
                 if (value == null || value.Trim().Length == 0)
                 {
-                    file = null;
+                    Info = null;
                 }
                 else
                 {
-                    file = new FileInfo(value);
+                    Info = new FileInfo(value);
                 }
-                valid = file != null && file.Exists;
+                valid = Info != null && Info.Exists;
                 icon = null;
                 ext = null;
-                if (FileChanged != null)
-                    FileChanged(this, EventArgs.Empty);
+                FileChanged?.Invoke(this, EventArgs.Empty);
             }
         }
         public event EventHandler FileChanged;
@@ -1271,20 +1246,17 @@ ArrayList menus = new ArrayList();
         /// <summary>
         /// Returns the underlying <see cref=&quotFileInfo"/> object
         /// </summary>
-        public FileInfo Info
-        {
-            get { return file; }
-        }
+        public FileInfo Info { get; private set; }
         /// <summary>
         /// The folder in which the file is held
         /// </summary>
         public string Folder
         {
-            get { return file != null ? file.DirectoryName : null; }
+            get { return Info != null ? Info.DirectoryName : null; }
             set
             {
-                if (file == null || Folder == value) return;
-                FileName = value + @"\" + (valid ? file.Name : null);
+                if (Info == null || Folder == value) return;
+                FileName = value + @"\" + (valid ? Info.Name : null);
             }
         }
         FileExtension ext;
@@ -1306,8 +1278,8 @@ ArrayList menus = new ArrayList();
         {
             get
             {
-                if (file == null) return null;
-                return file.Extension;
+                if (Info == null) return null;
+                return Info.Extension;
             }
         }
 
@@ -1319,7 +1291,6 @@ ArrayList menus = new ArrayList();
             {
                 if (icon == null)
                 {
-#if Net20
                     if (valid)
                         try
                         {
@@ -1327,7 +1298,6 @@ ArrayList menus = new ArrayList();
                         }
                         catch { }
                     if (icon == null)
-#endif
                         if (ExtensionInfo != null)
                             icon = ext.GetIcon();
                 }
@@ -1335,7 +1305,6 @@ ArrayList menus = new ArrayList();
             }
         }
 
-#if Net20
         public void DrawFile(Graphics g, Rectangle bounds, Font Font, bool IncludeIcon)
         {
             if (IncludeIcon)
@@ -1367,18 +1336,16 @@ ArrayList menus = new ArrayList();
             else
             {
                 TextFormatFlags flags = TextFormatFlags.SingleLine | TextFormatFlags.Right | TextFormatFlags.EndEllipsis;
-                TextRenderer.DrawText(g, file.Name, Font, bounds, Color.Black, flags);
-                s = TextRenderer.MeasureText(g, file.Name, Font, bounds.Size, flags);
+                TextRenderer.DrawText(g, Info.Name, Font, bounds, Color.Black, flags);
+                s = TextRenderer.MeasureText(g, Info.Name, Font, bounds.Size, flags);
                 float rem = bounds.Width - s.Width;
                 if (rem > 3)
                 {
                     bounds.Width = (int)rem;
                     Font = new Font(Font.FontFamily, Font.Size - 2, FontStyle.Italic);
-                    TextRenderer.DrawText(g, file.DirectoryName, Font, bounds, Color.Black, flags);
+                    TextRenderer.DrawText(g, Info.DirectoryName, Font, bounds, Color.Black, flags);
                 }
             }
         }
-
-#endif
     }
 }

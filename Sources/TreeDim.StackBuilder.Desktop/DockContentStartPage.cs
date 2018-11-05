@@ -1,14 +1,5 @@
 ﻿#region Using directives
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
-using log4net;
-using treeDiM.StackBuilder.Desktop.Properties;
 #endregion
 
 namespace treeDiM.StackBuilder.Desktop

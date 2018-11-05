@@ -125,15 +125,34 @@
     <Compile Include="Containers\PackArrangement.cs" />
     <Compile Include="Containers\PackProperties.cs" />
     <Compile Include="Containers\PackWrapper.cs" />
+    <Compile Include="Containers\Strappers.cs" />
     <Compile Include="Containers\WrapperCardboard.cs" />
     <Compile Include="Containers\WrapperPaper.cs" />
     <Compile Include="Containers\WrapperPolyethilene.cs" />
     <Compile Include="Containers\WrapperTray.cs" />
+    <Compile Include="Controls\CtrlStrapperSet.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\CtrlStrapperSet.Designer.cs">
+      <DependentUpon>CtrlStrapperSet.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\FormValueArray.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\FormValueArray.Designer.cs">
+      <DependentUpon>FormValueArray.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\UCtrlDualDouble.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Controls\UCtrlDualDouble.Designer.cs">
       <DependentUpon>UCtrlDualDouble.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\UCtrlInt.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\UCtrlInt.Designer.cs">
+      <DependentUpon>UCtrlInt.cs</DependentUpon>
     </Compile>
     <Compile Include="Controls\UCtrlOptInt.cs">
       <SubType>UserControl</SubType>
@@ -233,6 +252,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\OfficePickers\OfficePickers.csproj">
+      <Project>{cad56b75-481b-4c76-b090-4bc2ff5e5681}</Project>
+      <Name>OfficePickers</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TreeDim.EdgeCrushTest\treeDiM.EdgeCrushTest.csproj">
       <Project>{E4240EE0-60B3-4435-BD09-F81D56C0899A}</Project>
       <Name>treeDiM.EdgeCrushTest</Name>
@@ -269,8 +292,33 @@
     <Folder Include="Schemas\" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Controls\CtrlStrapperSet.resx">
+      <DependentUpon>CtrlStrapperSet.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\FormValueArray.resx">
+      <DependentUpon>FormValueArray.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\UCtrlDouble.tr.resx">
+      <DependentUpon>UCtrlDouble.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\UCtrlInt.resx">
+      <DependentUpon>UCtrlInt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\UCtrlOptDouble.tr.resx">
+      <DependentUpon>UCtrlOptDouble.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\UCtrlOptInt.resx">
       <DependentUpon>UCtrlOptInt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\UCtrlOptInt.tr.resx">
+      <DependentUpon>UCtrlOptInt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\UCtrlOptTriDouble.tr.resx">
+      <DependentUpon>UCtrlOptTriDouble.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\UCtrlTriDouble.tr.resx">
+      <DependentUpon>UCtrlTriDouble.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\UCtrlTriInt.resx">
       <DependentUpon>UCtrlTriInt.cs</DependentUpon>
@@ -287,7 +335,9 @@
     <EmbeddedResource Include="Controls\UCtrlTriDouble.resx">
       <DependentUpon>UCtrlTriDouble.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.sl.resx" />
+    <EmbeddedResource Include="Controls\UCtrlTriInt.tr.resx">
+      <DependentUpon>UCtrlTriInt.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.de.resx" />
     <EmbeddedResource Include="Properties\Resources.es.resx" />
     <EmbeddedResource Include="Properties\Resources.fr.resx" />
@@ -297,6 +347,7 @@
     <EmbeddedResource Include="Properties\Resources.pl.resx" />
     <EmbeddedResource Include="Properties\Resources.ru.resx" />
     <EmbeddedResource Include="Properties\Resources.sv.resx" />
+    <EmbeddedResource Include="Properties\Resources.tr.resx" />
     <EmbeddedResource Include="Properties\Resources.zh.resx" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -320,11 +371,14 @@
   <Target Name="PostBuildEvent" Condition=" '$(PostBuildEvent)' != '' " DependsOnTargets="$(PostBuildEventDependsOn)">
     <Exec WorkingDirectory="$(OutDir)" Command="$(PostBuildEvent)" IgnoreExitCode="true" />
   </Target>
-  <Import Project="..\packages\NuGet.Build.Tasks.Pack.4.7.0\build\NuGet.Build.Tasks.Pack.targets" Condition="Exists('..\packages\NuGet.Build.Tasks.Pack.4.7.0\build\NuGet.Build.Tasks.Pack.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
+    <Error Condition="!Exists('..\packages\NETStandard.Library.2.0.3\build\netstandard2.0\NETStandard.Library.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NETStandard.Library.2.0.3\build\netstandard2.0\NETStandard.Library.targets'))" />
+    <Error Condition="!Exists('..\packages\NuGet.Build.Tasks.Pack.4.8.0\build\NuGet.Build.Tasks.Pack.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NuGet.Build.Tasks.Pack.4.8.0\build\NuGet.Build.Tasks.Pack.targets'))" />
     <Error Condition="!Exists('..\packages\NuGet.Build.Tasks.Pack.4.7.0\build\NuGet.Build.Tasks.Pack.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NuGet.Build.Tasks.Pack.4.7.0\build\NuGet.Build.Tasks.Pack.targets'))" />
   </Target>
+  <Import Project="..\packages\NuGet.Build.Tasks.Pack.4.8.0\build\NuGet.Build.Tasks.Pack.targets" Condition="Exists('..\packages\NuGet.Build.Tasks.Pack.4.8.0\build\NuGet.Build.Tasks.Pack.targets')" />
+  <Import Project="..\packages\NuGet.Build.Tasks.Pack.4.7.0\build\NuGet.Build.Tasks.Pack.targets" Condition="Exists('..\packages\NuGet.Build.Tasks.Pack.4.7.0\build\NuGet.Build.Tasks.Pack.targets')" />
 </Project>

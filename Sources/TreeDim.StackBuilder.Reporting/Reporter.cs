@@ -185,7 +185,7 @@ namespace treeDiM.StackBuilder.Reporting
     abstract public class Reporter
     {
         #region Enums
-        public enum eImageSize
+        public enum EImageSize
         {
             IMAGESIZE_DEFAULT
             , IMAGESIZE_SMALL
@@ -195,12 +195,7 @@ namespace treeDiM.StackBuilder.Reporting
         #region Data members
         protected static readonly ILog _log = LogManager.GetLogger(typeof(Reporter));
         protected static bool _validateAgainstSchema = false;
-        protected string _imageDirectory;
         protected static int _imageIndex = 0;
-        protected static bool _showDimensions = true;
-        protected static float _fontSizeRatioDetail = 6.0f, _fontSizeRatioLarge = 10.0f;
-        protected static int _imgSizeDetail= 200, _imgSizeLarge = 500;
-        protected static int _imgHTMLSizeDetail = 100, _imgHTMLSizeLarge = 500;
         #endregion
 
         #region Abstract members
@@ -228,15 +223,13 @@ namespace treeDiM.StackBuilder.Reporting
                 return companyLogo; 
             }
         }
-        static public void SetFontSizeRatios(float fontSizeRatioDetail, float fontSizeRatioLarge)
-        { _fontSizeRatioDetail = fontSizeRatioDetail; _fontSizeRatioLarge = fontSizeRatioLarge; }
-        static public float FontSizeRatioDetail { get { return _fontSizeRatioDetail; } }
-        static public float FontSizeRatioLarge { get { return _fontSizeRatioLarge; } }
-        static public void SetImageSize(int imgSizeDetail, int imgSizeLarge)
-        { _imgSizeDetail = imgSizeDetail; _imgSizeLarge = imgSizeLarge; }
-        static public void SetImageHTMLSize(int imgHTMLDetail, int imgHTMLLarge)
-        { _imgHTMLSizeDetail = imgHTMLDetail; _imgHTMLSizeLarge = imgHTMLLarge; }
-        static public string TemplatePath
+        public static void SetFontSizeRatios(float fontSizeRatioDetail, float fontSizeRatioLarge)
+        { FontSizeRatioDetail = fontSizeRatioDetail; FontSizeRatioLarge = fontSizeRatioLarge; }
+        public static void SetImageSize(int imgSizeDetail, int imgSizeLarge)
+        { ImageSizeDetail = imgSizeDetail; ImageSizeLarge = imgSizeLarge; }
+        public static void SetImageHTMLSize(int imgHTMLDetail, int imgHTMLLarge)
+        { ImageHTMLSizeDetail = imgHTMLDetail; ImageHTMLSizeLarge = imgHTMLLarge; }
+        public static string TemplatePath
         {
             get
             {
@@ -253,30 +246,23 @@ namespace treeDiM.StackBuilder.Reporting
                 return templatePath;
             }
         }
-        static public bool ShowDimensions
-        {
-            get { return _showDimensions; }
-            set { _showDimensions = value; }
-        }
+        static public bool ShowDimensions { get; set; } = true;
         #endregion
 
         #region Private properties
-        private string ImageDirectory
-        {
-            set {   _imageDirectory = value;}
-            get {   return _imageDirectory;  }
-        }
-        private int ImageSizeDetail { get { return _imgSizeDetail; } }
-        private int ImageSizeWide { get { return _imgSizeLarge; } }
-        private int ImageHTMLSizeDetail { get { return _imgHTMLSizeDetail; } }
-        private int ImageHTMLSizeLarge { get { return _imgHTMLSizeLarge; } }
+        private string ImageDirectory { set; get; }
+        private static int ImageSizeDetail { get; set; } = 200;
+        private static int ImageSizeLarge { get; set; } = 500;
+        private static int ImageHTMLSizeDetail { get; set; } = 100;
+        private static int ImageHTMLSizeLarge { get; set; } = 500;
+        public static float FontSizeRatioDetail { get; set; } = 6.0f;
+        public static float FontSizeRatioLarge { get; set; } = 10.0f;
         #endregion
 
         #region Report generation
         public void BuildAnalysisReport(ReportData inputData, ref ReportNode rootNode, string reportTemplatePath, string outputFilePath)
         {
             // initialize image index
-            _imageIndex = 0;
             // verify if inputData is a valid entry
             if (!inputData.IsValid)
                 throw new Exception("Reporter.BuildAnalysisReport(): ReportData argument is invalid!");
@@ -297,7 +283,7 @@ namespace treeDiM.StackBuilder.Reporting
             // note xml file validation against xml schema produces a large number of errors
             // For the moment, I can not remove all errors
             if (_validateAgainstSchema)
-                Reporter.ValidateXmlDocument(xmlData, Path.Combine(Path.GetDirectoryName(absReportTemplatePath), "ReportSchema.xsd"));
+                ValidateXmlDocument(xmlData, Path.Combine(Path.GetDirectoryName(absReportTemplatePath), "ReportSchema.xsd"));
             // check availibility of files
             if (!File.Exists(absReportTemplatePath))
                 throw new FileNotFoundException(string.Format("Report template path ({0}) is invalid", absReportTemplatePath));
@@ -429,7 +415,7 @@ namespace treeDiM.StackBuilder.Reporting
             ReportNode rnCompanyLogo = rootNode.GetChildByName(Resources.ID_RN_COMPANYLOGO);
             if (rnCompanyLogo.Activated && !string.IsNullOrEmpty(CompanyLogo))
             {
-                Bitmap logoBitmap = new Bitmap(System.Drawing.Bitmap.FromFile(CompanyLogo));
+                Bitmap logoBitmap = new Bitmap(Image.FromFile(CompanyLogo));
 
                 XmlElement elemCompanyLogo = xmlDoc.CreateElement("companyLogo", ns);
                 elemDocument.AppendChild(elemCompanyLogo);
@@ -614,23 +600,23 @@ namespace treeDiM.StackBuilder.Reporting
             while (null != content && content.InnerContent(ref content, ref number));
             // ***
             // Number of layers
-            Reporter.AppendElementValue(xmlDoc, elemSolution, "noLayers", sol.Layers.Count);
+            AppendElementValue(xmlDoc, elemSolution, "noLayers", sol.Layers.Count);
             // Number of cases per layer
             if (sol.HasConstantNoCasesPerLayer)
-                Reporter.AppendElementValue(xmlDoc, elemSolution, "noCasesPerLayer", sol.Layers[0].BoxCount);
+                AppendElementValue(xmlDoc, elemSolution, "noCasesPerLayer", sol.Layers[0].BoxCount);
             // number layers x number cases
             if (rnSolution.GetChildByName(Resources.ID_RN_NOLAYERSBYNOCASES).Activated)
-                Reporter.AppendElementValue(xmlDoc, elemSolution, "noLayersAndNoCases", sol.NoLayersPerNoCasesString);
+                AppendElementValue(xmlDoc, elemSolution, "noLayersAndNoCases", sol.NoLayersPerNoCasesString);
             // ***
             if (rnSolution.GetChildByName(Resources.ID_RN_WEIGHT).Activated)
             {
                 if (sol.HasNetWeight)
-                    Reporter.AppendElementValue(xmlDoc, elemSolution, "netWeight", UnitsManager.UnitType.UT_MASS, sol.NetWeight.Value);
-                Reporter.AppendElementValue(xmlDoc, elemSolution, "loadWeight", UnitsManager.UnitType.UT_MASS, sol.LoadWeight);
-                Reporter.AppendElementValue(xmlDoc, elemSolution, "totalWeight", UnitsManager.UnitType.UT_MASS, sol.Weight);
+                    AppendElementValue(xmlDoc, elemSolution, "netWeight", UnitsManager.UnitType.UT_MASS, sol.NetWeight.Value);
+                AppendElementValue(xmlDoc, elemSolution, "loadWeight", UnitsManager.UnitType.UT_MASS, sol.LoadWeight);
+                AppendElementValue(xmlDoc, elemSolution, "totalWeight", UnitsManager.UnitType.UT_MASS, sol.Weight);
             }
             if (rnSolution.GetChildByName(Resources.ID_RN_VOLUMEEFFICIENCY).Activated)
-                Reporter.AppendElementValue(xmlDoc, elemSolution, "efficiencyVolume", sol.VolumeEfficiency);
+                AppendElementValue(xmlDoc, elemSolution, "efficiencyVolume", sol.VolumeEfficiency);
 
             ReportNode rnViews = rnSolution.GetChildByName(Resources.ID_RN_VIEWS);
             ReportNode rnViewIso = rnSolution.GetChildByName(Resources.ID_RN_VIEWISO);
@@ -653,7 +639,7 @@ namespace treeDiM.StackBuilder.Reporting
                     case 2: viewName = "view_solution_right"; cameraPos = Graphics3D.Right; break;
                     case 3: viewName = "view_solution_back"; cameraPos = Graphics3D.Back; break;
                     case 4: viewName = "view_solution_iso"; cameraPos = Graphics3D.Corner_0;
-                        imageWidth = ImageSizeWide;
+                        imageWidth = ImageSizeLarge;
                         imgHTMLWidth = ImageHTMLSizeLarge;
                         showDimLocal = true;
                         break;
@@ -719,28 +705,30 @@ namespace treeDiM.StackBuilder.Reporting
                     if (rnLayers.GetChildByName(Resources.ID_RN_DIMENSIONS).Activated)
                     {
                         // layerLength
-                        Reporter.AppendElementValue(xmlDoc, elemLayer, "layerLength", UnitsManager.UnitType.UT_LENGTH, layerSum.LayerDimensions.X);
+                        AppendElementValue(xmlDoc, elemLayer, "layerLength", UnitsManager.UnitType.UT_LENGTH, layerSum.LayerDimensions.X);
                         // layerWidth
-                        Reporter.AppendElementValue(xmlDoc, elemLayer, "layerWidth", UnitsManager.UnitType.UT_LENGTH, layerSum.LayerDimensions.Y);
+                        AppendElementValue(xmlDoc, elemLayer, "layerWidth", UnitsManager.UnitType.UT_LENGTH, layerSum.LayerDimensions.Y);
                         // layerHeight
-                        Reporter.AppendElementValue(xmlDoc, elemLayer, "layerHeight", UnitsManager.UnitType.UT_LENGTH, layerSum.LayerDimensions.Z);
+                        AppendElementValue(xmlDoc, elemLayer, "layerHeight", UnitsManager.UnitType.UT_LENGTH, layerSum.LayerDimensions.Z);
                     }
                     if (rnLayers.GetChildByName(Resources.ID_RN_WEIGHT).Activated)
                     {
                         // layerWeight
-                        Reporter.AppendElementValue(xmlDoc, elemLayer, "layerWeight", UnitsManager.UnitType.UT_MASS, layerSum.LayerWeight);
+                        AppendElementValue(xmlDoc, elemLayer, "layerWeight", UnitsManager.UnitType.UT_MASS, layerSum.LayerWeight);
                         // layerNetWeight
                         if (sol.HasNetWeight)
-                            Reporter.AppendElementValue(xmlDoc, elemLayer, "layerNetWeight", UnitsManager.UnitType.UT_MASS, layerSum.LayerNetWeight);
+                            AppendElementValue(xmlDoc, elemLayer, "layerNetWeight", UnitsManager.UnitType.UT_MASS, layerSum.LayerNetWeight);
                     }
                     // layer spaces
                     if (rnLayers.GetChildByName(Resources.ID_RN_SPACES).Activated)
-                        Reporter.AppendElementValue(xmlDoc, elemLayer, "layerSpaces", UnitsManager.UnitType.UT_LENGTH, layerSum.Space);
+                        AppendElementValue(xmlDoc, elemLayer, "layerSpaces", UnitsManager.UnitType.UT_LENGTH, layerSum.Space);
                     // layer image
                     if (rnLayers.GetChildByName(Resources.ID_RN_IMAGE).Activated)
                     {
-                        Graphics3DImage graphics = new Graphics3DImage(new Size(ImageSizeDetail, ImageSizeDetail));
-                        graphics.FontSizeRatio = FontSizeRatioDetail;
+                        Graphics3DImage graphics = new Graphics3DImage(new Size(ImageSizeDetail, ImageSizeDetail))
+                        {
+                            FontSizeRatio = FontSizeRatioDetail
+                        };
                         ViewerSolution.DrawILayer(graphics, layerSum.Layer3D, sol.Analysis.Content, Reporter.ShowDimensions);
                         graphics.Flush();
                         AppendThumbnailElement(xmlDoc, elemLayer, graphics.Bitmap);
@@ -785,12 +773,15 @@ namespace treeDiM.StackBuilder.Reporting
             if (rnPallet.GetChildByName(Resources.ID_RN_IMAGE).Activated)
             {
                 // --- build image
-                Graphics3DImage graphics = new Graphics3DImage(new Size(512, 512));
-                graphics.FontSizeRatio = _fontSizeRatioDetail;
-                graphics.CameraPosition = Graphics3D.Corner_0;
+                Graphics3DImage graphics = new Graphics3DImage(new Size(ImageSizeDetail, ImageSizeDetail))
+                {
+                    FontSizeRatio = FontSizeRatioDetail,
+                    CameraPosition = Graphics3D.Corner_0,
+                    Target = Vector3D.Zero
+                };
                 Pallet pallet = new Pallet(palletProp);
                 pallet.Draw(graphics, Transform3D.Identity);
-                if (Reporter.ShowDimensions)
+                if (ShowDimensions)
                     graphics.AddDimensions(new DimensionCube(palletProp.Length, palletProp.Width, palletProp.Height));
                 graphics.Flush();
                 // ---
@@ -825,13 +816,15 @@ namespace treeDiM.StackBuilder.Reporting
             if (rnCylinder.GetChildByName(Resources.ID_RN_IMAGE).Activated)
             {
                 // --- build image
-                Graphics3DImage graphics = new Graphics3DImage(new Size(ImageSizeDetail, ImageSizeDetail));
-                graphics.FontSizeRatio = FontSizeRatioDetail;
-                graphics.CameraPosition = Graphics3D.Corner_0;
-                graphics.Target = Vector3D.Zero;
+                Graphics3DImage graphics = new Graphics3DImage(new Size(ImageSizeDetail, ImageSizeDetail))
+                {
+                    FontSizeRatio = FontSizeRatioDetail,
+                    CameraPosition = Graphics3D.Corner_0,
+                    Target = Vector3D.Zero
+                };
                 Cylinder cyl = new Cylinder(0, cylProperties);
                 graphics.AddCylinder(cyl);
-                if (Reporter.ShowDimensions)
+                if (ShowDimensions)
                 {
                     DimensionCube dc = new DimensionCube(cyl.DiameterOuter, cyl.DiameterOuter, cyl.Height);
                     graphics.AddDimensions(dc);
@@ -878,12 +871,14 @@ namespace treeDiM.StackBuilder.Reporting
             if (rnBundle.GetChildByName(Resources.ID_RN_IMAGE).Activated)
             {
                 // --- build image
-                Graphics3DImage graphics = new Graphics3DImage(new Size(ImageSizeDetail, ImageSizeDetail));
-                graphics.FontSizeRatio = FontSizeRatioDetail;
-                graphics.CameraPosition = Graphics3D.Corner_0;
+                Graphics3DImage graphics = new Graphics3DImage(new Size(ImageSizeDetail, ImageSizeDetail))
+                {
+                    FontSizeRatio = FontSizeRatioDetail,
+                    CameraPosition = Graphics3D.Corner_0
+                };
                 Box box = new Box(0, bundleProp);
                 graphics.AddBox(box);
-                if (Reporter.ShowDimensions)
+                if (ShowDimensions)
                 {
                     DimensionCube dc = new DimensionCube(bundleProp.Length, bundleProp.Width, bundleProp.Height);
                     graphics.AddDimensions(dc);
@@ -972,8 +967,10 @@ namespace treeDiM.StackBuilder.Reporting
             // ---
             // view_palletCorner_iso
             // build image
-            Graphics3DImage graphics = new Graphics3DImage(new Size(ImageSizeDetail, ImageSizeDetail));
-            graphics.CameraPosition = Graphics3D.Corner_0;
+            Graphics3DImage graphics = new Graphics3DImage(new Size(ImageSizeDetail, ImageSizeDetail))
+            {
+                CameraPosition = Graphics3D.Corner_0
+            };
             Corner corner = new Corner(0, palletCornerProp);
             corner.Draw(graphics);
             graphics.Flush();
@@ -1101,9 +1098,11 @@ namespace treeDiM.StackBuilder.Reporting
             // --- build image
             if (rnTruck.GetChildByName(Resources.ID_RN_IMAGE).Activated)
             {
-                Graphics3DImage graphics = new Graphics3DImage(new Size(ImageSizeDetail, ImageSizeDetail));
-                graphics.FontSizeRatio = FontSizeRatioDetail;
-                graphics.CameraPosition = Graphics3D.Corner_0;
+                Graphics3DImage graphics = new Graphics3DImage(new Size(ImageSizeDetail, ImageSizeDetail))
+                {
+                    FontSizeRatio = FontSizeRatioDetail,
+                    CameraPosition = Graphics3D.Corner_0
+                };
                 Truck truck = new Truck(truckProp);
                 truck.DrawBegin(graphics);
                 truck.DrawEnd(graphics);
@@ -1361,7 +1360,7 @@ namespace treeDiM.StackBuilder.Reporting
         #region Deleting methods
         public void DeleteImageDirectory()
         {
-            try { Directory.Delete(_imageDirectory, true); }
+            try { Directory.Delete(ImageDirectory, true); }
             catch (Exception ex) { _log.Error(ex.Message); }
         }
         #endregion

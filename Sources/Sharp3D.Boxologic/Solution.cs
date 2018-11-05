@@ -1,23 +1,22 @@
-﻿using System;
+﻿#region Using directives
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+#endregion
 
 namespace Sharp3D.Boxologic
 {
     public class SolItem
     {
-        public int Id { get; set; }
-        public long X { get; set; }
-        public long Y { get; set; }
-        public long Z { get; set; }
-        public long BX { get; set; }
-        public long BY { get; set; }
-        public long BZ { get; set; }
-        public long DimX { get; set; }
-        public long DimY { get; set; }
-        public long DimZ { get; set; }
+        public uint Id { get; set; }
+        public decimal X { get; set; }
+        public decimal Y { get; set; }
+        public decimal Z { get; set; }
+        public decimal BX { get; set; }
+        public decimal BY { get; set; }
+        public decimal BZ { get; set; }
+        public decimal DimX { get; set; }
+        public decimal DimY { get; set; }
+        public decimal DimZ { get; set; }
         public override string ToString() { return $"ID={Id} X={X} Y={Y} Z={Z} BX={BX} BY={BY} BZ={BZ}"; }
     }
 

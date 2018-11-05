@@ -11,27 +11,27 @@ namespace Sharp3D.Boxologic
         #region Private data members
         private DateTime _timeStart, _timeStop;
         private PalletInfo pallet;
-        private List<BoxInfo> boxList = new List<BoxInfo>();
+        private List<Cuboid> boxList = new List<Cuboid>();
         private List<Layer> layers = new List<Layer>();
         private Scrappad scrapfirst, smallestz;
         private Scrappad trash;
-        private Dictionary<KeyValuePair<int, int>, double> best_iterations = new Dictionary<KeyValuePair<int, int>, double>();
+        private Dictionary<KeyValuePair<int, int>, decimal> best_iterations = new Dictionary<KeyValuePair<int, int>, decimal>();
 
         private bool packing = true, layerdone = false, evened = false;
         private int best_variant;
-        private long layerinlayer;
-        private long prelayer;
-        private long lilz;
+        private decimal layerinlayer;
+        private decimal prelayer;
+        private decimal lilz;
         private int number_of_iterations;
-        private long remainpy, preremainpy, remainpz;
-        private long packedy, prepackedy;
-        private long layerThickness;
+        private decimal remainpy, preremainpy, remainpz;
+        private decimal packedy, prepackedy;
+        private decimal layerThickness;
         private int best_iteration;
         private int packednumbox;
         private int number_packed_boxes;
-        private long packedvolume;
-        private long best_solution_volume;
-        private long total_box_volume;
+        private decimal packedvolume;
+        private decimal best_solution_volume;
+        private decimal total_box_volume;
         private double pallet_volume_used_percentage;
         private StreamWriter fso;
         #endregion
@@ -47,7 +47,7 @@ namespace Sharp3D.Boxologic
             foreach (BoxItem bi in listBoxItem)
             {
                 for (int i = 0; i < bi.N; ++i)
-                    boxList.Add(new BoxInfo() { ID= bi.ID, Dim1 = bi.Boxx, Dim2 = bi.Boxy, Dim3 = bi.Boxz, N = bi.N });
+                    boxList.Add(new Cuboid() { ID= bi.ID, Dim1 = bi.Boxx, Dim2 = bi.Boxy, Dim3 = bi.Boxz, N = bi.N });
             }
             // pallet
             pallet = new PalletInfo(palletLength, palletWidth, palletHeight);
@@ -63,7 +63,7 @@ namespace Sharp3D.Boxologic
         private void Initialize()
         {
             total_box_volume = 0;
-            foreach (BoxInfo bi in boxList)
+            foreach (Cuboid bi in boxList)
             { total_box_volume += bi.Vol; }
 
             scrapfirst = new Scrappad();
@@ -73,7 +73,7 @@ namespace Sharp3D.Boxologic
         public void Execute_iterations()
         {
             bool hundredpercent = false;
-            for (int variant = 1; variant <= 6; ++variant)
+            for (int variant = 0; variant < 6; ++variant)
             {
                 // initialize pallet
                 pallet.Variant = variant;
@@ -97,7 +97,7 @@ namespace Sharp3D.Boxologic
                     remainpy = pallet.Pallet_y;
                     remainpz = pallet.Pallet_z;
                     packednumbox = 0;
-                    foreach (BoxInfo bi in boxList)
+                    foreach (Cuboid bi in boxList)
                         bi.Is_packed = false;
 
                     // ### BEGIN DO-WHILE
@@ -141,18 +141,18 @@ namespace Sharp3D.Boxologic
                     pallet_volume_used_percentage = (double)best_solution_volume * 100 / (double)pallet.Vol;
                 }
                 if (hundredpercent) break;
-                if ((pallet.Dim1 == pallet.Dim2) && (pallet.Dim2 == pallet.Dim3)) variant = 6;
+                if ((pallet.Dim1 == pallet.Dim2) && (pallet.Dim2 == pallet.Dim3)) variant = 5;
             }
         }
         #endregion
         #region List_candidate_layers (DONE)
         public void List_candidate_layers(bool show)
         {
-            foreach (BoxInfo bi1 in boxList)
+            foreach (Cuboid bi1 in boxList)
             {
                 for (int y = 1; y <= 3; ++y)
                 {
-                    long exdim = 0, dimen2 = 0, dimen3 = 0;
+                    decimal exdim = 0, dimen2 = 0, dimen3 = 0;
                     switch (y)
                     {
                         case 1:
@@ -187,12 +187,12 @@ namespace Sharp3D.Boxologic
                     if (null != layers.Find(lay => lay.LayerDim == exdim))
                         continue;
 
-                    long layereval = 0;
-                    foreach (BoxInfo bi2 in boxList)
+                    decimal layereval = 0;
+                    foreach (Cuboid bi2 in boxList)
                     {
                         if (bi1 != bi2)
                         {
-                            long dimdif = Math.Abs(exdim - bi2.Dim1);
+                            decimal dimdif = Math.Abs(exdim - bi2.Dim1);
                             if (Math.Abs(exdim - bi2.Dim2) < dimdif)
                                 dimdif = Math.Abs(exdim - bi2.Dim2);
                             if (Math.Abs(exdim - bi2.Dim3) < dimdif)
@@ -246,7 +246,7 @@ namespace Sharp3D.Boxologic
                 Cumx = pallet.Pallet_x,
                 Cumz = 0
             };
-            long cboxi = 0, cboxx = 0, cboxy = 0, cboxz = 0;
+            decimal cboxi = 0, cboxx = 0, cboxy = 0, cboxz = 0;
             while (true)
             {
                 smallestz = Find_smallest_z();
@@ -254,15 +254,15 @@ namespace Sharp3D.Boxologic
                 if (null == smallestz.prev && null == smallestz.next)
                 {
                     //*** SITUATION-1: NO BOXES ON THE RIGHT AND LEFT SIDES ***
-                    long lenx = smallestz.Cumx;
-                    long lpz = remainpz - smallestz.Cumz;
+                    decimal lenx = smallestz.Cumx;
+                    decimal lpz = remainpz - smallestz.Cumz;
                     Find_box(lenx, layerThickness, remainpy, lpz, lpz,
                         ref cboxi, ref cboxx, ref cboxy, ref cboxz);
 
                     if (layerdone) break;
                     if (evened) continue;
 
-                    BoxInfo bi = boxList[(int)cboxi];
+                    Cuboid bi = boxList[(int)cboxi];
                     boxList[(int)cboxi].Cox = 0;
                     boxList[(int)cboxi].Coy = packedy;
                     boxList[(int)cboxi].Coz = smallestz.Cumz;
@@ -286,16 +286,16 @@ namespace Sharp3D.Boxologic
                 else if (null == smallestz.prev)
                 {
                     //*** SITUATION-2: NO BOXES ON THE LEFT SIDE ***
-                    long lenx = smallestz.Cumx;
-                    long lenz = smallestz.next.Cumz - smallestz.Cumz;
-                    long lpz = remainpz - smallestz.Cumz;
+                    decimal lenx = smallestz.Cumx;
+                    decimal lenz = smallestz.next.Cumz - smallestz.Cumz;
+                    decimal lpz = remainpz - smallestz.Cumz;
                     Find_box(lenx, layerThickness, remainpy, lenz, lpz
                         , ref cboxi, ref cboxx, ref cboxy, ref cboxz);
 
                     if (layerdone) break;
                     if (evened) continue;
 
-                    BoxInfo bi = boxList[(int)cboxi];
+                    Cuboid bi = boxList[(int)cboxi];
                     bi.Coy = packedy;
                     bi.Coz = smallestz.Cumz;
                     if (cboxx == smallestz.Cumx)
@@ -343,16 +343,16 @@ namespace Sharp3D.Boxologic
                 else if (null == smallestz.next)
                 {
                     //*** SITUATION-3: NO BOXES ON THE RIGHT SIDE ***
-                    long lenx = smallestz.Cumx - smallestz.prev.Cumx;
-                    long lenz = smallestz.prev.Cumz - smallestz.Cumz;
-                    long lpz = remainpz - smallestz.Cumz;
+                    decimal lenx = smallestz.Cumx - smallestz.prev.Cumx;
+                    decimal lenz = smallestz.prev.Cumz - smallestz.Cumz;
+                    decimal lpz = remainpz - smallestz.Cumz;
                     Find_box(lenx, layerThickness, remainpy, lenz, lpz
                         , ref cboxi, ref cboxx, ref cboxy, ref cboxz);
 
                     if (layerdone) break;
                     if (evened) continue;
 
-                    BoxInfo bi = boxList[(int)cboxi];
+                    Cuboid bi = boxList[(int)cboxi];
                     bi.Coy = packedy;
                     bi.Coz = smallestz.Cumz;
                     bi.Cox = smallestz.prev.Cumx;
@@ -393,9 +393,9 @@ namespace Sharp3D.Boxologic
                 {
                     //*** SITUATION-4: THERE ARE BOXES ON BOTH OF THE SIDES ***
                     //*** SUBSITUATION-4A: SIDES ARE EQUAL TO EACH OTHER ***
-                    long lenx = smallestz.Cumx - smallestz.prev.Cumx;
-                    long lenz = smallestz.prev.Cumz - smallestz.Cumz;
-                    long lpz = remainpz - smallestz.Cumz;
+                    decimal lenx = smallestz.Cumx - smallestz.prev.Cumx;
+                    decimal lenz = smallestz.prev.Cumz - smallestz.Cumz;
+                    decimal lpz = remainpz - smallestz.Cumz;
                     Find_box(lenx, layerThickness, remainpy, lenz, lpz
                         , ref cboxi, ref cboxx, ref cboxy, ref cboxz);
 
@@ -472,9 +472,9 @@ namespace Sharp3D.Boxologic
                 {
                     //*** SUBSITUATION-4B: SIDES ARE NOT EQUAL TO EACH OTHER ***
                     //*** SUBSITUATION-4B: SIDES ARE NOT EQUAL TO EACH OTHER ***
-                    long lenx = smallestz.Cumx - smallestz.prev.Cumx;
-                    long lenz = smallestz.prev.Cumz - smallestz.Cumz;
-                    long lpz = remainpz - smallestz.Cumz;
+                    decimal lenx = smallestz.Cumx - smallestz.prev.Cumx;
+                    decimal lenz = smallestz.prev.Cumz - smallestz.Cumz;
+                    decimal lpz = remainpz - smallestz.Cumz;
                     Find_box(lenx, layerThickness, remainpy, lenz, lpz
                         , ref cboxi, ref cboxx, ref cboxy, ref cboxz);
 
@@ -531,14 +531,14 @@ namespace Sharp3D.Boxologic
         /// FINDS THE MOST PROPER LAYER HEIGHT BY LOOKING AT THE UNPACKED BOXES AND THE
         /// REMAINING EMPTY SPACE AVAILABLE
         ///----------------------------------------------------------------------------
-        private int Find_layer(long thickness, PalletInfo p)
+        private int Find_layer(decimal thickness, PalletInfo p)
         {
-            long exdim = 0, dimdif = 0, dimen2 = 0, dimen3 = 0;
-            long layereval = 0, eval = long.MaxValue;
+            decimal exdim = 0, dimdif = 0, dimen2 = 0, dimen3 = 0;
+            decimal layereval = 0, eval = decimal.MaxValue;
             layerThickness = 0;
             for (int x = 0; x < boxList.Count; x++)
             {
-                BoxInfo bi = boxList[x];
+                Cuboid bi = boxList[x];
                 if (bi.Is_packed)
                     continue;
                 for (int y = 1; y <= 3; y++)
@@ -599,12 +599,12 @@ namespace Sharp3D.Boxologic
         /// ARE EXAMINED
         /// </summary>
         private void CheckFound(
-            ref long cboxi, ref long cboxx, ref long cboxy, ref long cboxz
-            , long boxi, long boxx, long boxy, long boxz
-            , long bboxi, long bboxx, long bboxy, long bboxz)
+            ref decimal cboxi, ref decimal cboxx, ref decimal cboxy, ref decimal cboxz
+            , decimal boxi, decimal boxx, decimal boxy, decimal boxz
+            , decimal bboxi, decimal bboxx, decimal bboxy, decimal bboxz)
         {
             evened = false;
-            if (boxi > 0)
+            if (boxi >= 0 && 0 != boxx * boxy *boxz)
             {
                 cboxi = boxi;
                 cboxx = boxx;
@@ -613,9 +613,9 @@ namespace Sharp3D.Boxologic
             }
             else
             {
-                if ((bboxi > 0) && (layerinlayer > 0 || (null == smallestz.prev && null == smallestz.next)))
+                if ((bboxi >= 0 && 0 != bboxx * bboxy * bboxz) && (layerinlayer > 0 || (null == smallestz.prev && null == smallestz.next)))
                 {
-                    if (layerinlayer == 0.0)
+                    if (layerinlayer == 0.0M)
                     {
                         prelayer = layerThickness;
                         lilz = smallestz.Cumz;
@@ -687,16 +687,15 @@ namespace Sharp3D.Boxologic
         /// <summary>
         /// AFTER PACKING OF EACH BOX, 100% PACKING CONDITION IS CHECKED
         /// </summary>
-        private void VolumeCheck(int cboxi, long cboxx, long cboxy, long cboxz, bool packingbest
+        private void VolumeCheck(int cboxi, decimal cboxx, decimal cboxy, decimal cboxz, bool packingbest
             , ref bool hundredpercent)
         {
-            BoxInfo bi = boxList[cboxi];
+            Cuboid bi = boxList[cboxi];
             bi.SetPacked(cboxx, cboxy, cboxz);
             packedvolume += bi.Vol;
             packednumbox++;
             if (packingbest)
             {
-                bi.Write(cboxi);
                 bi.WriteToFile(fso, best_variant, 0);
             }
             else if (packedvolume == pallet.Vol || packedvolume == total_box_volume)
@@ -711,13 +710,15 @@ namespace Sharp3D.Boxologic
         /// FINDS THE MOST PROPER BOXES BY LOOKING AT ALL SIX POSSIBLE ORIENTATIONS,
         /// EMPTY SPACE GIVEN, ADJACENT BOXES, AND PALLET LIMITS 
         /// </summary>
-        private void Find_box(long hmx, long hy, long hmy, long hz, long hmz,
-            ref long cboxi, ref long cboxx, ref long cboxy, ref long cboxz)
+        private void Find_box(decimal hmx, decimal hy, decimal hmy, decimal hz, decimal hmz,
+            ref decimal cboxi, ref decimal cboxx, ref decimal cboxy, ref decimal cboxz)
         {
-            long boxi = 0, boxx = 0, boxy = 0, boxz = 0;
-            long bboxi = 0, bboxx = 0, bboxy = 0, bboxz = 0;
-            long bfx = long.MaxValue, bfy = long.MaxValue, bfz = long.MaxValue;
-            long bbfx = long.MaxValue, bbfy = long.MaxValue, bbfz = long.MaxValue;
+            decimal boxi = 0;
+            decimal boxx = 0, boxy = 0, boxz = 0;
+            decimal bboxi = 0;
+            decimal bboxx = 0, bboxy = 0, bboxz = 0;
+            decimal bfx = decimal.MaxValue, bfy = decimal.MaxValue, bfz = decimal.MaxValue;
+            decimal bbfx = decimal.MaxValue, bbfy = decimal.MaxValue, bbfz = decimal.MaxValue;
             boxi = 0; bboxi = 0;
 
             for (int y = 0; y < boxList.Count; y += boxList[y].N)
@@ -728,8 +729,9 @@ namespace Sharp3D.Boxologic
                     if (!boxList[x].Is_packed) break;
                 }
                 if (boxList[x].Is_packed) continue;
-                if (x >= boxList.Count) return;
-                BoxInfo bi = boxList[x];
+                if (x >= boxList.Count)
+                    return;
+                Cuboid bi = boxList[x];
                 // 1 2 3
                 Analyse_box(x, hmx, hy, hmy, hz, hmz,
                     bi.Dim1, bi.Dim2, bi.Dim3
@@ -785,12 +787,12 @@ namespace Sharp3D.Boxologic
         /// ANALYZES EACH UNPACKED BOX TO FIND THE BEST FITTING ONE TO THE EMPTY SPACE
         /// GIVEN
         /// </summary>
-        private void Analyse_box(long x, long hmx, long hy, long hmy, long hz, long hmz,
-            long dim1, long dim2, long dim3
-            , ref long bfx, ref long bfy, ref long bfz
-            , ref long bbfx, ref long bbfy, ref long bbfz
-            , ref long boxi, ref long boxx, ref long boxy, ref long boxz
-            , ref long bboxi, ref long bboxx, ref long bboxy, ref long bboxz)
+        private void Analyse_box(decimal x, decimal hmx, decimal hy, decimal hmy, decimal hz, decimal hmz,
+            decimal dim1, decimal dim2, decimal dim3
+            , ref decimal bfx, ref decimal bfy, ref decimal bfz
+            , ref decimal bbfx, ref decimal bbfy, ref decimal bbfz
+            , ref decimal boxi, ref decimal boxx, ref decimal boxy, ref decimal boxz
+            , ref decimal bboxi, ref decimal bboxx, ref decimal bboxy, ref decimal bboxz)
         {
             if (dim1 <= hmx && dim2 <= hmy && dim3 <= hmz)
             {
@@ -879,7 +881,7 @@ namespace Sharp3D.Boxologic
             remainpy = pallet.Pallet_y;
             remainpz = pallet.Pallet_z;
 
-            foreach (BoxInfo bi in boxList)
+            foreach (Cuboid bi in boxList)
                 bi.Is_packed = false;
 
             bool hundredpercent = false;
@@ -911,7 +913,7 @@ namespace Sharp3D.Boxologic
 
 
             Solution sol = new Solution() { Variant = best_variant, Iteration = best_iteration };
-            foreach (BoxInfo bi in boxList)
+            foreach (Cuboid bi in boxList)
             {
                 if (bi.Is_packed)
                     sol.ItemsPacked.Add(bi.ToSolItem(best_variant));

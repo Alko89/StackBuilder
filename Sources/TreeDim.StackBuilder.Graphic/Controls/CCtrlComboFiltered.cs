@@ -1,12 +1,8 @@
 ﻿#region Using directives
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
+
+using log4net;
 
 using treeDiM.StackBuilder.Basics;
 #endregion
@@ -20,52 +16,52 @@ namespace treeDiM.StackBuilder.Graphics.Controls
             InitializeComponent();
         }
 
-        public void Initialize(Document doc, IItemBaseFilter filter, ItemBase initialSelect)
+        public void Initialize(Document doc, IItemBaseFilter filter, ItemBase initiallySelectedItem)
         {
             Items.Clear();
-            int index = 0, iSelected = -1;
-            foreach (ItemBase itemBase in doc.TypeList)
-                if (null == filter || filter.Accept(this, itemBase))
+            try
+            {
+                int index = 0, iSelected = -1;
+                foreach (ItemBase itemBase in doc.TypeList)
+                    if (null == filter || filter.Accept(this, itemBase))
+                    {
+                        Items.Add(new ItemBaseWrapper(itemBase));
+                        if (initiallySelectedItem == itemBase)
+                            iSelected = index;
+                        ++index;
+                    }
+
+                Analysis analysisInitial = null;
+                if (null != initiallySelectedItem)
                 {
-                    Items.Add(new ItemBaseWrapper(itemBase));
-                    if (initialSelect == itemBase)
-                        iSelected = index;
-                    ++index;
+                    if (initiallySelectedItem is PackableLoaded packableLoadedInitial)
+                        analysisInitial = packableLoadedInitial.ParentAnalysis;
                 }
 
-            Analysis analysisInitial = null;
-            if (null != initialSelect)
-            {
-                PackableLoaded packableLoadedInitial = initialSelect as PackableLoaded;
-                if (null != packableLoadedInitial)
-                    analysisInitial = packableLoadedInitial.ParentAnalysis;
-            }
-
-            foreach (Analysis analysis in doc.Analyses)
-            {
-                PackableLoaded eqvtPackable = analysis.EquivalentPackable;
-                if (null == eqvtPackable) continue;
-                if (null == filter || filter.Accept(this, eqvtPackable))
+                foreach (Analysis analysis in doc.Analyses)
                 {
-                    Items.Add(new ItemBaseWrapper(eqvtPackable));
-                    if (analysisInitial == analysis)
-                        iSelected = index;
-                    ++index;
+                    PackableLoaded eqvtPackable = analysis.EquivalentPackable;
+                    if (null == eqvtPackable) continue;
+                    if (null == filter || filter.Accept(this, eqvtPackable))
+                    {
+                        Items.Add(new ItemBaseWrapper(eqvtPackable));
+                        if (analysisInitial == analysis)
+                            iSelected = index;
+                        ++index;
+                    }
                 }
+                if (-1 == iSelected && Items.Count > 0)
+                    SelectedIndex = 0;
+                else
+                    SelectedIndex = iSelected;
             }
-            if (-1 == iSelected && Items.Count > 0)
-                SelectedIndex = 0;
-            else
-                SelectedIndex = iSelected;
-        }
-
-        public ItemBase SelectedType
-        {
-            get
+            catch (Exception ex)
             {
-                ItemBaseWrapper  wrapper = SelectedItem as ItemBaseWrapper;
-                return null == wrapper ? null : wrapper.ItemBase; 
+                _log.Error(ex.ToString());
             }
         }
+        public ItemBase SelectedType => !(SelectedItem is ItemBaseWrapper wrapper) ? null : wrapper.ItemBase;
+
+        static readonly ILog _log = LogManager.GetLogger(typeof(CCtrlComboFiltered));
     }
 }

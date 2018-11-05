@@ -1,10 +1,7 @@
 ﻿#region Using directives
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows.Forms;
 using System.Drawing;
-using System.Diagnostics;
 #endregion
 
 #pragma warning disable 1591

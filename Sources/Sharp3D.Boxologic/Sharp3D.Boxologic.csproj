@@ -43,8 +43,11 @@
   <ItemGroup>
     <Compile Include="BoxItem.cs" />
     <Compile Include="Boxlogic.cs" />
+    <Compile Include="Cuboid.cs" />
+    <Compile Include="PalletInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Solution.cs" />
+    <Compile Include="St_Instance.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

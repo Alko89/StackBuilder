@@ -1,11 +1,7 @@
 ﻿#region Using directives
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 #endregion
 
@@ -68,9 +64,9 @@ namespace treeDiM.StackBuilder.Basics
         private void ValueControl_SizeChanged(object sender, EventArgs e)
         {
             // set nud location
-            nudValue.Location = new Point(Width - UCtrlDouble.stNudLength - UCtrlDouble.stLbUnitLength, 0);
+            nudValue.Location = new Point(Width - stNudLength - stLbUnitLength, 0);
             // set unit location
-            lbUnit.Location = new Point(Width - UCtrlDouble.stLbUnitLength + 1, 4);
+            lbUnit.Location = new Point(Width - stLbUnitLength + 1, 4);
         }
         #endregion
 

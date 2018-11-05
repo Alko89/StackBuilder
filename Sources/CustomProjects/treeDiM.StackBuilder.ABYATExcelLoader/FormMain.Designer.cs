@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.toolStripMIFile = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -38,24 +39,28 @@
             this.lbFilePath = new System.Windows.Forms.Label();
             this.fileSelectExcel = new treeDiM.UserControls.FileSelect();
             this.graphCtrlPallet = new treeDiM.StackBuilder.Graphics.Graphics3DControl();
-            this.uCtrlPalletDimensions = new treeDiM.StackBuilder.Basics.UCtrlTriDouble();
             this.gbInput = new System.Windows.Forms.GroupBox();
             this.lbCaseLoaded = new System.Windows.Forms.Label();
             this.cbPalletType = new System.Windows.Forms.ComboBox();
             this.lbPalletType = new System.Windows.Forms.Label();
-            this.uCtrlTruckDimensions = new treeDiM.StackBuilder.Basics.UCtrlTriDouble();
-            this.uCtrlPalletWeight = new treeDiM.StackBuilder.Basics.UCtrlDouble();
-            this.uCtrlMaximumPalletHeight = new treeDiM.StackBuilder.Basics.UCtrlDouble();
             this.rbContainer = new System.Windows.Forms.RadioButton();
             this.rbPallet = new System.Windows.Forms.RadioButton();
             this.gbOutput = new System.Windows.Forms.GroupBox();
+            this.bnSelectImageFolder = new System.Windows.Forms.Button();
+            this.tbImageFolder = new System.Windows.Forms.TextBox();
+            this.chkbSaveImageInFolder = new System.Windows.Forms.CheckBox();
+            this.chkbGenerateImage = new System.Windows.Forms.CheckBox();
             this.chkbOpenFile = new System.Windows.Forms.CheckBox();
             this.bnGenerate = new System.Windows.Forms.Button();
             this.fileSelectOutput = new treeDiM.UserControls.FileSelect();
             this.lbOutputFilePath = new System.Windows.Forms.Label();
-            this.chkbGenerateImage = new System.Windows.Forms.CheckBox();
             this.richTextBoxLog = new System.Windows.Forms.RichTextBox();
-            this.chkbGenerateReport = new System.Windows.Forms.CheckBox();
+            this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
+            this.uCtrlTruckDimensions = new treeDiM.StackBuilder.Basics.UCtrlTriDouble();
+            this.uCtrlPalletWeight = new treeDiM.StackBuilder.Basics.UCtrlDouble();
+            this.uCtrlMaximumPalletHeight = new treeDiM.StackBuilder.Basics.UCtrlDouble();
+            this.uCtrlPalletDimensions = new treeDiM.StackBuilder.Basics.UCtrlTriDouble();
+            this.chkbAllowZOrientationOnly = new System.Windows.Forms.CheckBox();
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.graphCtrlPallet)).BeginInit();
@@ -87,7 +92,7 @@
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(92, 22);
             this.exitToolStripMenuItem.Text = "Exit";
-            this.exitToolStripMenuItem.Click += new System.EventHandler(this.onExit);
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.OnExit);
             // 
             // toolStripMITools
             // 
@@ -102,7 +107,7 @@
             this.toolStripMISettings.Name = "toolStripMISettings";
             this.toolStripMISettings.Size = new System.Drawing.Size(116, 22);
             this.toolStripMISettings.Text = "Settings";
-            this.toolStripMISettings.Click += new System.EventHandler(this.onSettings);
+            this.toolStripMISettings.Click += new System.EventHandler(this.OnSettings);
             // 
             // statusStrip
             // 
@@ -135,41 +140,24 @@
             this.fileSelectExcel.Name = "fileSelectExcel";
             this.fileSelectExcel.Size = new System.Drawing.Size(557, 20);
             this.fileSelectExcel.TabIndex = 3;
-            this.fileSelectExcel.FileNameChanged += new System.EventHandler(this.onInputFilePathChanged);
+            this.fileSelectExcel.FileNameChanged += new System.EventHandler(this.OnInputFilePathChanged);
             // 
             // graphCtrlPallet
             // 
             this.graphCtrlPallet.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.graphCtrlPallet.Location = new System.Drawing.Point(213, 209);
+            this.graphCtrlPallet.Location = new System.Drawing.Point(229, 208);
             this.graphCtrlPallet.Name = "graphCtrlPallet";
-            this.graphCtrlPallet.Size = new System.Drawing.Size(267, 241);
+            this.graphCtrlPallet.Size = new System.Drawing.Size(240, 240);
             this.graphCtrlPallet.TabIndex = 4;
             this.graphCtrlPallet.Viewer = null;
-            // 
-            // uCtrlPalletDimensions
-            // 
-            this.uCtrlPalletDimensions.Location = new System.Drawing.Point(102, 57);
-            this.uCtrlPalletDimensions.Minimum = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.uCtrlPalletDimensions.Name = "uCtrlPalletDimensions";
-            this.uCtrlPalletDimensions.Size = new System.Drawing.Size(378, 20);
-            this.uCtrlPalletDimensions.TabIndex = 6;
-            this.uCtrlPalletDimensions.Text = "Dimensions";
-            this.uCtrlPalletDimensions.Unit = treeDiM.StackBuilder.Basics.UnitsManager.UnitType.UT_LENGTH;
-            this.uCtrlPalletDimensions.ValueX = 0D;
-            this.uCtrlPalletDimensions.ValueY = 0D;
-            this.uCtrlPalletDimensions.ValueZ = 0D;
-            this.uCtrlPalletDimensions.ValueChanged += new treeDiM.StackBuilder.Basics.UCtrlTriDouble.ValueChangedDelegate(this.onDataChanged);
             // 
             // gbInput
             // 
             this.gbInput.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.gbInput.Controls.Add(this.chkbAllowZOrientationOnly);
             this.gbInput.Controls.Add(this.lbCaseLoaded);
             this.gbInput.Controls.Add(this.cbPalletType);
             this.gbInput.Controls.Add(this.lbPalletType);
@@ -184,7 +172,7 @@
             this.gbInput.Controls.Add(this.graphCtrlPallet);
             this.gbInput.Location = new System.Drawing.Point(6, 27);
             this.gbInput.Name = "gbInput";
-            this.gbInput.Size = new System.Drawing.Size(671, 456);
+            this.gbInput.Size = new System.Drawing.Size(671, 457);
             this.gbInput.TabIndex = 7;
             this.gbInput.TabStop = false;
             this.gbInput.Text = "Input";
@@ -206,7 +194,7 @@
             this.cbPalletType.Name = "cbPalletType";
             this.cbPalletType.Size = new System.Drawing.Size(186, 21);
             this.cbPalletType.TabIndex = 13;
-            this.cbPalletType.SelectedIndexChanged += new System.EventHandler(this.onDataChanged);
+            this.cbPalletType.SelectedIndexChanged += new System.EventHandler(this.OnDataChanged);
             // 
             // lbPalletType
             // 
@@ -216,6 +204,134 @@
             this.lbPalletType.Size = new System.Drawing.Size(56, 13);
             this.lbPalletType.TabIndex = 12;
             this.lbPalletType.Text = "Pallet type";
+            // 
+            // rbContainer
+            // 
+            this.rbContainer.AutoSize = true;
+            this.rbContainer.Location = new System.Drawing.Point(7, 183);
+            this.rbContainer.Name = "rbContainer";
+            this.rbContainer.Size = new System.Drawing.Size(70, 17);
+            this.rbContainer.TabIndex = 8;
+            this.rbContainer.TabStop = true;
+            this.rbContainer.Text = "Container";
+            this.rbContainer.UseVisualStyleBackColor = true;
+            this.rbContainer.CheckedChanged += new System.EventHandler(this.onModeChanged);
+            // 
+            // rbPallet
+            // 
+            this.rbPallet.AutoSize = true;
+            this.rbPallet.Location = new System.Drawing.Point(7, 57);
+            this.rbPallet.Name = "rbPallet";
+            this.rbPallet.Size = new System.Drawing.Size(51, 17);
+            this.rbPallet.TabIndex = 7;
+            this.rbPallet.TabStop = true;
+            this.rbPallet.Text = "Pallet";
+            this.rbPallet.UseVisualStyleBackColor = true;
+            this.rbPallet.CheckedChanged += new System.EventHandler(this.onModeChanged);
+            // 
+            // gbOutput
+            // 
+            this.gbOutput.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.gbOutput.Controls.Add(this.bnSelectImageFolder);
+            this.gbOutput.Controls.Add(this.tbImageFolder);
+            this.gbOutput.Controls.Add(this.chkbSaveImageInFolder);
+            this.gbOutput.Controls.Add(this.chkbGenerateImage);
+            this.gbOutput.Controls.Add(this.chkbOpenFile);
+            this.gbOutput.Controls.Add(this.bnGenerate);
+            this.gbOutput.Controls.Add(this.fileSelectOutput);
+            this.gbOutput.Controls.Add(this.lbOutputFilePath);
+            this.gbOutput.Location = new System.Drawing.Point(6, 490);
+            this.gbOutput.Name = "gbOutput";
+            this.gbOutput.Size = new System.Drawing.Size(671, 90);
+            this.gbOutput.TabIndex = 8;
+            this.gbOutput.TabStop = false;
+            this.gbOutput.Text = "Output";
+            // 
+            // bnSelectImageFolder
+            // 
+            this.bnSelectImageFolder.Location = new System.Drawing.Point(634, 41);
+            this.bnSelectImageFolder.Name = "bnSelectImageFolder";
+            this.bnSelectImageFolder.Size = new System.Drawing.Size(24, 20);
+            this.bnSelectImageFolder.TabIndex = 6;
+            this.bnSelectImageFolder.Text = "...";
+            this.bnSelectImageFolder.UseVisualStyleBackColor = true;
+            this.bnSelectImageFolder.Click += new System.EventHandler(this.OnSelectImageFolder);
+            // 
+            // tbImageFolder
+            // 
+            this.tbImageFolder.Location = new System.Drawing.Point(362, 42);
+            this.tbImageFolder.Name = "tbImageFolder";
+            this.tbImageFolder.Size = new System.Drawing.Size(269, 20);
+            this.tbImageFolder.TabIndex = 5;
+            // 
+            // chkbSaveImageInFolder
+            // 
+            this.chkbSaveImageInFolder.AutoSize = true;
+            this.chkbSaveImageInFolder.Location = new System.Drawing.Point(229, 44);
+            this.chkbSaveImageInFolder.Name = "chkbSaveImageInFolder";
+            this.chkbSaveImageInFolder.Size = new System.Drawing.Size(127, 17);
+            this.chkbSaveImageInFolder.TabIndex = 4;
+            this.chkbSaveImageInFolder.Text = "Save images in folder";
+            this.chkbSaveImageInFolder.UseVisualStyleBackColor = true;
+            this.chkbSaveImageInFolder.CheckedChanged += new System.EventHandler(this.OnSaveImagesInFolder);
+            // 
+            // chkbGenerateImage
+            // 
+            this.chkbGenerateImage.AutoSize = true;
+            this.chkbGenerateImage.Location = new System.Drawing.Point(10, 44);
+            this.chkbGenerateImage.Name = "chkbGenerateImage";
+            this.chkbGenerateImage.Size = new System.Drawing.Size(175, 17);
+            this.chkbGenerateImage.TabIndex = 3;
+            this.chkbGenerateImage.Text = "Generate images in Excel sheet";
+            this.chkbGenerateImage.UseVisualStyleBackColor = true;
+            // 
+            // chkbOpenFile
+            // 
+            this.chkbOpenFile.AutoSize = true;
+            this.chkbOpenFile.Location = new System.Drawing.Point(10, 67);
+            this.chkbOpenFile.Name = "chkbOpenFile";
+            this.chkbOpenFile.Size = new System.Drawing.Size(119, 17);
+            this.chkbOpenFile.TabIndex = 3;
+            this.chkbOpenFile.Text = "Open generated file";
+            this.chkbOpenFile.UseVisualStyleBackColor = true;
+            // 
+            // bnGenerate
+            // 
+            this.bnGenerate.Location = new System.Drawing.Point(567, 63);
+            this.bnGenerate.Name = "bnGenerate";
+            this.bnGenerate.Size = new System.Drawing.Size(92, 23);
+            this.bnGenerate.TabIndex = 2;
+            this.bnGenerate.Text = "Generate";
+            this.bnGenerate.UseVisualStyleBackColor = true;
+            this.bnGenerate.Click += new System.EventHandler(this.OnGenerate);
+            // 
+            // fileSelectOutput
+            // 
+            this.fileSelectOutput.Location = new System.Drawing.Point(102, 15);
+            this.fileSelectOutput.Name = "fileSelectOutput";
+            this.fileSelectOutput.Size = new System.Drawing.Size(557, 20);
+            this.fileSelectOutput.TabIndex = 1;
+            this.fileSelectOutput.FileNameChanged += new System.EventHandler(this.OnOutputFilePathChanged);
+            // 
+            // lbOutputFilePath
+            // 
+            this.lbOutputFilePath.AutoSize = true;
+            this.lbOutputFilePath.Location = new System.Drawing.Point(7, 15);
+            this.lbOutputFilePath.Name = "lbOutputFilePath";
+            this.lbOutputFilePath.Size = new System.Drawing.Size(79, 13);
+            this.lbOutputFilePath.TabIndex = 0;
+            this.lbOutputFilePath.Text = "Output file path";
+            // 
+            // richTextBoxLog
+            // 
+            this.richTextBoxLog.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.richTextBoxLog.Location = new System.Drawing.Point(0, 584);
+            this.richTextBoxLog.Name = "richTextBoxLog";
+            this.richTextBoxLog.Size = new System.Drawing.Size(684, 55);
+            this.richTextBoxLog.TabIndex = 10;
+            this.richTextBoxLog.Text = "";
             // 
             // uCtrlTruckDimensions
             // 
@@ -230,10 +346,11 @@
             this.uCtrlTruckDimensions.TabIndex = 11;
             this.uCtrlTruckDimensions.Text = "Dimensions";
             this.uCtrlTruckDimensions.Unit = treeDiM.StackBuilder.Basics.UnitsManager.UnitType.UT_LENGTH;
+            this.uCtrlTruckDimensions.Value = ((Sharp3D.Math.Core.Vector3D)(resources.GetObject("uCtrlTruckDimensions.Value")));
             this.uCtrlTruckDimensions.ValueX = 0D;
             this.uCtrlTruckDimensions.ValueY = 0D;
             this.uCtrlTruckDimensions.ValueZ = 0D;
-            this.uCtrlTruckDimensions.ValueChanged += new treeDiM.StackBuilder.Basics.UCtrlTriDouble.ValueChangedDelegate(this.onDataChanged);
+            this.uCtrlTruckDimensions.ValueChanged += new treeDiM.StackBuilder.Basics.UCtrlTriDouble.ValueChangedDelegate(this.OnDataChanged);
             // 
             // uCtrlPalletWeight
             // 
@@ -267,110 +384,34 @@
             this.uCtrlMaximumPalletHeight.Unit = treeDiM.StackBuilder.Basics.UnitsManager.UnitType.UT_LENGTH;
             this.uCtrlMaximumPalletHeight.Value = 0D;
             // 
-            // rbContainer
+            // uCtrlPalletDimensions
             // 
-            this.rbContainer.AutoSize = true;
-            this.rbContainer.Location = new System.Drawing.Point(7, 183);
-            this.rbContainer.Name = "rbContainer";
-            this.rbContainer.Size = new System.Drawing.Size(70, 17);
-            this.rbContainer.TabIndex = 8;
-            this.rbContainer.TabStop = true;
-            this.rbContainer.Text = "Container";
-            this.rbContainer.UseVisualStyleBackColor = true;
-            this.rbContainer.CheckedChanged += new System.EventHandler(this.onModeChanged);
+            this.uCtrlPalletDimensions.Location = new System.Drawing.Point(102, 57);
+            this.uCtrlPalletDimensions.Minimum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+            this.uCtrlPalletDimensions.Name = "uCtrlPalletDimensions";
+            this.uCtrlPalletDimensions.Size = new System.Drawing.Size(378, 20);
+            this.uCtrlPalletDimensions.TabIndex = 6;
+            this.uCtrlPalletDimensions.Text = "Dimensions";
+            this.uCtrlPalletDimensions.Unit = treeDiM.StackBuilder.Basics.UnitsManager.UnitType.UT_LENGTH;
+            this.uCtrlPalletDimensions.Value = ((Sharp3D.Math.Core.Vector3D)(resources.GetObject("uCtrlPalletDimensions.Value")));
+            this.uCtrlPalletDimensions.ValueX = 0D;
+            this.uCtrlPalletDimensions.ValueY = 0D;
+            this.uCtrlPalletDimensions.ValueZ = 0D;
+            this.uCtrlPalletDimensions.ValueChanged += new treeDiM.StackBuilder.Basics.UCtrlTriDouble.ValueChangedDelegate(this.OnDataChanged);
             // 
-            // rbPallet
+            // chkbAllowZOrientationOnly
             // 
-            this.rbPallet.AutoSize = true;
-            this.rbPallet.Location = new System.Drawing.Point(7, 57);
-            this.rbPallet.Name = "rbPallet";
-            this.rbPallet.Size = new System.Drawing.Size(51, 17);
-            this.rbPallet.TabIndex = 7;
-            this.rbPallet.TabStop = true;
-            this.rbPallet.Text = "Pallet";
-            this.rbPallet.UseVisualStyleBackColor = true;
-            this.rbPallet.CheckedChanged += new System.EventHandler(this.onModeChanged);
-            // 
-            // gbOutput
-            // 
-            this.gbOutput.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.gbOutput.Controls.Add(this.chkbGenerateReport);
-            this.gbOutput.Controls.Add(this.chkbGenerateImage);
-            this.gbOutput.Controls.Add(this.chkbOpenFile);
-            this.gbOutput.Controls.Add(this.bnGenerate);
-            this.gbOutput.Controls.Add(this.fileSelectOutput);
-            this.gbOutput.Controls.Add(this.lbOutputFilePath);
-            this.gbOutput.Location = new System.Drawing.Point(6, 489);
-            this.gbOutput.Name = "gbOutput";
-            this.gbOutput.Size = new System.Drawing.Size(671, 87);
-            this.gbOutput.TabIndex = 8;
-            this.gbOutput.TabStop = false;
-            this.gbOutput.Text = "Output";
-            // 
-            // chkbOpenFile
-            // 
-            this.chkbOpenFile.AutoSize = true;
-            this.chkbOpenFile.Location = new System.Drawing.Point(10, 67);
-            this.chkbOpenFile.Name = "chkbOpenFile";
-            this.chkbOpenFile.Size = new System.Drawing.Size(119, 17);
-            this.chkbOpenFile.TabIndex = 3;
-            this.chkbOpenFile.Text = "Open generated file";
-            this.chkbOpenFile.UseVisualStyleBackColor = true;
-            // 
-            // bnGenerate
-            // 
-            this.bnGenerate.Location = new System.Drawing.Point(566, 38);
-            this.bnGenerate.Name = "bnGenerate";
-            this.bnGenerate.Size = new System.Drawing.Size(92, 23);
-            this.bnGenerate.TabIndex = 2;
-            this.bnGenerate.Text = "Generate";
-            this.bnGenerate.UseVisualStyleBackColor = true;
-            this.bnGenerate.Click += new System.EventHandler(this.onGenerate);
-            // 
-            // fileSelectOutput
-            // 
-            this.fileSelectOutput.Location = new System.Drawing.Point(102, 15);
-            this.fileSelectOutput.Name = "fileSelectOutput";
-            this.fileSelectOutput.Size = new System.Drawing.Size(557, 20);
-            this.fileSelectOutput.TabIndex = 1;
-            // 
-            // lbOutputFilePath
-            // 
-            this.lbOutputFilePath.AutoSize = true;
-            this.lbOutputFilePath.Location = new System.Drawing.Point(7, 15);
-            this.lbOutputFilePath.Name = "lbOutputFilePath";
-            this.lbOutputFilePath.Size = new System.Drawing.Size(79, 13);
-            this.lbOutputFilePath.TabIndex = 0;
-            this.lbOutputFilePath.Text = "Output file path";
-            // 
-            // chkbGenerateImage
-            // 
-            this.chkbGenerateImage.AutoSize = true;
-            this.chkbGenerateImage.Location = new System.Drawing.Point(10, 44);
-            this.chkbGenerateImage.Name = "chkbGenerateImage";
-            this.chkbGenerateImage.Size = new System.Drawing.Size(101, 17);
-            this.chkbGenerateImage.TabIndex = 3;
-            this.chkbGenerateImage.Text = "Generate image";
-            this.chkbGenerateImage.UseVisualStyleBackColor = true;
-            // 
-            // richTextBoxLog
-            // 
-            this.richTextBoxLog.Location = new System.Drawing.Point(0, 581);
-            this.richTextBoxLog.Name = "richTextBoxLog";
-            this.richTextBoxLog.Size = new System.Drawing.Size(684, 55);
-            this.richTextBoxLog.TabIndex = 10;
-            this.richTextBoxLog.Text = "";
-            // 
-            // chkbGenerateReport
-            // 
-            this.chkbGenerateReport.AutoSize = true;
-            this.chkbGenerateReport.Location = new System.Drawing.Point(158, 44);
-            this.chkbGenerateReport.Name = "chkbGenerateReport";
-            this.chkbGenerateReport.Size = new System.Drawing.Size(100, 17);
-            this.chkbGenerateReport.TabIndex = 4;
-            this.chkbGenerateReport.Text = "Generate report";
-            this.chkbGenerateReport.UseVisualStyleBackColor = true;
+            this.chkbAllowZOrientationOnly.AutoSize = true;
+            this.chkbAllowZOrientationOnly.Location = new System.Drawing.Point(7, 207);
+            this.chkbAllowZOrientationOnly.Name = "chkbAllowZOrientationOnly";
+            this.chkbAllowZOrientationOnly.Size = new System.Drawing.Size(135, 17);
+            this.chkbAllowZOrientationOnly.TabIndex = 18;
+            this.chkbAllowZOrientationOnly.Text = "Allow only Z orientation";
+            this.chkbAllowZOrientationOnly.UseVisualStyleBackColor = true;
             // 
             // FormMain
             // 
@@ -432,7 +473,11 @@
         private System.Windows.Forms.Label lbCaseLoaded;
         private System.Windows.Forms.CheckBox chkbGenerateImage;
         private System.Windows.Forms.RichTextBox richTextBoxLog;
-        private System.Windows.Forms.CheckBox chkbGenerateReport;
+        private System.Windows.Forms.CheckBox chkbSaveImageInFolder;
+        private System.Windows.Forms.Button bnSelectImageFolder;
+        private System.Windows.Forms.TextBox tbImageFolder;
+        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
+        private System.Windows.Forms.CheckBox chkbAllowZOrientationOnly;
     }
 }
 

@@ -23,6 +23,11 @@ namespace treeDiM.StackBuilder.Basics
             BoxProperties bProperties = _containers[index] as BoxProperties;
             return bProperties.OuterDimensions - bProperties.InsideDimensions;
         }
+        public override BBox3D AdditionalBoudingBox(int index)
+        {
+            BoxProperties bProperties = _containers[index] as BoxProperties;
+            return new BBox3D(Vector3D.Zero, bProperties.OuterDimensions);
+        }
         #endregion
 
     }

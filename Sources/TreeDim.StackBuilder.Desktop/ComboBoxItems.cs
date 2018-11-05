@@ -1,7 +1,4 @@
 ﻿#region Using directives
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 using treeDiM.StackBuilder.Basics;
 using System.Windows.Forms;

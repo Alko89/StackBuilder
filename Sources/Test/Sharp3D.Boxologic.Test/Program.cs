@@ -35,8 +35,7 @@ namespace Sharp3D.Boxologic.Test
                     OutputFilePath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "output.txt")
                 };
                 SolutionArray solArray = new SolutionArray();
-                //bl.Run(boxItem, 1040, 960, 840, ref solArray);
-                bl.Run(boxItem, 5000, 5000, 5000, ref solArray);
+                bl.Run(boxItem, 1040, 960, 840, ref solArray);
 
                 Console.Write(solArray.ToString());
                 Console.WriteLine();

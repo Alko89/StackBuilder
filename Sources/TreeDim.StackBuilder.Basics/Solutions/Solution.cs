@@ -128,46 +128,45 @@ namespace treeDiM.StackBuilder.Basics
     #region LayerSummary
     public class LayerSummary
     {
-        #region Data members
-        private Solution _sol;
-        private bool _symetryX, _symetryY;
-        private int _indexLayer;
-        #endregion
-
         #region Constructor
         public LayerSummary(Solution sol, int indexLayer, bool symetryX, bool symetryY)
         {
-            _sol = sol;
-            _indexLayer = indexLayer;
-            _symetryX = symetryX;
-            _symetryY = symetryY;
+            Sol = sol;
+            IndexLayer = indexLayer;
+            SymetryX = symetryX;
+            SymetryY = symetryY;
         }
         #endregion
 
         #region Public properties
         public int ItemCount
-        { get { return _sol.LayerBoxCount(_indexLayer); } }
+        { get { return Sol.LayerBoxCount(IndexLayer); } }
         public Vector3D LayerDimensions
-        { get { return new Vector3D(_sol._layerTypes[_indexLayer].Length, _sol._layerTypes[_indexLayer].Width, _sol._layerTypes[_indexLayer].LayerHeight); } }
+        { get { return new Vector3D(Sol._layerTypes[IndexLayer].Length, Sol._layerTypes[IndexLayer].Width, Sol._layerTypes[IndexLayer].LayerHeight); } }
         public double LayerWeight
-        { get { return _sol.LayerWeight(_indexLayer); } }
+        { get { return Sol.LayerWeight(IndexLayer); } }
         public double LayerNetWeight
-        { get { return _sol.LayerNetWeight(_indexLayer); } }
+        { get { return Sol.LayerNetWeight(IndexLayer); } }
         public double Space
-        { get { return _sol.LayerMaximumSpace(_indexLayer); } }
+        { get { return Sol.LayerMaximumSpace(IndexLayer); } }
         public List<int> LayerIndexes { get; } = new List<int>();
 
         public string LayerIndexesString => string.Join(",", LayerIndexes.ToArray());
 
-        public ILayer Layer3D => _sol.GetILayer(_indexLayer, _symetryX, _symetryY);
+        public ILayer Layer3D => Sol.GetILayer(IndexLayer, SymetryX, SymetryY);
+
+        public bool SymetryX { get; }
+        public bool SymetryY { get; }
+        public int IndexLayer { get; }
+        public Solution Sol { get; set; }
         #endregion
 
         #region Public methods
         public bool IsLayerTypeOf(SolutionItem solItem)
         {
-            return _indexLayer == solItem.LayerIndex
-                && _symetryX == solItem.SymetryX
-                && _symetryY == solItem.SymetryY;
+            return IndexLayer == solItem.LayerIndex
+                && SymetryX == solItem.SymetryX
+                && SymetryY == solItem.SymetryY;
         }
         public void AddIndex(int index)
         {

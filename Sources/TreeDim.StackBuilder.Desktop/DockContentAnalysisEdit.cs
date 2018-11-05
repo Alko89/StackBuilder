@@ -1,16 +1,9 @@
 ﻿#region Using directives
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using System.Globalization;
 
-// Docking
-using WeifenLuo.WinFormsUI.Docking;
 // log4net
 using log4net;
 // Sharp3D
@@ -27,21 +20,6 @@ namespace treeDiM.StackBuilder.Desktop
 {
     public partial class DockContentAnalysisEdit : DockContentView, IDrawingContainer, IItemBaseFilter
     {
-        #region Data members
-        /// <summary>
-        /// analysis
-        /// </summary>
-        protected Analysis _analysis;
-        /// <summary>
-        /// solution
-        /// </summary>
-        protected Solution _solution;
-        /// <summary>
-        /// logger
-        /// </summary>
-        protected static readonly ILog _log = LogManager.GetLogger(typeof(DockContentAnalysisEdit));
-        #endregion
-
         #region Constructor
         public DockContentAnalysisEdit()
             : base(null)
@@ -67,7 +45,7 @@ namespace treeDiM.StackBuilder.Desktop
             base.OnLoad(e);
             if (DesignMode) return;
 
-            GridFontSize = Properties.Settings.Default.GridFontSize;
+            GridFontSize = Settings.Default.GridFontSize;
 
             // --- window caption
             if (null != Analysis)
@@ -127,7 +105,7 @@ namespace treeDiM.StackBuilder.Desktop
         }
         public virtual string GridCaption
         {
-            get { return Properties.Resources.ID_LOAD; }
+            get { return Resources.ID_LOAD; }
         }
         protected int GridFontSize { get; set; }
         #endregion
@@ -520,6 +498,21 @@ namespace treeDiM.StackBuilder.Desktop
             {
             }
         }
+        #endregion
+
+        #region Data members
+        /// <summary>
+        /// analysis
+        /// </summary>
+        protected Analysis _analysis;
+        /// <summary>
+        /// solution
+        /// </summary>
+        protected Solution _solution;
+        /// <summary>
+        /// logger
+        /// </summary>
+        protected static readonly ILog _log = LogManager.GetLogger(typeof(DockContentAnalysisEdit));
         #endregion
     }
 }

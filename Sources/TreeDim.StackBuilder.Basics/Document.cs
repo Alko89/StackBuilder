@@ -23,23 +23,23 @@ namespace treeDiM.StackBuilder.Basics
     public class Document
     {
         #region Data members
-        private string _name, _description, _author;
-        private DateTime _dateCreated;
         private UnitsManager.UnitSystem _unitSystem;
         private List<ItemBase> _typeList = new List<ItemBase>();
-        private List<Analysis> _analyses = new List<Analysis>();
         private List<AnalysisLegacy> _analysesLegacy = new List<AnalysisLegacy>();
  
         private List<IDocumentListener> _listeners = new List<IDocumentListener>();
         private static ILayerSolver _solver;
         protected static readonly ILog _log = LogManager.GetLogger(typeof(Document));
+
+        public delegate void DocumentClosing(Document document);
+        public event DocumentClosing DocumentClosed;
         #endregion
 
         #region Constructor
         public Document(string filePath, IDocumentListener listener)
         {
             // set name from file path
-            _name = Path.GetFileNameWithoutExtension(filePath);
+            Name = Path.GetFileNameWithoutExtension(filePath);
             if (null != listener)
             {
                 // add listener
@@ -50,15 +50,15 @@ namespace treeDiM.StackBuilder.Basics
             // load file
             Load(filePath);            
             // rechange name to match filePath
-            _name = Path.GetFileNameWithoutExtension(filePath);
+            Name = Path.GetFileNameWithoutExtension(filePath);
         }
 
         public Document(string name, string description, string author, DateTime dateCreated, IDocumentListener listener)
         {
-            _name = name;
-            _description = description;
-            _author = author;
-            _dateCreated = dateCreated;
+            Name = name;
+            Description = description;
+            Author = author;
+            DateOfCreation = dateCreated;
             if (null != listener)
             {
                 // add listener
@@ -95,7 +95,7 @@ namespace treeDiM.StackBuilder.Basics
         public bool IsValidNewAnalysisName(string name, ItemBase analysisToRename)
         {
             string trimmedName = name.Trim();
-            return (null == _analyses.Find(
+            return (null == Analyses.Find(
                 delegate(Analysis analysis)
                 {
                     return analysis != analysisToRename
@@ -683,16 +683,43 @@ namespace treeDiM.StackBuilder.Basics
             return InsertAnalysis(analysis);
         }
 
+        public HAnalysis CreateNewHAnalysisCasePallet(
+            string name, string description,
+            List<ContentItem> contentItems,
+            PalletProperties palletProperties,
+            HConstraintSetPallet constraintSet,
+            HSolution solution
+            )
+        {
+            HAnalysisPallet analysis = new HAnalysisPallet(this)
+            {
+                Content = contentItems,
+                Pallet = palletProperties,
+                ConstraintSet = constraintSet,
+                Solution = solution
+            };
+            analysis.ID.SetNameDesc(name, description);
+            return InsertAnalysis(analysis);
+        }
+
         private Analysis InsertAnalysis(Analysis analysis)
         {
-            _analyses.Add(analysis);
+            Analyses.Add(analysis);
             // notify listeners
             NotifyOnNewAnalysisCreated(analysis);
             // set document dirty
             Modify();
             return analysis;
         }
-
+        private HAnalysis InsertAnalysis(HAnalysis analysis)
+        {
+            HAnalyses.Add(analysis);
+            // notify listeners
+            NotifyOnNewAnalysisCreated(analysis);
+            // set document dirty
+            Modify();
+            return analysis;
+        }
         public void UpdateAnalysis(Analysis analysis)
         {
             // notify listeners
@@ -700,6 +727,14 @@ namespace treeDiM.StackBuilder.Basics
             // set document dirty
             Modify();
         }
+        public void UpdateAnalysis(HAnalysis analysis)
+        {
+            // notify listeners
+            NotifyAnalysisUpdated(analysis);
+            // set document dirty
+            Modify();
+        }
+
         #endregion
 
         #region Legacy analyses instantiation method
@@ -862,7 +897,7 @@ namespace treeDiM.StackBuilder.Basics
             else if (item is Analysis)
             {
                 NotifyOnAnalysisRemoved(item as Analysis);
-                if (!_analyses.Remove(item as Analysis))
+                if (!Analyses.Remove(item as Analysis))
                     _log.Warn(string.Format("Failed to properly remove analysis {0}", item.ID.Name));
             }
             else if (item is AnalysisLegacy)
@@ -878,26 +913,10 @@ namespace treeDiM.StackBuilder.Basics
         #endregion
 
         #region Public properties
-        public string Name
-        {
-            get { return _name; }
-            set { _name = value; }
-        }
-        public string Description
-        {
-            get { return _description; }
-            set { _description = value; }
-        }
-        public string Author
-        {
-            get { return _author; }
-            set { _author = value; }
-        }
-        public DateTime DateOfCreation
-        {
-            get { return _dateCreated; }
-            set { _dateCreated = value; }
-        }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public string Author { get; set; }
+        public DateTime DateOfCreation { get; set; }
         public ReadOnlyCollection<ItemBase> TypeList
         {
             get { return new ReadOnlyCollection<ItemBase>(_typeList); }
@@ -929,7 +948,8 @@ namespace treeDiM.StackBuilder.Basics
         public IEnumerable<ItemBase> GetByType(Type t) =>
             _typeList.Where(item => item.GetType() == t);
 
-        public List<Analysis> Analyses => _analyses;
+        public List<Analysis> Analyses { get; } = new List<Analysis>();
+        public List<HAnalysis> HAnalyses { get; } = new List<HAnalysis>();
 
         /// <summary>
         /// Get list of case/pallet analyses
@@ -993,20 +1013,20 @@ namespace treeDiM.StackBuilder.Basics
         void LoadDocumentElement(XmlElement docElement)
         {
             if (docElement.HasAttribute("Name"))
-                _name = docElement.Attributes["Name"].Value;
+                Name = docElement.Attributes["Name"].Value;
             if (docElement.HasAttribute("Description"))
-                _description = docElement.Attributes["Description"].Value;
+                Description = docElement.Attributes["Description"].Value;
             if (docElement.HasAttribute("Description"))
-                _author = docElement.Attributes["Author"].Value;
+                Author = docElement.Attributes["Author"].Value;
             if (docElement.HasAttribute("DateCreated"))
             {
                 try
                 {
-                    _dateCreated = Convert.ToDateTime(docElement.Attributes["DateCreated"].Value, new CultureInfo("en-US"));
+                    DateOfCreation = Convert.ToDateTime(docElement.Attributes["DateCreated"].Value, new CultureInfo("en-US"));
                 }
                 catch (Exception /*ex*/)
                 {
-                    _dateCreated = DateTime.Now;
+                    DateOfCreation = DateTime.Now;
                     _log.Debug("Failed to load date of creation correctly: Loading file generated with former version?");
                 }
             }
@@ -1268,55 +1288,6 @@ namespace treeDiM.StackBuilder.Basics
                 );
             cylinderProperties.ID.IGuid = new Guid(sid);
         }
-        /*
-        private void LoadCaseOfBoxesProperties(XmlElement eltCaseOfBoxesProperties)
-        {
-            string sid = eltCaseOfBoxesProperties.Attributes["Id"].Value;
-            string sname = eltCaseOfBoxesProperties.Attributes["Name"].Value;
-            string sdescription = eltCaseOfBoxesProperties.Attributes["Description"].Value;
-            string sweight = eltCaseOfBoxesProperties.Attributes["Weight"].Value;
-            string sBoxId = eltCaseOfBoxesProperties.Attributes["InsideBoxId"].Value;
-
-            CaseDefinition caseDefinition = null;
-            ParamSetPackOptim constraintSet = null;
-            Color[] colors = new Color[6];
-            List<Pair<HalfAxis.HAxis, Texture>> listTexture = new List<Pair<HalfAxis.HAxis,Texture>>();
-            foreach (XmlNode node in eltCaseOfBoxesProperties.ChildNodes)
-            {
-                if (string.Equals(node.Name, "FaceColors", StringComparison.CurrentCultureIgnoreCase))
-                {
-                    XmlElement faceColorList = node as XmlElement;
-                    LoadFaceColors(faceColorList, ref colors);
-                }
-                else if (string.Equals(node.Name, "Textures", StringComparison.CurrentCultureIgnoreCase))
-                {
-                    XmlElement textureElt = node as XmlElement;
-                    LoadTextureList(textureElt, ref listTexture);
-                }
-                else if (string.Equals(node.Name, "CaseDefinition", StringComparison.CurrentCultureIgnoreCase))
-                {
-                    XmlElement caseDefinitionElt = node as XmlElement;
-                    LoadCaseDefinition(caseDefinitionElt, out caseDefinition);
-                }
-                else if (string.Equals(node.Name, "OptimConstraintSet", StringComparison.CurrentCultureIgnoreCase))
-                {
-                    XmlElement constraintSetElt = node as XmlElement;
-                    LoadOptimConstraintSet(constraintSetElt, out constraintSet);
-                }
-            }
-
-            CaseOfBoxesProperties caseOfBoxProperties = CreateNewCaseOfBoxes(
-                sname
-                , sdescription
-                , GetTypeByGuid(new Guid(sBoxId)) as BoxProperties
-                , caseDefinition
-                , constraintSet);
-            caseOfBoxProperties.SetWeight( UnitsManager.ConvertMassFrom(Convert.ToDouble(sweight, System.Globalization.CultureInfo.InvariantCulture), _unitSystem) );
-            caseOfBoxProperties.ID.IGuid = new Guid(sid);
-            caseOfBoxProperties.TextureList = listTexture;
-            caseOfBoxProperties.SetAllColors( colors );
-        }
-        */ 
         private void LoadFaceColors(XmlElement eltColors, ref Color[] colors)
         {
             foreach (XmlNode faceColorNode in eltColors.ChildNodes)
@@ -1366,7 +1337,7 @@ namespace treeDiM.StackBuilder.Basics
             tapeColor = Color.Black;
             try
             {
-                tapeWidth = UnitsManager.ConvertLengthFrom(Convert.ToDouble(eltTape.Attributes["TapeWidth"].Value, CultureInfo.InvariantCulture), _unitSystem);
+                tapeWidth = Convert.ToDouble(eltTape.Attributes["TapeWidth"].Value, CultureInfo.InvariantCulture);
                 string sColorArgb = eltTape.Attributes["TapeColor"].Value;
                 tapeColor = Color.FromArgb(Convert.ToInt32(sColorArgb));
             }
@@ -1880,23 +1851,6 @@ namespace treeDiM.StackBuilder.Basics
                         }
                     }
                 }
-
-                /*
-                BProperties bProperties = GetTypeByGuid(new Guid(sBoxId)) as BProperties;
-                // instantiate box/case analysis
-                BoxCaseAnalysis analysis = CreateNewBoxCaseAnalysis(
-                         sName
-                         , sDescription
-                         , bProperties
-                         , GetTypeByGuid(new Guid(sCaseId)) as BoxProperties
-                         , constraintSet
-                         , solutions
-                         );
-
-                // save selected solutions
-                foreach (int indexSol in selectedIndices)
-                    analysis.SelectSolutionByIndex(indexSol);
-                */
             }
         } 
 
@@ -2178,27 +2132,7 @@ namespace treeDiM.StackBuilder.Basics
             return constraints;
         }
         #endregion
-/*
-        private CylinderPalletConstraintSet LoadCylinderPalletConstraintSet(XmlElement eltConstraintSet)
-        {
-            CylinderPalletConstraintSet constraints = new CylinderPalletConstraintSet();
-            // stop criterions
-            if (constraints.UseMaximumPalletHeight = eltConstraintSet.HasAttribute("MaximumHeight"))
-                constraints.MaximumPalletHeight = UnitsManager.ConvertLengthFrom(double.Parse(eltConstraintSet.Attributes["MaximumHeight"].Value), _unitSystem);
-            if (constraints.UseMaximumNumberOfItems = eltConstraintSet.HasAttribute("ManimumNumberOfItems"))
-                constraints.MaximumNumberOfItems = int.Parse(eltConstraintSet.Attributes["ManimumNumberOfItems"].Value);
-            if (constraints.UseMaximumPalletWeight = eltConstraintSet.HasAttribute("MaximumPalletWeight"))
-                constraints.MaximumPalletWeight = UnitsManager.ConvertMassFrom(double.Parse(eltConstraintSet.Attributes["MaximumPalletWeight"].Value), _unitSystem);
-            if (constraints.UseMaximumLoadOnLowerCylinder = eltConstraintSet.HasAttribute("MaximumLoadOnLowerCylinder"))
-                constraints.MaximumLoadOnLowerCylinder = UnitsManager.ConvertMassFrom(double.Parse(eltConstraintSet.Attributes["MaximumLoadOnLowerCylinder"].Value), _unitSystem);
-            // overhang / underhang
-            if (eltConstraintSet.HasAttribute("OverhangX"))
-                constraints.OverhangX = UnitsManager.ConvertLengthFrom(double.Parse(eltConstraintSet.Attributes["OverhangX"].Value), _unitSystem);
-            if (eltConstraintSet.HasAttribute("OverhangY"))
-                constraints.OverhangY = UnitsManager.ConvertLengthFrom(double.Parse(eltConstraintSet.Attributes["OverhangY"].Value), _unitSystem);
-            return constraints;
-        }
-*/
+
         private HCylinderPalletConstraintSet LoadHCylinderPalletConstraintSet(XmlElement eltConstraintSet)
         {
             HCylinderPalletConstraintSet constraints = new HCylinderPalletConstraintSet();
@@ -2422,19 +2356,19 @@ namespace treeDiM.StackBuilder.Basics
                 xmlDoc.AppendChild(xmlRootElement);
                 // name
                 XmlAttribute xmlDocNameAttribute = xmlDoc.CreateAttribute("Name");
-                xmlDocNameAttribute.Value = _name;
+                xmlDocNameAttribute.Value = Name;
                 xmlRootElement.Attributes.Append(xmlDocNameAttribute);
                 // description
                 XmlAttribute xmlDocDescAttribute = xmlDoc.CreateAttribute("Description");
-                xmlDocDescAttribute.Value = _description;
+                xmlDocDescAttribute.Value = Description;
                 xmlRootElement.Attributes.Append(xmlDocDescAttribute);
                 // author
                 XmlAttribute xmlDocAuthorAttribute = xmlDoc.CreateAttribute("Author");
-                xmlDocAuthorAttribute.Value = _author;
+                xmlDocAuthorAttribute.Value = Author;
                 xmlRootElement.Attributes.Append(xmlDocAuthorAttribute);
                 // dateCreated
                 XmlAttribute xmlDateCreatedAttribute = xmlDoc.CreateAttribute("DateCreated");
-                xmlDateCreatedAttribute.Value = Convert.ToString(_dateCreated, new CultureInfo("en-US"));
+                xmlDateCreatedAttribute.Value = Convert.ToString(DateOfCreation, new CultureInfo("en-US"));
                 xmlRootElement.Attributes.Append(xmlDateCreatedAttribute);
                 // unit system
                 XmlAttribute xmlUnitSystem = xmlDoc.CreateAttribute("UnitSystem");
@@ -2476,7 +2410,7 @@ namespace treeDiM.StackBuilder.Basics
                 // create Analyses element
                 XmlElement xmlAnalysesElt = xmlDoc.CreateElement("Analyses");
                 xmlRootElement.AppendChild(xmlAnalysesElt);
-                foreach (Analysis analysis in _analyses)
+                foreach (Analysis analysis in Analyses)
                     SaveAnalysis(analysis, xmlAnalysesElt, xmlDoc);
                 // finally save XmlDocument
                 xmlDoc.Save(filePath);
@@ -3630,11 +3564,11 @@ namespace treeDiM.StackBuilder.Basics
         {
             // remove all analysis and items
             // -> this should close any listening forms
-            while (_analyses.Count > 0)
-                RemoveItem(_analyses[0]);
+            while (Analyses.Count > 0)
+                RemoveItem(Analyses[0]);
             while (_typeList.Count > 0)
                 RemoveItem(_typeList[0]);
-            NotifyOnDocumentClosed();
+            DocumentClosed?.Invoke(this);
         }
         #endregion
 
@@ -3744,10 +3678,15 @@ namespace treeDiM.StackBuilder.Basics
             foreach (IDocumentListener listener in _listeners)
                 listener.OnAnalysisUpdated(this, analysis);
         }
-        private void NotifyOnDocumentClosed()
+        private void NotifyOnNewAnalysisCreated(HAnalysis analysis)
         {
             foreach (IDocumentListener listener in _listeners)
-                listener.OnDocumentClosed(this);
+                listener.OnNewAnalysisCreated(this, analysis);
+        }
+        private void NotifyAnalysisUpdated(HAnalysis analysis)
+        {
+            foreach (IDocumentListener listener in _listeners)
+                listener.OnAnalysisUpdated(this, analysis);
         }
         private void NotifyOnTypeRemoved(ItemBase item)
         {

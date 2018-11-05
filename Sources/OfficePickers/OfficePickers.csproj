@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.50727</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{CAD56B75-481B-4C76-B090-4BC2FF5E5681}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -97,14 +97,23 @@
       <DependentUpon>ComboBoxColorPicker.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="ColorPicker\ComboBoxColorPicker.tr.resx">
+      <DependentUpon>ComboBoxColorPicker.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ColorPicker\OfficeColorPicker.resx">
       <DependentUpon>OfficeColorPicker.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ColorPicker\OfficeColorPicker.tr.resx">
+      <DependentUpon>OfficeColorPicker.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ColorPicker\ToolStripColorPicker.ru.resx">
       <DependentUpon>ToolStripColorPicker.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ColorPicker\ToolStripColorPicker.sv.resx">
+      <DependentUpon>ToolStripColorPicker.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ColorPicker\ToolStripColorPicker.tr.resx">
       <DependentUpon>ToolStripColorPicker.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ColorPicker\ToolStripColorPicker.zh.resx">
@@ -127,6 +136,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Util\ContextMenuForm.tr.resx">
+      <DependentUpon>ContextMenuForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Util\GradientPanel.bmp" />
   </ItemGroup>
   <ItemGroup>

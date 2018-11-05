@@ -324,8 +324,10 @@ namespace treeDiM.StackBuilder.ExcelAddIn
                             , ExcelHelpers.ReadDouble("Pallet length", worksheet, "c" + i)
                             , ExcelHelpers.ReadDouble("Pallet width", worksheet, "d" + i)
                             , ExcelHelpers.ReadDouble("Pallet height", worksheet, "e" + i)
-                            );
-                        palletProp.Weight = ExcelHelpers.ReadDouble("Weight", worksheet, "f" + i);
+                            )
+                        {
+                            Weight = ExcelHelpers.ReadDouble("Weight", worksheet, "f" + i)
+                        };
                         palletProp.ID.SetNameDesc(
                             ExcelHelpers.ReadString("Pallet name", worksheet, "a" + i),
                             ExcelHelpers.ReadString("Pallet description", worksheet, "b" + i)

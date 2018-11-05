@@ -16,11 +16,11 @@ namespace treeDiM.StackBuilder.Basics
         void OnNewTypeCreated(Document doc, ItemBase itemBase);
         void OnNewAnalysisCreated(Document doc, Analysis analysis);
         void OnAnalysisUpdated(Document doc, Analysis analysis);
+        void OnNewAnalysisCreated(Document doc, HAnalysis analysis);
+        void OnAnalysisUpdated(Document doc, HAnalysis analysis);
         // remove
         void OnTypeRemoved(Document doc, ItemBase itemBase);
         void OnAnalysisRemoved(Document doc, ItemBase itemBase); 
-        // close
-        void OnDocumentClosed(Document doc);
     }
     #endregion
 }

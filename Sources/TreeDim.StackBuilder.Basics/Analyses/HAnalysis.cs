@@ -46,6 +46,14 @@ namespace treeDiM.StackBuilder.Basics
                 ci.Pack.RemoveDependancy(this);
             _content.Clear();
         }
+        public void AddContent(List<ContentItem> contentItems)
+        {
+            foreach (var ci in contentItems)
+            {
+                ci.Pack.AddDependancy(this);
+                _content.Add(ci);
+            }
+        }
         public void AddContent(Packable p, uint number, bool[] orientations)
         {
             _content.Add(new ContentItem(p, number) { AllowedOrientations = orientations });
@@ -59,6 +67,7 @@ namespace treeDiM.StackBuilder.Basics
         #region Container
         public IEnumerable<ItemBase> Containers => _containers;
         public abstract Vector3D DimContainer(int index);
+        public abstract BBox3D AdditionalBoudingBox(int index);
         #endregion
 
         public HConstraintSet ConstraintSet { get; set; }
@@ -72,7 +81,7 @@ namespace treeDiM.StackBuilder.Basics
             return Solution;
         }
         #region Non-public members
-        public HSolution Solution { get; private set; }
+        public HSolution Solution { get; set; }
 
         protected override void RemoveItselfFromDependancies()
         {

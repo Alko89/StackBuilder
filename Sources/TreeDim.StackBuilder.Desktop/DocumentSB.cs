@@ -2,16 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.ComponentModel;
 using System.Windows.Forms;
 
 using treeDiM.StackBuilder.Basics;
-using treeDiM.StackBuilder.Engine;
-using treeDiM.StackBuilder.Reporting;
 
 // Docking
-using WeifenLuo.WinFormsUI.Docking;
 #endregion
 
 namespace treeDiM.StackBuilder.Desktop
@@ -127,6 +123,19 @@ namespace treeDiM.StackBuilder.Desktop
             AddView(form);
             return form;
         }
+        public DockContentView CreateViewHAnalysis(HAnalysis analysis)
+        {
+            DockContentView form = null;
+            if (analysis is HAnalysisPallet) form = new DockContentHAnalysisCasePallet(this, analysis);
+            else
+            {
+                _log.Error(string.Format("Analysis ({0}) type not handled", analysis.Name));
+                return null;
+            }
+            AddView(form);
+            return form;
+        }
+
         /// <summary>
         /// creates a new DockContentECTAnalysis view
         /// </summary>
@@ -352,11 +361,11 @@ namespace treeDiM.StackBuilder.Desktop
         #region UI item edition
         public void EditAnalysis(Analysis analysis)
         {
-            // search for any DockContentAnalysis window
+            // search for any DockContentAnalysis window and close it
             var seq = (from view in Views
                        where view is DockContentAnalysisEdit && analysis == (view as DockContentAnalysisEdit).Analysis
                        select view);
-            while (seq.Count() > 0) seq.First().Close();
+            if (seq.Count() > 0) seq.First().Close();
 
             // instantiate a form to edit analysis
             Form form = null;
@@ -376,6 +385,24 @@ namespace treeDiM.StackBuilder.Desktop
                 DockContentView formAnalysis = CreateViewAnalysis(analysis);
                 formAnalysis.Show();
             }
+        }
+        public void EditAnalysis(HAnalysis analysis)
+        {
+            // search for DockContentHAnalysis window and close it
+            var seq = (from view in Views
+                       where view is DockContentHAnalysisCasePallet && (analysis == (view as DockContentHAnalysisCasePallet).Analysis)
+                       select view);
+            if (seq.Count() > 0) seq.First().Close();
+
+            // instantiate a form to edit analysis
+            Form form = null;
+            if (analysis is HAnalysisPallet) form = new FormNewHAnalysisCasePallet(this, analysis);
+            else
+            {
+                MessageBox.Show("Unexpected analysis type!");
+                return;
+            }
+            if (DialogResult.OK == form.ShowDialog()) { }
         }
         #endregion
 

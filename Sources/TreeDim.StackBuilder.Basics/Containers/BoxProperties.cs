@@ -19,7 +19,7 @@ namespace treeDiM.StackBuilder.Basics
             : base(document)
         {
             _length = 0.0; _width = 0.0; _height = 0.0;
-            _hasInsideDimensions = true;
+            HasInsideDimensions = true;
         }
         
         /// <summary>
@@ -35,7 +35,7 @@ namespace treeDiM.StackBuilder.Basics
             _length     = length;
             _width      = width;
             _height     = height;
-            _hasInsideDimensions = false;
+            HasInsideDimensions = false;
         }
 
         public BoxProperties(Document document, double[] dimensions)
@@ -44,7 +44,7 @@ namespace treeDiM.StackBuilder.Basics
             _length = dimensions[0];
             _width = dimensions[1];
             _height = dimensions[2];
-            _hasInsideDimensions = false;
+            HasInsideDimensions = false;
 
         }
 
@@ -69,7 +69,7 @@ namespace treeDiM.StackBuilder.Basics
             _insideLength = insideLength;
             _insideWidth = insideWidth;
             _insideHeight = insideHeight;
-            _hasInsideDimensions = true;
+            HasInsideDimensions = true;
         }
 
         public override bool IsCase => HasInsideDimensions;
@@ -83,10 +83,10 @@ namespace treeDiM.StackBuilder.Basics
         }
 
         // InsideDimensions
-        public bool HasInsideDimensions => _hasInsideDimensions;
+        public bool HasInsideDimensions { get; }
         public double InsideLength
         {
-            get => _hasInsideDimensions ? _insideLength : _length;
+            get => HasInsideDimensions ? _insideLength : _length;
             set
             {
                 _insideLength = value;
@@ -95,7 +95,7 @@ namespace treeDiM.StackBuilder.Basics
         }
         public double InsideWidth
         {
-            get => _hasInsideDimensions ? _insideWidth : _width;
+            get => HasInsideDimensions ? _insideWidth : _width;
             set
             {
                 _insideWidth = value;
@@ -104,7 +104,7 @@ namespace treeDiM.StackBuilder.Basics
         }
         public double InsideHeight
         {
-            get => _hasInsideDimensions ? _insideHeight : _height;
+            get => HasInsideDimensions ? _insideHeight : _height;
             set
             {
                 _insideHeight = value;
@@ -254,19 +254,14 @@ namespace treeDiM.StackBuilder.Basics
         public bool ShowTopLabel { get; set; }
 
         public override bool IsBundle => false;
+        protected override string TypeName => IsCase ? Properties.Resources.ID_NAMECASE : Properties.Resources.ID_NAMEBOX;
 
         #region Non-Public Members
-
         private double _height;
-        private bool _hasInsideDimensions;
         private double _insideLength, _insideWidth, _insideHeight;
         private Color[] _colors = new Color[6];
         private List<Pair<HalfAxis.HAxis, Texture>> _textures = new List<Pair<HalfAxis.HAxis, Texture>>();
         private OptDouble _maxWeight;
-
-        protected override string TypeName => IsCase ? Properties.Resources.ID_NAMECASE : Properties.Resources.ID_NAMEBOX;
-
         #endregion
-
     }
 }

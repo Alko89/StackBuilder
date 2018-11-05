@@ -113,83 +113,10 @@ namespace treeDiM.StackBuilder.Basics
             {
                 Vector3D dimensions = packableBrick.OuterDimensions;
                 foreach (BoxPosition bpos in this)
-                {
-                    Vector3D[] pts = new Vector3D[8];
-                    Vector3D vI = HalfAxis.ToVector3D(bpos.DirectionLength);
-                    Vector3D vJ = HalfAxis.ToVector3D(bpos.DirectionWidth);
-                    Vector3D vK = Vector3D.CrossProduct(vI, vJ);
-                    pts[0] = bpos.Position;
-                    pts[1] = bpos.Position + dimensions.X * vI;
-                    pts[2] = bpos.Position + dimensions.Y * vJ;
-                    pts[3] = bpos.Position + dimensions.X * vI + dimensions.Y * vJ;
-                    pts[4] = bpos.Position + dimensions.Z * vK;
-                    pts[5] = bpos.Position + dimensions.Y * vJ + dimensions.Z * vK;
-                    pts[6] = bpos.Position + HalfAxis.ToVector3D(bpos.DirectionWidth) * dimensions.Y;
-                    pts[7] = bpos.Position + HalfAxis.ToVector3D(bpos.DirectionLength) * dimensions.X + HalfAxis.ToVector3D(bpos.DirectionWidth) * dimensions.Y;
-
-                    foreach (Vector3D pt in pts)
-                        bbox.Extend(pt);
-                }
+                    bbox.Extend(bpos.BBox(dimensions));
             }
             return bbox;
         }
-/*
-        /// <summary>
-        /// Compute layer bouding box
-        /// </summary>
-        /// <param name="bProperties">Case properties</param>
-        /// <returns>bounding box</returns>
-        public BBox3D BoundingBox(BProperties bProperties)
-        {
-            BBox3D bbox = new BBox3D();
-
-            foreach (BoxPosition bpos in this)
-            {
-                Vector3D[] pts = new Vector3D[8];
-                Vector3D vI = HalfAxis.ToVector3D(bpos.DirectionLength);
-                Vector3D vJ = HalfAxis.ToVector3D(bpos.DirectionWidth);
-                Vector3D vK = Vector3D.CrossProduct(vI, vJ);
-                pts[0] = bpos.Position;
-                pts[1] = bpos.Position + bProperties.Length * vI;
-                pts[2] = bpos.Position + bProperties.Width * vJ;
-                pts[3] = bpos.Position + bProperties.Length * vI + bProperties.Width * vJ;
-                pts[4] = bpos.Position + bProperties.Height * vK;
-                pts[5] = bpos.Position + bProperties.Width * vJ + bProperties.Height * vK; ;
-                pts[6] = bpos.Position + HalfAxis.ToVector3D(bpos.DirectionWidth) * bProperties.Width;
-                pts[7] = bpos.Position + HalfAxis.ToVector3D(bpos.DirectionLength) * bProperties.Length + HalfAxis.ToVector3D(bpos.DirectionWidth) * bProperties.Width;
-
-                foreach (Vector3D pt in pts)
-                    bbox.Extend(pt);
-            }
-            return bbox;
-        }
-
-        public BBox3D BoundingBox(PackProperties packProperties)
-        {
-            BBox3D bbox = new BBox3D();
-
-            foreach (BoxPosition bpos in this)
-            {
-                Vector3D[] pts = new Vector3D[8];
-                Vector3D vI = HalfAxis.ToVector3D(bpos.DirectionLength);
-                Vector3D vJ = HalfAxis.ToVector3D(bpos.DirectionWidth);
-                Vector3D vK = Vector3D.CrossProduct(vI, vJ);
-                pts[0] = bpos.Position;
-                pts[1] = bpos.Position + packProperties.Length * vI;
-                pts[2] = bpos.Position + packProperties.Width * vJ;
-                pts[3] = bpos.Position + packProperties.Length * vI + packProperties.Width * vJ;
-                pts[4] = bpos.Position + packProperties.Height * vK;
-                pts[5] = bpos.Position + packProperties.Width * vJ + packProperties.Height * vK; ;
-                pts[6] = bpos.Position + HalfAxis.ToVector3D(bpos.DirectionWidth) * packProperties.Width;
-                pts[7] = bpos.Position + HalfAxis.ToVector3D(bpos.DirectionLength) * packProperties.Length + HalfAxis.ToVector3D(bpos.DirectionWidth) * packProperties.Width;
-
-                foreach (Vector3D pt in pts)
-                    bbox.Extend(pt);
-            }
-
-            return bbox;       
-        }
-*/
         public double Thickness(BProperties bProperties)
         {
             if (Count == 0) return 0.0;

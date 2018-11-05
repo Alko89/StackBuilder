@@ -15,12 +15,8 @@ namespace treeDiM.StackBuilder.Graphics
     /// </summary>
     public class Case : Drawable
     {
+
         #region Data members
-        private uint _pickId = 0;
-        private double _length, _width, _height;
-        private double _insideLength, _insideWidth, _insideHeight;
-        private Color[] _colors = new Color[6];
-        private Color _colorPath = Color.Black;
         private Vector3D[] _points;
         private Transform3D _transf = Transform3D.Identity;
         #endregion
@@ -28,25 +24,25 @@ namespace treeDiM.StackBuilder.Graphics
         #region Constructor
         public Case(BoxProperties boxProperties)
         {
-            _length = boxProperties.Length;
-            _width = boxProperties.Width;
-            _height = boxProperties.Height;
-            _insideLength = boxProperties.InsideLength;
-            _insideWidth = boxProperties.InsideWidth;
-            _insideHeight = boxProperties.InsideHeight;
-            _colors = boxProperties.Colors;
-            _colorPath = Color.Black;
+            Length = boxProperties.Length;
+            Width = boxProperties.Width;
+            Height = boxProperties.Height;
+            InsideLength = boxProperties.InsideLength;
+            InsideWidth = boxProperties.InsideWidth;
+            InsideHeight = boxProperties.InsideHeight;
+            Colors = boxProperties.Colors;
+            ColorPath = Color.Black;
         }
         public Case(BoxProperties boxProperties, Transform3D transf)
         {
-            _length = boxProperties.Length;
-            _width = boxProperties.Width;
-            _height = boxProperties.Height;
-            _insideLength = boxProperties.InsideLength;
-            _insideWidth = boxProperties.InsideWidth;
-            _insideHeight = boxProperties.InsideHeight;
-            _colors = boxProperties.Colors;
-            _colorPath = Color.Black;
+            Length = boxProperties.Length;
+            Width = boxProperties.Width;
+            Height = boxProperties.Height;
+            InsideLength = boxProperties.InsideLength;
+            InsideWidth = boxProperties.InsideWidth;
+            InsideHeight = boxProperties.InsideHeight;
+            Colors = boxProperties.Colors;
+            ColorPath = Color.Black;
             _transf = transf;
         }
         #endregion
@@ -63,14 +59,14 @@ namespace treeDiM.StackBuilder.Graphics
                 {
                     _points = new Vector3D[8];
                     _points[0] = _transf.transform(new Vector3D(0.0, 0.0, 0.0));
-                    _points[1] = _transf.transform(new Vector3D(_length, 0.0, 0.0));
-                    _points[2] = _transf.transform(new Vector3D(_length, _width, 0.0));
-                    _points[3] = _transf.transform(new Vector3D(0.0, _width, 0.0));
+                    _points[1] = _transf.transform(new Vector3D(Length, 0.0, 0.0));
+                    _points[2] = _transf.transform(new Vector3D(Length, Width, 0.0));
+                    _points[3] = _transf.transform(new Vector3D(0.0, Width, 0.0));
 
-                    _points[4] = _transf.transform(new Vector3D(0.0, 0.0, _height));
-                    _points[5] = _transf.transform(new Vector3D(_length, 0.0, _height));
-                    _points[6] = _transf.transform(new Vector3D(_length, _width, _height));
-                    _points[7] = _transf.transform(new Vector3D(0.0, _width, _height));
+                    _points[4] = _transf.transform(new Vector3D(0.0, 0.0, Height));
+                    _points[5] = _transf.transform(new Vector3D(Length, 0.0, Height));
+                    _points[6] = _transf.transform(new Vector3D(Length, Width, Height));
+                    _points[7] = _transf.transform(new Vector3D(0.0, Width, Height));
                 }
                 return _points;
             }
@@ -80,22 +76,20 @@ namespace treeDiM.StackBuilder.Graphics
         {
             get
             {
-                double xThickness = _length > _insideLength ? 0.5 * (_length - _insideLength) : 0.0;
-                double yThickness = _width > _insideWidth ? 0.5 * (_width - _insideWidth) : 0.0;
-                double zThickness = _height > _insideHeight ? 0.5 * (_height - _insideHeight) : 0.0;
+                double zThickness = Height > InsideHeight ? 0.5 * (Height - InsideHeight) : 0.0;
                 if (null == _points)
                 {
                     _points = new Vector3D[8];
 
                     _points[0] = _transf.transform(new Vector3D(0.0, 0.0, 0.0));
-                    _points[1] = _transf.transform(new Vector3D(_insideLength, 0.0, 0.0));
-                    _points[2] = _transf.transform(new Vector3D(_insideLength, _insideWidth, 0.0 + zThickness));
-                    _points[3] = _transf.transform(new Vector3D(0.0, _insideWidth, 0.0 + zThickness));
+                    _points[1] = _transf.transform(new Vector3D(InsideLength, 0.0, 0.0));
+                    _points[2] = _transf.transform(new Vector3D(InsideLength, InsideWidth, 0.0 + zThickness));
+                    _points[3] = _transf.transform(new Vector3D(0.0, InsideWidth, 0.0 + zThickness));
 
-                    _points[4] = _transf.transform(new Vector3D(0.0, 0.0, _insideHeight + zThickness));
-                    _points[5] = _transf.transform(new Vector3D(_insideLength, 0.0, _insideHeight + zThickness));
-                    _points[6] = _transf.transform(new Vector3D(_insideLength, _insideWidth, _insideHeight + zThickness));
-                    _points[7] = _transf.transform(new Vector3D(0.0, _insideWidth, _insideHeight + zThickness));
+                    _points[4] = _transf.transform(new Vector3D(0.0, 0.0, InsideHeight + zThickness));
+                    _points[5] = _transf.transform(new Vector3D(InsideLength, 0.0, InsideHeight + zThickness));
+                    _points[6] = _transf.transform(new Vector3D(InsideLength, InsideWidth, InsideHeight + zThickness));
+                    _points[7] = _transf.transform(new Vector3D(0.0, InsideWidth, InsideHeight + zThickness));
                 }
                 return _points;
             }
@@ -107,16 +101,14 @@ namespace treeDiM.StackBuilder.Graphics
         {
             get
             {
-                Face[] faces = new Face[6];
-                Vector3D[] points = Points;
-
-                faces[0] = new Face(_pickId, new Vector3D[] { points[3], points[2], points[1], points[0] }, _colors[0], _colorPath, true);    // AXIS_Z_P
-                faces[1] = new Face(_pickId, new Vector3D[] { points[4], points[5], points[6], points[7] }, _colors[1], _colorPath, true);    // AXIS_Z_N
-                faces[2] = new Face(_pickId, new Vector3D[] { points[1], points[5], points[4], points[0] }, _colors[2], _colorPath, true);    // AXIS_Y_P
-                faces[3] = new Face(_pickId, new Vector3D[] { points[3], points[7], points[6], points[2] }, _colors[3], _colorPath, true);    // AXIS_Y_N
-                faces[4] = new Face(_pickId, new Vector3D[] { points[2], points[6], points[5], points[1] }, _colors[4], _colorPath, true);    // AXIS_X_N
-                faces[5] = new Face(_pickId, new Vector3D[] { points[4], points[7], points[3], points[0] }, _colors[5], _colorPath, true);    // AXIS_X_P
-
+                var points = Points;
+                var faces = new Face[6];
+                faces[0] = new Face(PickId, new Vector3D[] { points[3], points[2], points[1], points[0] }, Colors[0], ColorPath, true);    // AXIS_Z_P
+                faces[1] = new Face(PickId, new Vector3D[] { points[4], points[5], points[6], points[7] }, Colors[1], ColorPath, true);    // AXIS_Z_N
+                faces[2] = new Face(PickId, new Vector3D[] { points[1], points[5], points[4], points[0] }, Colors[2], ColorPath, true);    // AXIS_Y_P
+                faces[3] = new Face(PickId, new Vector3D[] { points[3], points[7], points[6], points[2] }, Colors[3], ColorPath, true);    // AXIS_Y_N
+                faces[4] = new Face(PickId, new Vector3D[] { points[2], points[6], points[5], points[1] }, Colors[4], ColorPath, true);    // AXIS_X_N
+                faces[5] = new Face(PickId, new Vector3D[] { points[4], points[7], points[3], points[0] }, Colors[5], ColorPath, true);    // AXIS_X_P
                 return faces;
             }
         }
@@ -124,19 +116,28 @@ namespace treeDiM.StackBuilder.Graphics
         {
             get
             {
-                Face[] faces = new Face[6];
-                Vector3D[] points = InsidePoints;
-
-                faces[0] = new Face(_pickId, new Vector3D[] { points[3], points[2], points[1], points[0] }, _colors[0], _colorPath, false);    // AXIS_Z_P
-                faces[1] = new Face(_pickId, new Vector3D[] { points[4], points[5], points[6], points[7] }, _colors[1], _colorPath, false);    // AXIS_Z_N
-                faces[2] = new Face(_pickId, new Vector3D[] { points[1], points[5], points[4], points[0] }, _colors[2], _colorPath, false);    // AXIS_Y_P
-                faces[3] = new Face(_pickId, new Vector3D[] { points[3], points[7], points[6], points[2] }, _colors[3], _colorPath, false);    // AXIS_Y_N
-                faces[4] = new Face(_pickId, new Vector3D[] { points[2], points[6], points[5], points[1] }, _colors[4], _colorPath, false);    // AXIS_X_N
-                faces[5] = new Face(_pickId, new Vector3D[] { points[4], points[7], points[3], points[0] }, _colors[5], _colorPath, false);    // AXIS_X_P
-
+                var points = InsidePoints;
+                var faces = new Face[6];
+                faces[0] = new Face(PickId, new Vector3D[] { points[3], points[2], points[1], points[0] }, Colors[0], ColorPath, false);    // AXIS_Z_P
+                faces[1] = new Face(PickId, new Vector3D[] { points[4], points[5], points[6], points[7] }, Colors[1], ColorPath, false);    // AXIS_Z_N
+                faces[2] = new Face(PickId, new Vector3D[] { points[1], points[5], points[4], points[0] }, Colors[2], ColorPath, false);    // AXIS_Y_P
+                faces[3] = new Face(PickId, new Vector3D[] { points[3], points[7], points[6], points[2] }, Colors[3], ColorPath, false);    // AXIS_Y_N
+                faces[4] = new Face(PickId, new Vector3D[] { points[2], points[6], points[5], points[1] }, Colors[4], ColorPath, false);    // AXIS_X_N
+                faces[5] = new Face(PickId, new Vector3D[] { points[4], points[7], points[3], points[0] }, Colors[5], ColorPath, false);    // AXIS_X_P
                 return faces;
             }
         }
+
+        public double Length { get; }
+        public double Width { get; }
+        public double Height { get; }
+        public double InsideLength { get; }
+        public double InsideWidth { get; }
+        public double InsideHeight { get; }
+
+        public uint PickId { get; set; } = 0;
+        public Color[] Colors { get; } = new Color[6];
+        public Color ColorPath { get; } = Color.Black;
         #endregion
 
         #region Overrides

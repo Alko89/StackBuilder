@@ -2,7 +2,7 @@
 using System;
 using System.IO;
 
-using Codaxy.WkHtmlToPdf;
+using WkHtmlToXSharp;
 #endregion
 
 namespace treeDiM.StackBuilder.Reporting
@@ -40,12 +40,52 @@ namespace treeDiM.StackBuilder.Reporting
             string htmlFilePath = Path.ChangeExtension(absOutputFilePath, "html");
             BuildAnalysisReport(inputData, ref rnRoot, absTemplatePath, htmlFilePath);
 
-            PdfConvert.ConvertHtmlToPdf(new PdfDocument() { Url = htmlFilePath }, new PdfOutput() { OutputFilePath = absOutputFilePath });
+            try
+            {
+                var ignore = Environment.GetEnvironmentVariable("WKHTMLTOXSHARP_NOBUNDLES");
+
+                if (ignore == null || ignore.ToLower() != "true")
+                {
+                    // Register all available bundles..
+                    WkHtmlToXLibrariesManager.Register(new Win32NativeBundle());
+                    WkHtmlToXLibrariesManager.Register(new Win64NativeBundle());
+                }
+
+                using (IHtmlToPdfConverter converter = new MultiplexingConverter())
+                {
+                    converter.GlobalSettings.Margin.Top = "0cm";
+                    converter.GlobalSettings.Margin.Bottom = "0cm";
+                    converter.GlobalSettings.Margin.Left = "0cm";
+                    converter.GlobalSettings.Margin.Right = "0cm";
+                    converter.GlobalSettings.Orientation = PdfOrientation.Portrait;
+                    converter.GlobalSettings.Size.PageSize = PdfPageSize.A4;
+
+                    converter.ObjectSettings.Page = htmlFilePath;
+                    converter.ObjectSettings.Web.EnablePlugins = true;
+                    converter.ObjectSettings.Web.EnableJavascript = true;
+                    converter.ObjectSettings.Web.Background = true;
+                    converter.ObjectSettings.Web.LoadImages = true;
+                    converter.ObjectSettings.Load.LoadErrorHandling = LoadErrorHandlingType.ignore;
+
+                    byte[] bufferPDF = converter.Convert();
+                    File.WriteAllBytes(absOutputFilePath, bufferPDF);
+                }
+            }
+            catch (Exception ex)
+            {
+                _log.Error(ex.ToString());
+            }
         }
         public override bool WriteNamespace => false;
         public override bool WriteImageFiles => true;
+        private MultiplexingConverter GetConverter()
+        {
+            var obj = new MultiplexingConverter();
+            obj.Begin += (s, e) => _log.DebugFormat("Conversion begin, phase count: {0}", e.Value);
+            obj.Warning += (s, e) => _log.Warn(e.Value);
+            obj.Finished += (s, e) => _log.InfoFormat("Finished: {0}", e.Value ? "success" : "failed!");
+            return obj;
+        }
     }
-
     #endregion
-
 }

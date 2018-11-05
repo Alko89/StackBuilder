@@ -225,6 +225,51 @@ namespace treeDiM.StackBuilder.Graphics
                 );
             return new Transform3D(Mcam);
         }
+		private Transform3D GetPerspectiveTransformation1(double fov, double near, double far)
+		{
+			// set the basic projection matrix
+			double scale = 1.0 / Math.Tan(fov * 0.5 * Math.PI / 180.0);
+			Matrix4D Mpers = new Matrix4D(
+				scale, 0.0, 0.0, 0.0
+				, 0.0, scale, 0.0, 0.0
+				, 0.0, 0.0, -far / (far - near), -1.0
+				, 0.0, 0.0, -far * near / (far - near), 0.0
+				);
+			return new Transform3D(Mpers);			
+		}		
+
+        Transform3D GetPerspectiveTransformation2(double persProjWidth, double persProjHeight, double zNear, double zFar, double fov)
+        {
+            double ar = persProjWidth / persProjHeight;
+            double zRange = zNear - zFar;
+            double tanHalfFOV = Math.Tan(fov * 0.5 * Math.PI / 180.0);
+
+            Matrix4D m = new Matrix4D
+            {
+                M11 = 1.0 / (tanHalfFOV * ar),
+                M12 = 0.0,
+                M13 = 0.0,
+                M14 = 0.0,
+
+                M21 = 0.0,
+                M22 = 1.0 / tanHalfFOV,
+                M23 = 0.0,
+                M24 = 0.0,
+
+                M31 = 0.0,
+                M32 = 0.0,
+                M33 = (-zNear - zFar) / zRange,
+                M34 = 2.0 * zFar * zNear / zRange,
+
+                M41 = 0.0,
+                M42 = 0.0,
+                M43 = 1.0,
+                M44 = 0.0
+            };
+
+            return new Transform3D(m);
+        }
+
         private Transform3D GetOrthographicProjection(Vector3D vecMin, Vector3D vecMax)
         {
             double[] sizeMin = new double[3];
@@ -238,11 +283,13 @@ namespace treeDiM.StackBuilder.Graphics
             sizeMax[2] = 1.0;
             return Transform3D.OrthographicProjection(vecMin, vecMax, sizeMin, sizeMax);
         }
-        /// <summary>
-        /// Background faces
-        /// </summary>
-        /// <param name="face">Face to be drawn before other faces</param>
-        public void AddFaceBackground(Face face)
+
+
+    /// <summary>
+    /// Background faces
+    /// </summary>
+    /// <param name="face">Face to be drawn before other faces</param>
+    public void AddFaceBackground(Face face)
         {
             _facesBackground.Add(face);
         }
@@ -598,6 +645,7 @@ namespace treeDiM.StackBuilder.Graphics
                     orthographicProj = GetOrthographicProjection(vecMin1, vecMax1);
                 }
                 CurrentTransf = orthographicProj * world2eye;
+                //CurrentTransf = GetPerspectiveTransformation2(_viewport[2] - _viewport[0], _viewport[3]-_viewport[1], 100, 1000.0, 45.0)* world2eye; 
             }
             return CurrentTransf;
         }
@@ -725,9 +773,14 @@ namespace treeDiM.StackBuilder.Graphics
             g.FillPolygon(brush, pt);
             // draw path
             Brush brush0 = new SolidBrush(tr.ColorPath);
+            Pen pen0 = new Pen(brush0, 0);
             for (int i = 1; i < pt.Length; ++i)
-                g.DrawLine(new Pen(brush0, 1.5f), pt[i - 1], pt[i]);
-            g.DrawLine(new Pen(brush0, 1.5f), pt[pt.Length - 1], pt[0]);
+            {
+                if (tr.DrawPath[i-1])
+                    g.DrawLine(pen0, pt[i - 1], pt[i]);
+            }
+            if (tr.DrawPath[2])
+                g.DrawLine(pen0, pt[pt.Length - 1], pt[0]);
         }
 
         /// <summary>
@@ -920,6 +973,15 @@ namespace treeDiM.StackBuilder.Graphics
                         , Brushes.Black
                         , new Point((int)(ptId.X - adjustedSizeNew.Width / 2), (int)(ptId.Y - adjustedSizeNew.Height / 2))
                         , StringFormat.GenericDefault);
+                }
+
+                foreach (var sf in box.StrapperFaces)
+                {
+                    // get color
+                    // instantiate brush
+                    // get face points
+                    // fill polygon
+                    // draw path
                 }
             }
             if (ShowBoxIds)

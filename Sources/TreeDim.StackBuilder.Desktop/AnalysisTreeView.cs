@@ -1,15 +1,11 @@
 ﻿#region Using directives
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Text;
 using System.Windows.Forms;
 using System.Diagnostics;
 
 using treeDiM.StackBuilder.Basics;
-using treeDiM.StackBuilder.Engine;
 using treeDiM.StackBuilder.Desktop.Properties;
 
 using log4net;
@@ -22,7 +18,7 @@ namespace treeDiM.StackBuilder.Desktop
     /// AnalysisTreeView : left frame treeview control
     /// </summary>
     public partial class AnalysisTreeView
-        : System.Windows.Forms.TreeView, IDocumentListener
+        : TreeView, IDocumentListener
     {
         #region Constructor
         /// <summary>
@@ -87,6 +83,8 @@ namespace treeDiM.StackBuilder.Desktop
             else if (item is AnalysisCaseTruck) return 16;
             else if (item is AnalysisCylinderPallet) return 19;
             else if (item is AnalysisCylinderCase) return 17;
+            else if (item is HAnalysisPallet) return 14;
+            else if (item is HAnalysisCase) return 17;
             else
             {
                 _log.Error("Unexpected analysis type");
@@ -518,6 +516,8 @@ namespace treeDiM.StackBuilder.Desktop
         /// <param name="doc"></param>
         public void OnNewDocument(Document doc)
         {
+            doc.DocumentClosed += OnDocumentClosed;
+
             // add document node
             TreeNode nodeDoc = new TreeNode(doc.Name, 2, 2)
             {
@@ -738,6 +738,25 @@ namespace treeDiM.StackBuilder.Desktop
             if (null != analysisNode)
                 analysisNode.Name = analysis.Name;
         }
+        public void OnNewAnalysisCreated(Document doc, HAnalysis analysis)
+        {
+            // get parent node
+            TreeNode parentNode = FindNode(null, new NodeTag(NodeTag.NodeType.NT_LISTANALYSIS, doc));
+            // instantiate analysis node
+            TreeNode nodeAnalysis = new TreeNode(analysis.Name, ToIconIndex(analysis), ToIconIndex(analysis))
+            {
+                Tag = new NodeTag(NodeTag.NodeType.NT_ANALYSIS, doc, analysis)
+            };
+            // insert context menu
+            parentNode.Nodes.Add( nodeAnalysis );
+            parentNode.Expand();
+        }
+        public void OnAnalysisUpdated(Document doc, HAnalysis analysis)
+        {
+            TreeNode analysisNode = FindNode(null, new NodeTag(NodeTag.NodeType.NT_ANALYSIS, doc, analysis));
+            if (null != analysisNode)
+                analysisNode.Name = analysis.Name;
+        }
         #endregion
 
         #region Remove functions
@@ -810,6 +829,8 @@ namespace treeDiM.StackBuilder.Desktop
             TreeNode docNode = FindNode(null, new NodeTag(nodeType, doc));
             // remove node
             Nodes.Remove(docNode);
+
+            doc.DocumentClosed -= OnDocumentClosed;
         }
         #endregion
 
@@ -1079,7 +1100,8 @@ namespace treeDiM.StackBuilder.Desktop
         /// <summary>
         /// returns analysis if any
         /// </summary>
-        public Analysis Analysis { get { return _itemBase as Analysis; } }
+        public Analysis Analysis => _itemBase as Analysis;
+        public HAnalysis HAnalysis => _itemBase as HAnalysis;
         #endregion
     }
     #endregion
@@ -1091,34 +1113,17 @@ namespace treeDiM.StackBuilder.Desktop
     /// </summary>
     public class AnalysisTreeViewEventArgs : EventArgs
     {
-        #region Data members
-        private NodeTag _nodeTag;
-        #endregion
-
         #region Constructor
-        /// <summary>
-        /// Constructor takes the clicked node tag as argument
-        /// </summary>
-        /// <param name="nodeTag"></param>
-        public AnalysisTreeViewEventArgs(NodeTag nodeTag)
-        {
-            _nodeTag = nodeTag;
-        }
+        public AnalysisTreeViewEventArgs(NodeTag nodeTag)  { NodeTag = nodeTag; }
         #endregion
-
         #region Public properties
-        /// <summary>
-        /// Document
-        /// </summary>
-        public Document Document { get { return _nodeTag.Document; } }
-        /// <summary>
-        /// Analysis
-        /// </summary>
-        public Analysis Analysis { get { return _nodeTag.Analysis; } }
-        /// <summary>
-        /// ItemBase (BoxProperties \ PaletProperties \ Interlayer properties)
-        /// </summary>
-        public ItemBase ItemBase { get { return _nodeTag.ItemProperties; } }
+        public Document Document => NodeTag.Document;
+        public Analysis Analysis => NodeTag.Analysis;
+        public HAnalysis HAnalysis => NodeTag.HAnalysis;
+        public ItemBase ItemBase => NodeTag.ItemProperties;
+        #endregion
+        #region Private properties
+        private NodeTag NodeTag { get; set; }
         #endregion
     }
     #endregion

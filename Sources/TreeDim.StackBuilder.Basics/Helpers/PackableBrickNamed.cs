@@ -30,12 +30,16 @@ namespace treeDiM.StackBuilder.Basics
             Modify();
         }
 
-        #region Non-Public Members
+        public virtual StrapperSet Strappers
+        {
+            get => _strapperSet; set => _strapperSet = value;
+        }
 
+        #region Non-Public Members
         protected GlobID _id = new GlobID();
         protected double _weight;
         protected OptDouble _netWeight = OptDouble.Zero;
-
+        protected StrapperSet _strapperSet;
         #endregion
     }
 }

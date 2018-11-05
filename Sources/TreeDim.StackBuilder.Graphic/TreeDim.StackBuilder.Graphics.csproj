@@ -95,6 +95,12 @@
     <Compile Include="Controls\UCtrlCaseOrientation.Designer.cs">
       <DependentUpon>UCtrlCaseOrientation.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controls\UCtrlCaseOrientationSimple.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\UCtrlCaseOrientationSimple.Designer.cs">
+      <DependentUpon>UCtrlCaseOrientationSimple.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\UCtrlLayerList.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -111,6 +117,7 @@
     <Compile Include="CylinderComparer.cs" />
     <Compile Include="DrawableComparerSimplifiedPainterAlgo.cs" />
     <Compile Include="SolutionViewers\ViewerHSolution.cs" />
+    <Compile Include="Triangle.cs" />
     <Compile Include="Types\Film.cs" />
     <Compile Include="Controls\Graphics3DControl.cs">
       <SubType>UserControl</SubType>
@@ -204,8 +211,17 @@
     <EmbeddedResource Include="Controls\CCtrlComboFiltered.resx">
       <DependentUpon>CCtrlComboFiltered.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\CCtrlComboFiltered.tr.resx">
+      <DependentUpon>CCtrlComboFiltered.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\CCtrlComboLayer.resx">
       <DependentUpon>CCtrlComboLayer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\CCtrlComboLayer.tr.resx">
+      <DependentUpon>CCtrlComboLayer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\Graphics3DControl.tr.resx">
+      <DependentUpon>Graphics3DControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\UCtrlCaseOrientation.resx">
       <DependentUpon>UCtrlCaseOrientation.cs</DependentUpon>
@@ -216,10 +232,19 @@
       <LastGenOutput>Graphics3DControl1.Designer.cs</LastGenOutput>
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\UCtrlCaseOrientation.tr.resx">
+      <DependentUpon>UCtrlCaseOrientation.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\UCtrlCaseOrientationSimple.resx">
+      <DependentUpon>UCtrlCaseOrientationSimple.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controls\UCtrlLayerList.resx">
       <DependentUpon>UCtrlLayerList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\UCtrlPackable.resx">
+      <DependentUpon>UCtrlPackable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\UCtrlPackable.tr.resx">
       <DependentUpon>UCtrlPackable.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -227,6 +252,7 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.tr.resx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Rotate.png" />
@@ -284,11 +310,13 @@
   <Target Name="PostBuildEvent" Condition=" '$(PostBuildEvent)' != '' " DependsOnTargets="$(PostBuildEventDependsOn)">
     <Exec WorkingDirectory="$(OutDir)" Command="$(PostBuildEvent)" IgnoreExitCode="true" />
   </Target>
-  <Import Project="..\packages\NuGet.Build.Tasks.Pack.4.7.0\build\NuGet.Build.Tasks.Pack.targets" Condition="Exists('..\packages\NuGet.Build.Tasks.Pack.4.7.0\build\NuGet.Build.Tasks.Pack.targets')" />
+  <Import Project="..\packages\NuGet.Build.Tasks.Pack.4.8.0\build\NuGet.Build.Tasks.Pack.targets" Condition="Exists('..\packages\NuGet.Build.Tasks.Pack.4.8.0\build\NuGet.Build.Tasks.Pack.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
+    <Error Condition="!Exists('..\packages\NuGet.Build.Tasks.Pack.4.8.0\build\NuGet.Build.Tasks.Pack.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NuGet.Build.Tasks.Pack.4.8.0\build\NuGet.Build.Tasks.Pack.targets'))" />
     <Error Condition="!Exists('..\packages\NuGet.Build.Tasks.Pack.4.7.0\build\NuGet.Build.Tasks.Pack.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NuGet.Build.Tasks.Pack.4.7.0\build\NuGet.Build.Tasks.Pack.targets'))" />
   </Target>
+  <Import Project="..\packages\NuGet.Build.Tasks.Pack.4.7.0\build\NuGet.Build.Tasks.Pack.targets" Condition="Exists('..\packages\NuGet.Build.Tasks.Pack.4.7.0\build\NuGet.Build.Tasks.Pack.targets')" />
 </Project>

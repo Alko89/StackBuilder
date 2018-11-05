@@ -95,8 +95,9 @@
       <HintPath>..\..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1000\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1000\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Sharp3D.Math, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Sharp3D.Math.1.0.3\lib\net45\Sharp3D.Math.dll</HintPath>
@@ -173,6 +174,9 @@
     <EmbeddedResource Include="FormMain.sv.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormMain.tr.resx">
+      <DependentUpon>FormMain.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormMain.zh.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>
@@ -180,6 +184,9 @@
       <DependentUpon>FormOptionsSettings.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormOptionsSettings.ru.resx">
+      <DependentUpon>FormOptionsSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormOptionsSettings.tr.resx">
       <DependentUpon>FormOptionsSettings.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormOptionsSettings.zh.resx">
@@ -191,6 +198,9 @@
     <EmbeddedResource Include="OptionsPanelFiltering.ru.resx">
       <DependentUpon>OptionsPanelFiltering.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="OptionsPanelFiltering.tr.resx">
+      <DependentUpon>OptionsPanelFiltering.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="OptionsPanelFiltering.zh.resx">
       <DependentUpon>OptionsPanelFiltering.cs</DependentUpon>
     </EmbeddedResource>
@@ -198,6 +208,9 @@
       <DependentUpon>OptionsPanelImageSize.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="OptionsPanelImageSize.ru.resx">
+      <DependentUpon>OptionsPanelImageSize.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OptionsPanelImageSize.tr.resx">
       <DependentUpon>OptionsPanelImageSize.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="OptionsPanelImageSize.zh.resx">
@@ -222,6 +235,7 @@
     </Compile>
     <EmbeddedResource Include="Properties\Resources.ru.resx" />
     <EmbeddedResource Include="Properties\Resources.sv.resx" />
+    <EmbeddedResource Include="Properties\Resources.tr.resx" />
     <EmbeddedResource Include="Properties\Resources.zh.resx" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

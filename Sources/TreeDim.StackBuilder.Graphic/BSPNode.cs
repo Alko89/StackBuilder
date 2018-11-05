@@ -126,8 +126,8 @@ namespace treeDiM.StackBuilder.Graphics
                         // here positive, pivot and negative are ready
                         Vector3D ptInter = Vector3D.Zero;
                         TestLine(t.Points[positive], t.Points[negative], ref ptInter);                        
-                        t1.Add(new Triangle(t.PickId, t.Points[positive], ptInter, t.Points[pivot], t.ColorFill));
-                        t2.Add(new Triangle(t.PickId, t.Points[negative], t.Points[pivot], ptInter, t.ColorFill));
+                        t1.Add(new Triangle(t.PickId, t.Points[positive], t.EdgeDrawn(positive, negative), ptInter, false, t.Points[pivot], t.EdgeDrawn(pivot, positive), t.ColorFill));
+                        t2.Add(new Triangle(t.PickId, t.Points[negative], t.EdgeDrawn(negative, pivot), t.Points[pivot], false, ptInter, t.EdgeDrawn(positive, negative), t.ColorFill));
                         return 2;
                     }
                     else
@@ -149,9 +149,9 @@ namespace treeDiM.StackBuilder.Graphics
                         Vector3D ptInter1 = Vector3D.Zero, ptInter2 = Vector3D.Zero;
                         TestLine(t.Points[negative1], t.Points[positive], ref ptInter1);
                         TestLine(t.Points[negative2], t.Points[positive], ref ptInter2);
-                        Triangle t11 = new Triangle(t.PickId, t.Points[positive], ptInter1, ptInter2, t.ColorFill);
-                        Triangle t21 = new Triangle(t.PickId, t.Points[negative2], ptInter2, ptInter1, t.ColorFill);
-                        Triangle t22 = new Triangle(t.PickId, t.Points[negative2], ptInter1, t.Points[negative1], t.ColorFill);
+                        Triangle t11 = new Triangle(t.PickId, t.Points[positive], t.EdgeDrawn(positive, negative1), ptInter1, false, ptInter2, t.EdgeDrawn(negative2, positive), t.ColorFill);
+                        Triangle t21 = new Triangle(t.PickId, t.Points[negative2], t.EdgeDrawn(negative2, positive), ptInter2, false, ptInter1, false, t.ColorFill);
+                        Triangle t22 = new Triangle(t.PickId, t.Points[negative2], false, ptInter1, t.EdgeDrawn(positive, negative1), t.Points[negative1], t.EdgeDrawn(negative1, negative2), t.ColorFill);
 
                         if (!t11.IsFlat)
                             t1.Add(AlignNormal(t11, normal));
@@ -175,9 +175,9 @@ namespace treeDiM.StackBuilder.Graphics
                         Vector3D ptInter1 = Vector3D.Zero, ptInter2 = Vector3D.Zero;
                         TestLine(t.Points[positive1], t.Points[negative], ref ptInter1);
                         TestLine(t.Points[positive2], t.Points[negative], ref ptInter2);
-                        Triangle t11 = new Triangle(t.PickId, t.Points[positive1], ptInter1, ptInter2, t.ColorFill);
-                        Triangle t12 = new Triangle(t.PickId, t.Points[positive1], ptInter2, t.Points[positive2], t.ColorFill);
-                        Triangle t21 = new Triangle(t.PickId, t.Points[negative], ptInter2, ptInter1, t.ColorFill);
+                        Triangle t11 = new Triangle(t.PickId, t.Points[positive1], t.EdgeDrawn(positive1, negative), ptInter1, false, ptInter2, false, t.ColorFill);
+                        Triangle t12 = new Triangle(t.PickId, t.Points[positive1], false, ptInter2, t.EdgeDrawn(negative, positive2), t.Points[positive2], t.EdgeDrawn(positive2, positive1), t.ColorFill);
+                        Triangle t21 = new Triangle(t.PickId, t.Points[negative], t.EdgeDrawn(negative, positive2), ptInter2, false, ptInter1, t.EdgeDrawn(positive1, negative), t.ColorFill);
 
                         if (!t11.IsFlat)
                             t1.Add(AlignNormal(t11, normal));
@@ -288,14 +288,15 @@ namespace treeDiM.StackBuilder.Graphics
         private int TestPoint(Vector3D pt)
         {
             double Z = pt.X * A + pt.Y * B + pt.Z * C - D;
-            if (Z < Triangle.EPS) return -1;
+
+            if (Z < -Triangle.EPS) return -1;
             else if (Z > Triangle.EPS) return 1;
             else return 0;
         }
         private bool TestLine(Vector3D pt0, Vector3D pt1, ref Vector3D ptInter)
         {
             Vector3D normal = Face.Normal;
-            if (Math.Abs(Vector3D.DotProduct(normal, pt1 - pt0)) < EGALITY_EPS)
+            if (Math.Abs(Vector3D.DotProduct(normal, pt1 - pt0)) < Triangle.EPS)
             {
                 ptInter = pt0;
                 return false;
@@ -392,7 +393,6 @@ namespace treeDiM.StackBuilder.Graphics
         private readonly double B;
         private readonly double C;
         private readonly double D;
-        private static readonly double EGALITY_EPS = 0.00001;
         private static readonly ILog _log = LogManager.GetLogger(typeof(BSPNode));
         #endregion
     }

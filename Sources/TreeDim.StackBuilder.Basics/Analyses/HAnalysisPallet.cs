@@ -24,17 +24,24 @@ namespace treeDiM.StackBuilder.Basics
         #region Override HAnalysis
         public override Vector3D DimContainer(int index)
         {
-            if (_containers[index] is PalletProperties palletProperties)
+            if (index < _containers.Count && _containers[index] is PalletProperties palletProperties)
                 return new Vector3D(palletProperties.Length, palletProperties.Width, ConstraintSet.MaximumHeight - palletProperties.Height);
             else
                 return Vector3D.Zero;
         }
         public override Vector3D Offset(int index)
         {
-            if (_containers[index] is PalletProperties palletProperties)
+            if (index < _containers.Count && _containers[index] is PalletProperties palletProperties)
                 return new Vector3D(0.0, 0.0, palletProperties.Height);
             else
                 return Vector3D.Zero;
+        }
+        public override BBox3D AdditionalBoudingBox(int index)
+        {
+            if (index < _containers.Count && _containers[index] is PalletProperties palletProperties)
+                return palletProperties.BoundingBox;
+            else
+                return BBox3D.Initial;
         }
         #endregion
     }

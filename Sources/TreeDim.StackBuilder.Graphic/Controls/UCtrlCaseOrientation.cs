@@ -23,7 +23,7 @@ namespace treeDiM.StackBuilder.Graphics
         #endregion
 
         #region Event handlers
-        private void onPaint(object sender, PaintEventArgs e)
+        private void OnPaint(object sender, PaintEventArgs e)
         {
             if (null != _packable)
             {
@@ -37,10 +37,9 @@ namespace treeDiM.StackBuilder.Graphics
                     BoxToPictureBox.Draw(_packable, HalfAxis.HAxis.AXIS_Z_P, pictureBoxGlobal);
             }
         }
-        private void onCheckedChanged(object sender, EventArgs e)
+        private void OnCheckedChanged(object sender, EventArgs e)
         {
-            if (null != CheckedChanged)
-                CheckedChanged(this, e);
+            CheckedChanged?.Invoke(this, e);
         }
         #endregion
 

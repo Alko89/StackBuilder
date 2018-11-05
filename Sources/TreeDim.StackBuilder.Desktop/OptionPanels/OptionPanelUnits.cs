@@ -2,11 +2,6 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using System.IO;
 using System.Globalization;
@@ -103,6 +98,7 @@ namespace treeDiM.StackBuilder.Desktop
             // culture
             if (cbLanguages.SelectedItem is ComboCultureWrapper cCultWrapper)
                 Properties.Settings.Default.CultureToUse = cCultWrapper.ToCultureInfoString();
+            Properties.Settings.Default.Save();
 
             // tells the user that the application must restart
             ApplicationMustRestart = true;

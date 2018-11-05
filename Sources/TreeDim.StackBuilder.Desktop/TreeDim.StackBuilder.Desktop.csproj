@@ -39,7 +39,7 @@
     <MinimumRequiredVersion>3.0.0.0</MinimumRequiredVersion>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>76</ApplicationRevision>
+    <ApplicationRevision>80</ApplicationRevision>
     <ApplicationVersion>3.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -81,15 +81,6 @@
     <SignManifests>false</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>CDA7627C161DB03A5953043237AB1240E2C9CDC5</ManifestCertificateThumbprint>
-  </PropertyGroup>
-  <PropertyGroup>
-    <ManifestKeyFile>treedim.pfx</ManifestKeyFile>
-  </PropertyGroup>
-  <PropertyGroup>
-    <ManifestTimestampUrl>http://timestamp.comodoca.com/authenticode</ManifestTimestampUrl>
-  </PropertyGroup>
-  <PropertyGroup>
     <DelaySign>false</DelaySign>
   </PropertyGroup>
   <PropertyGroup>
@@ -114,6 +105,15 @@
     <PlatformTarget>x64</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>CDA7627C161DB03A5953043237AB1240E2C9CDC5</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>treedim.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestTimestampUrl>http://timestamp.comodoca.com/authenticode</ManifestTimestampUrl>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
@@ -147,7 +147,6 @@
     </Reference>
     <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="PropertyGridEx, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -158,6 +157,9 @@
     </Reference>
     <Reference Include="SourceGrid, Version=4.40.4580.29115, Culture=neutral, PublicKeyToken=df6f5e538749e85d, processorArchitecture=MSIL">
       <HintPath>..\packages\SourceGrid.4.4.0\lib\net35\SourceGrid.dll</HintPath>
+    </Reference>
+    <Reference Include="Syroot.KnownFolders, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Syroot.Windows.IO.KnownFolders.1.0.2\lib\net40\Syroot.KnownFolders.dll</HintPath>
     </Reference>
     <Reference Include="Syroot.Windows.IO.KnownFolders, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Syroot.Windows.IO.KnownFolders.1.0.2\lib\net40\Syroot.Windows.IO.KnownFolders.dll</HintPath>
@@ -261,6 +263,18 @@
     </Compile>
     <Compile Include="DockContentECTAnalysis.Designer.cs">
       <DependentUpon>DockContentECTAnalysis.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DockContentHAnalysis.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DockContentHAnalysis.Designer.cs">
+      <DependentUpon>DockContentHAnalysis.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DockContentHAnalysisCasePallet.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DockContentHAnalysisCasePallet.Designer.cs">
+      <DependentUpon>DockContentHAnalysisCasePallet.cs</DependentUpon>
     </Compile>
     <Compile Include="DockContentLogConsole.cs">
       <SubType>Form</SubType>
@@ -536,15 +550,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="ReportTemplates\NLD.xml" />
     <Content Include="ReportTemplates\POL.xml" />
-    <Content Include="wkHtmlToPdf\wkhtmltoimage.exe">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="wkHtmlToPdf\wkhtmltopdf.exe">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="wkHtmlToPdf\wkhtmltox.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <EmbeddedResource Include="AboutBox.de.resx">
       <DependentUpon>AboutBox.cs</DependentUpon>
     </EmbeddedResource>
@@ -577,6 +582,9 @@
     <EmbeddedResource Include="AboutBox.sv.resx">
       <DependentUpon>AboutBox.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="AboutBox.tr.resx">
+      <DependentUpon>AboutBox.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="AboutBox.zh.resx">
       <DependentUpon>AboutBox.cs</DependentUpon>
     </EmbeddedResource>
@@ -585,6 +593,9 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="AnalysisTreeView.ru.resx">
+      <DependentUpon>AnalysisTreeView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AnalysisTreeView.tr.resx">
       <DependentUpon>AnalysisTreeView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AnalysisTreeView.zh.resx">
@@ -610,6 +621,9 @@
       <DependentUpon>CheckedListBoxWithImage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CheckedListBoxWithImage.sv.resx">
+      <DependentUpon>CheckedListBoxWithImage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CheckedListBoxWithImage.tr.resx">
       <DependentUpon>CheckedListBoxWithImage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CheckedListBoxWithImage.zh.resx">
@@ -643,6 +657,9 @@
       <DependentUpon>DockContentAnalysisBoxCase.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DockContentAnalysisBoxCase.sv.resx">
+      <DependentUpon>DockContentAnalysisBoxCase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DockContentAnalysisBoxCase.tr.resx">
       <DependentUpon>DockContentAnalysisBoxCase.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DockContentAnalysisBoxCase.zh.resx">
@@ -681,6 +698,9 @@
     <EmbeddedResource Include="DockContentAnalysisCasePallet.sv.resx">
       <DependentUpon>DockContentAnalysisCasePallet.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="DockContentAnalysisCasePallet.tr.resx">
+      <DependentUpon>DockContentAnalysisCasePallet.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DockContentAnalysisCasePallet.zh.resx">
       <DependentUpon>DockContentAnalysisCasePallet.cs</DependentUpon>
     </EmbeddedResource>
@@ -712,6 +732,9 @@
       <DependentUpon>DockContentAnalysisCaseTruck.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DockContentAnalysisCaseTruck.sv.resx">
+      <DependentUpon>DockContentAnalysisCaseTruck.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DockContentAnalysisCaseTruck.tr.resx">
       <DependentUpon>DockContentAnalysisCaseTruck.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DockContentAnalysisCaseTruck.zh.resx">
@@ -747,6 +770,9 @@
     <EmbeddedResource Include="DockContentAnalysisCylinderCase.sv.resx">
       <DependentUpon>DockContentAnalysisCylinderCase.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="DockContentAnalysisCylinderCase.tr.resx">
+      <DependentUpon>DockContentAnalysisCylinderCase.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DockContentAnalysisCylinderCase.zh.resx">
       <DependentUpon>DockContentAnalysisCylinderCase.cs</DependentUpon>
     </EmbeddedResource>
@@ -778,6 +804,9 @@
       <DependentUpon>DockContentAnalysisCylinderPallet.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DockContentAnalysisCylinderPallet.sv.resx">
+      <DependentUpon>DockContentAnalysisCylinderPallet.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DockContentAnalysisCylinderPallet.tr.resx">
       <DependentUpon>DockContentAnalysisCylinderPallet.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DockContentAnalysisCylinderPallet.zh.resx">
@@ -816,6 +845,9 @@
     <EmbeddedResource Include="DockContentAnalysisEdit.sv.resx">
       <DependentUpon>DockContentAnalysisEdit.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="DockContentAnalysisEdit.tr.resx">
+      <DependentUpon>DockContentAnalysisEdit.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DockContentAnalysisEdit.zh.resx">
       <DependentUpon>DockContentAnalysisEdit.cs</DependentUpon>
     </EmbeddedResource>
@@ -847,6 +879,9 @@
       <DependentUpon>DockContentAnalysisPalletTruck.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DockContentAnalysisPalletTruck.sv.resx">
+      <DependentUpon>DockContentAnalysisPalletTruck.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DockContentAnalysisPalletTruck.tr.resx">
       <DependentUpon>DockContentAnalysisPalletTruck.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DockContentAnalysisPalletTruck.zh.resx">
@@ -887,6 +922,9 @@
     <EmbeddedResource Include="DockContentDocumentExplorer.sv.resx">
       <DependentUpon>DockContentDocumentExplorer.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="DockContentDocumentExplorer.tr.resx">
+      <DependentUpon>DockContentDocumentExplorer.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DockContentDocumentExplorer.zh.resx">
       <DependentUpon>DockContentDocumentExplorer.cs</DependentUpon>
     </EmbeddedResource>
@@ -921,8 +959,14 @@
     <EmbeddedResource Include="DockContentECTAnalysis.sv.resx">
       <DependentUpon>DockContentECTAnalysis.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="DockContentECTAnalysis.tr.resx">
+      <DependentUpon>DockContentECTAnalysis.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DockContentECTAnalysis.zh.resx">
       <DependentUpon>DockContentECTAnalysis.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DockContentHAnalysis.resx">
+      <DependentUpon>DockContentHAnalysis.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DockContentLogConsole.es.resx">
       <DependentUpon>DockContentLogConsole.cs</DependentUpon>
@@ -940,6 +984,9 @@
       <DependentUpon>DockContentLogConsole.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DockContentLogConsole.sv.resx">
+      <DependentUpon>DockContentLogConsole.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DockContentLogConsole.tr.resx">
       <DependentUpon>DockContentLogConsole.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DockContentLogConsole.zh.resx">
@@ -975,6 +1022,9 @@
     <EmbeddedResource Include="DockContentStartPage.sv.resx">
       <DependentUpon>DockContentStartPage.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="DockContentStartPage.tr.resx">
+      <DependentUpon>DockContentStartPage.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DockContentStartPage.zh.resx">
       <DependentUpon>DockContentStartPage.cs</DependentUpon>
     </EmbeddedResource>
@@ -985,6 +1035,9 @@
       <DependentUpon>DockContentView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DockContentView.sv.resx">
+      <DependentUpon>DockContentView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DockContentView.tr.resx">
       <DependentUpon>DockContentView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DockContentView.zh.resx">
@@ -1023,6 +1076,9 @@
     <EmbeddedResource Include="FormEditBitmaps.sv.resx">
       <DependentUpon>FormEditBitmaps.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormEditBitmaps.tr.resx">
+      <DependentUpon>FormEditBitmaps.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormEditBitmaps.zh.resx">
       <DependentUpon>FormEditBitmaps.cs</DependentUpon>
     </EmbeddedResource>
@@ -1052,6 +1108,9 @@
       <DependentUpon>FormExcelLibrary.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormExcelLibrary.sv.resx">
+      <DependentUpon>FormExcelLibrary.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormExcelLibrary.tr.resx">
       <DependentUpon>FormExcelLibrary.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormExcelLibrary.zh.resx">
@@ -1085,6 +1144,9 @@
       <DependentUpon>FormImportExcelCatalog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormImportExcelCatalog.sv.resx">
+      <DependentUpon>FormImportExcelCatalog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormImportExcelCatalog.tr.resx">
       <DependentUpon>FormImportExcelCatalog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormImportExcelCatalog.zh.resx">
@@ -1121,6 +1183,9 @@
       <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormMain.sv.resx">
+      <DependentUpon>FormMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormMain.tr.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormMain.zh.resx">
@@ -1160,6 +1225,9 @@
     <EmbeddedResource Include="FormNewAnalysis.sv.resx">
       <DependentUpon>FormNewAnalysis.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormNewAnalysis.tr.resx">
+      <DependentUpon>FormNewAnalysis.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormNewAnalysis.zh.resx">
       <DependentUpon>FormNewAnalysis.cs</DependentUpon>
     </EmbeddedResource>
@@ -1188,6 +1256,9 @@
       <DependentUpon>FormNewAnalysisBoxCase.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormNewAnalysisBoxCase.sv.resx">
+      <DependentUpon>FormNewAnalysisBoxCase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormNewAnalysisBoxCase.tr.resx">
       <DependentUpon>FormNewAnalysisBoxCase.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormNewAnalysisBoxCase.zh.resx">
@@ -1223,6 +1294,9 @@
     <EmbeddedResource Include="FormNewAnalysisCasePallet.sv.resx">
       <DependentUpon>FormNewAnalysisCasePallet.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormNewAnalysisCasePallet.tr.resx">
+      <DependentUpon>FormNewAnalysisCasePallet.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormNewAnalysisCasePallet.zh.resx">
       <DependentUpon>FormNewAnalysisCasePallet.cs</DependentUpon>
     </EmbeddedResource>
@@ -1231,6 +1305,9 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="FormNewAnalysisCasePalletDM.ru.resx">
+      <DependentUpon>FormNewAnalysisCasePalletDM.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormNewAnalysisCasePalletDM.tr.resx">
       <DependentUpon>FormNewAnalysisCasePalletDM.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormNewAnalysisCasePalletDM.zh.resx">
@@ -1266,6 +1343,9 @@
     <EmbeddedResource Include="FormNewAnalysisCaseTruck.sv.resx">
       <DependentUpon>FormNewAnalysisCaseTruck.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormNewAnalysisCaseTruck.tr.resx">
+      <DependentUpon>FormNewAnalysisCaseTruck.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormNewAnalysisCaseTruck.zh.resx">
       <DependentUpon>FormNewAnalysisCaseTruck.cs</DependentUpon>
     </EmbeddedResource>
@@ -1297,6 +1377,9 @@
       <DependentUpon>FormNewAnalysisCylinderCase.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormNewAnalysisCylinderCase.sv.resx">
+      <DependentUpon>FormNewAnalysisCylinderCase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormNewAnalysisCylinderCase.tr.resx">
       <DependentUpon>FormNewAnalysisCylinderCase.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormNewAnalysisCylinderCase.zh.resx">
@@ -1339,6 +1422,9 @@
     <EmbeddedResource Include="FormNewAnalysisCylinderPallet.sv.resx">
       <DependentUpon>FormNewAnalysisCylinderPallet.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormNewAnalysisCylinderPallet.tr.resx">
+      <DependentUpon>FormNewAnalysisCylinderPallet.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormNewAnalysisCylinderPallet.zh.resx">
       <DependentUpon>FormNewAnalysisCylinderPallet.cs</DependentUpon>
     </EmbeddedResource>
@@ -1375,6 +1461,9 @@
     <EmbeddedResource Include="FormNewAnalysisPalletTruck.sv.resx">
       <DependentUpon>FormNewAnalysisPalletTruck.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormNewAnalysisPalletTruck.tr.resx">
+      <DependentUpon>FormNewAnalysisPalletTruck.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormNewAnalysisPalletTruck.zh.resx">
       <DependentUpon>FormNewAnalysisPalletTruck.cs</DependentUpon>
     </EmbeddedResource>
@@ -1408,8 +1497,14 @@
     <EmbeddedResource Include="FormNewBase.sv.resx">
       <DependentUpon>FormNewBase.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormNewBase.tr.resx">
+      <DependentUpon>FormNewBase.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormNewBase.zh.resx">
       <DependentUpon>FormNewBase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormNewBox.fr.resx">
+      <DependentUpon>FormNewBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormNewBox.resx">
       <SubType>Designer</SubType>
@@ -1421,10 +1516,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormNewBox.es.resx">
       <DependentUpon>FormNewBox.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormNewBox.fr.resx">
-      <DependentUpon>FormNewBox.cs</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="FormNewBox.it.resx">
       <DependentUpon>FormNewBox.cs</DependentUpon>
@@ -1442,6 +1533,9 @@
       <DependentUpon>FormNewBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormNewBox.sv.resx">
+      <DependentUpon>FormNewBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormNewBox.tr.resx">
       <DependentUpon>FormNewBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormNewBox.zh.resx">
@@ -1481,6 +1575,9 @@
     <EmbeddedResource Include="FormNewBundle.sv.resx">
       <DependentUpon>FormNewBundle.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormNewBundle.tr.resx">
+      <DependentUpon>FormNewBundle.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormNewBundle.zh.resx">
       <DependentUpon>FormNewBundle.cs</DependentUpon>
     </EmbeddedResource>
@@ -1514,6 +1611,9 @@
       <DependentUpon>FormNewCylinder.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormNewCylinder.sv.resx">
+      <DependentUpon>FormNewCylinder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormNewCylinder.tr.resx">
       <DependentUpon>FormNewCylinder.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormNewCylinder.zh.resx">
@@ -1554,13 +1654,22 @@
     <EmbeddedResource Include="FormNewDocument.sv.resx">
       <DependentUpon>FormNewDocument.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormNewDocument.tr.resx">
+      <DependentUpon>FormNewDocument.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormNewDocument.zh.resx">
       <DependentUpon>FormNewDocument.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormNewHAnalysis.resx">
       <DependentUpon>FormNewHAnalysis.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormNewHAnalysis.tr.resx">
+      <DependentUpon>FormNewHAnalysis.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormNewHAnalysisCasePallet.resx">
+      <DependentUpon>FormNewHAnalysisCasePallet.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormNewHAnalysisCasePallet.tr.resx">
       <DependentUpon>FormNewHAnalysisCasePallet.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormNewInterlayer.de.resx">
@@ -1597,6 +1706,9 @@
     <EmbeddedResource Include="FormNewInterlayer.sv.resx">
       <DependentUpon>FormNewInterlayer.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormNewInterlayer.tr.resx">
+      <DependentUpon>FormNewInterlayer.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormNewInterlayer.zh.resx">
       <DependentUpon>FormNewInterlayer.cs</DependentUpon>
     </EmbeddedResource>
@@ -1628,6 +1740,9 @@
       <DependentUpon>FormNewPack.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormNewPack.sv.resx">
+      <DependentUpon>FormNewPack.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormNewPack.tr.resx">
       <DependentUpon>FormNewPack.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormNewPack.zh.resx">
@@ -1670,6 +1785,9 @@
     <EmbeddedResource Include="FormNewPallet.sv.resx">
       <DependentUpon>FormNewPallet.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormNewPallet.tr.resx">
+      <DependentUpon>FormNewPallet.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormNewPallet.zh.resx">
       <DependentUpon>FormNewPallet.cs</DependentUpon>
     </EmbeddedResource>
@@ -1704,6 +1822,9 @@
     <EmbeddedResource Include="FormNewPalletCap.sv.resx">
       <DependentUpon>FormNewPalletCap.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormNewPalletCap.tr.resx">
+      <DependentUpon>FormNewPalletCap.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormNewPalletCap.zh.resx">
       <DependentUpon>FormNewPalletCap.cs</DependentUpon>
     </EmbeddedResource>
@@ -1714,6 +1835,9 @@
       <DependentUpon>FormNewPalletCorners.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormNewPalletCorners.sv.resx">
+      <DependentUpon>FormNewPalletCorners.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormNewPalletCorners.tr.resx">
       <DependentUpon>FormNewPalletCorners.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormNewPalletCorners.zh.resx">
@@ -1747,6 +1871,9 @@
       <DependentUpon>FormNewPalletFilm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormNewPalletFilm.sv.resx">
+      <DependentUpon>FormNewPalletFilm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormNewPalletFilm.tr.resx">
       <DependentUpon>FormNewPalletFilm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormNewPalletFilm.zh.resx">
@@ -1786,6 +1913,9 @@
     <EmbeddedResource Include="FormNewTruck.sv.resx">
       <DependentUpon>FormNewTruck.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormNewTruck.tr.resx">
+      <DependentUpon>FormNewTruck.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormNewTruck.zh.resx">
       <DependentUpon>FormNewTruck.cs</DependentUpon>
     </EmbeddedResource>
@@ -1818,6 +1948,9 @@
       <DependentUpon>FormOptimiseMultiCase.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormOptimiseMultiCase.sv.resx">
+      <DependentUpon>FormOptimiseMultiCase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormOptimiseMultiCase.tr.resx">
       <DependentUpon>FormOptimiseMultiCase.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormOptimiseMultiCase.zh.resx">
@@ -1859,6 +1992,9 @@
     <EmbeddedResource Include="FormOptimizeCase.sv.resx">
       <DependentUpon>FormOptimizeCase.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormOptimizeCase.tr.resx">
+      <DependentUpon>FormOptimizeCase.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormOptimizeCase.zh.resx">
       <DependentUpon>FormOptimizeCase.cs</DependentUpon>
     </EmbeddedResource>
@@ -1891,6 +2027,9 @@
       <DependentUpon>FormOptimizePack.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormOptimizePack.sv.resx">
+      <DependentUpon>FormOptimizePack.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormOptimizePack.tr.resx">
       <DependentUpon>FormOptimizePack.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormOptimizePack.zh.resx">
@@ -1927,6 +2066,9 @@
     <EmbeddedResource Include="FormSetItemName.sv.resx">
       <DependentUpon>FormSetItemName.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormSetItemName.tr.resx">
+      <DependentUpon>FormSetItemName.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormSetItemName.zh.resx">
       <DependentUpon>FormSetItemName.cs</DependentUpon>
     </EmbeddedResource>
@@ -1952,6 +2094,9 @@
       <DependentUpon>FormSplashScreen.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormSplashScreen.sv.resx">
+      <DependentUpon>FormSplashScreen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSplashScreen.tr.resx">
       <DependentUpon>FormSplashScreen.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormSplashScreen.zh.resx">
@@ -1988,6 +2133,9 @@
     <EmbeddedResource Include="FormValidTypeName.sv.resx">
       <DependentUpon>FormValidTypeName.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormValidTypeName.tr.resx">
+      <DependentUpon>FormValidTypeName.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormValidTypeName.zh.resx">
       <DependentUpon>FormValidTypeName.cs</DependentUpon>
     </EmbeddedResource>
@@ -2016,6 +2164,9 @@
       <DependentUpon>FormOptionsSettings.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="OptionPanels\FormOptionsSettings.sv.resx">
+      <DependentUpon>FormOptionsSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OptionPanels\FormOptionsSettings.tr.resx">
       <DependentUpon>FormOptionsSettings.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="OptionPanels\FormOptionsSettings.zh.resx">
@@ -2051,6 +2202,9 @@
     <EmbeddedResource Include="OptionPanels\OptionPanelDatabase.sv.resx">
       <DependentUpon>OptionPanelDatabase.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="OptionPanels\OptionPanelDatabase.tr.resx">
+      <DependentUpon>OptionPanelDatabase.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="OptionPanels\OptionPanelDatabase.zh.resx">
       <DependentUpon>OptionPanelDatabase.cs</DependentUpon>
     </EmbeddedResource>
@@ -2083,6 +2237,9 @@
       <DependentUpon>OptionPanelDebugging.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="OptionPanels\OptionPanelDebugging.sv.resx">
+      <DependentUpon>OptionPanelDebugging.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OptionPanels\OptionPanelDebugging.tr.resx">
       <DependentUpon>OptionPanelDebugging.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="OptionPanels\OptionPanelDebugging.zh.resx">
@@ -2121,6 +2278,9 @@
     <EmbeddedResource Include="OptionPanels\OptionPanelDimensions.sv.resx">
       <DependentUpon>OptionPanelDimensions.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="OptionPanels\OptionPanelDimensions.tr.resx">
+      <DependentUpon>OptionPanelDimensions.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="OptionPanels\OptionPanelDimensions.zh.resx">
       <DependentUpon>OptionPanelDimensions.cs</DependentUpon>
     </EmbeddedResource>
@@ -2154,6 +2314,9 @@
     <EmbeddedResource Include="OptionPanels\OptionPanelLayerListCtrl.sv.resx">
       <DependentUpon>OptionPanelLayerListCtrl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="OptionPanels\OptionPanelLayerListCtrl.tr.resx">
+      <DependentUpon>OptionPanelLayerListCtrl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="OptionPanels\OptionPanelLayerListCtrl.zh.resx">
       <DependentUpon>OptionPanelLayerListCtrl.cs</DependentUpon>
     </EmbeddedResource>
@@ -2161,6 +2324,9 @@
       <DependentUpon>OptionPanelPalletEdition.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="OptionPanels\OptionPanelPalletEdition.ru.resx">
+      <DependentUpon>OptionPanelPalletEdition.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OptionPanels\OptionPanelPalletEdition.tr.resx">
       <DependentUpon>OptionPanelPalletEdition.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="OptionPanels\OptionPanelPalletEdition.zh.resx">
@@ -2194,6 +2360,9 @@
       <DependentUpon>OptionPanelPlugins.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="OptionPanels\OptionPanelPlugins.sv.resx">
+      <DependentUpon>OptionPanelPlugins.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OptionPanels\OptionPanelPlugins.tr.resx">
       <DependentUpon>OptionPanelPlugins.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="OptionPanels\OptionPanelPlugins.zh.resx">
@@ -2233,6 +2402,9 @@
     <EmbeddedResource Include="OptionPanels\OptionPanelReporting.sv.resx">
       <DependentUpon>OptionPanelReporting.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="OptionPanels\OptionPanelReporting.tr.resx">
+      <DependentUpon>OptionPanelReporting.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="OptionPanels\OptionPanelReporting.zh.resx">
       <DependentUpon>OptionPanelReporting.cs</DependentUpon>
     </EmbeddedResource>
@@ -2264,6 +2436,9 @@
       <DependentUpon>OptionPanelUnits.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="OptionPanels\OptionPanelUnits.sv.resx">
+      <DependentUpon>OptionPanelUnits.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OptionPanels\OptionPanelUnits.tr.resx">
       <DependentUpon>OptionPanelUnits.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="OptionPanels\OptionPanelUnits.zh.resx">
@@ -2345,6 +2520,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.sv.resx</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.tr.resx" />
     <EmbeddedResource Include="Properties\Resources.zh.resx">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -2450,7 +2626,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\OfficePickers\OfficePickers.csproj">
-      <Project>{CAD56B75-481B-4C76-B090-4BC2FF5E5681}</Project>
+      <Project>{cad56b75-481b-4c76-b090-4bc2ff5e5681}</Project>
       <Name>OfficePickers</Name>
     </ProjectReference>
     <ProjectReference Include="..\OptionsLib\OptionsLib.csproj">
@@ -2650,7 +2826,8 @@
   <ItemGroup />
   <PropertyGroup>
     <PostBuildEvent>copy /Y "$(SolutionDir)TreeDim.StackBuilder.Reporting\ReportTemplates" "$(TargetDir)ReportTemplates\"
-if $(ConfigurationName) == Release "$(SolutionDir)Signfile.bat" $(TargetPath)
+if $(ConfigurationName) == Release "$(SolutionDir)Signfile.bat" "$(TargetPath)"
+
 </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -2755,10 +2932,16 @@ if $(ConfigurationName) == Release "$(SolutionDir)Signfile.bat" $(TargetPath)
     <PropertyGroup>
       <ErrorText>Ce projet fait référence à des packages NuGet qui sont manquants sur cet ordinateur. Utilisez l'option de restauration des packages NuGet pour les télécharger. Pour plus d'informations, consultez http://go.microsoft.com/fwlink/?LinkID=322105. Le fichier manquant est : {0}.</ErrorText>
     </PropertyGroup>
+    <Error Condition="!Exists('..\packages\NuGet.Build.Tasks.Pack.4.8.0\build\NuGet.Build.Tasks.Pack.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NuGet.Build.Tasks.Pack.4.8.0\build\NuGet.Build.Tasks.Pack.targets'))" />
     <Error Condition="!Exists('..\packages\MSBuildTasks.1.5.0.235\build\MSBuildTasks.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\MSBuildTasks.1.5.0.235\build\MSBuildTasks.targets'))" />
     <Error Condition="!Exists('..\packages\MSBuildTasks.1.5.0.235\build\MSBuildTasks.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\MSBuildTasks.1.5.0.235\build\MSBuildTasks.targets'))" />
     <Error Condition="!Exists('..\packages\NuGet.Build.Tasks.Pack.4.7.0\build\NuGet.Build.Tasks.Pack.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NuGet.Build.Tasks.Pack.4.7.0\build\NuGet.Build.Tasks.Pack.targets'))" />
   </Target>
+  <Import Project="..\packages\NuGet.Build.Tasks.Pack.4.8.0\build\NuGet.Build.Tasks.Pack.targets" Condition="Exists('..\packages\NuGet.Build.Tasks.Pack.4.8.0\build\NuGet.Build.Tasks.Pack.targets')" />
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
   <Import Project="..\packages\MSBuildTasks.1.5.0.235\build\MSBuildTasks.targets" Condition="Exists('..\packages\MSBuildTasks.1.5.0.235\build\MSBuildTasks.targets')" />
   <Import Project="..\packages\NuGet.Build.Tasks.Pack.4.7.0\build\NuGet.Build.Tasks.Pack.targets" Condition="Exists('..\packages\NuGet.Build.Tasks.Pack.4.7.0\build\NuGet.Build.Tasks.Pack.targets')" />
 </Project>

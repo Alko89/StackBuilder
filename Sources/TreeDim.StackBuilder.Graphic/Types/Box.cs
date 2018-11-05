@@ -19,75 +19,60 @@ namespace treeDiM.StackBuilder.Graphics
     public class Box : Drawable
     {
         #region Data members
-        protected uint _pickId = 0;
         protected double[] _dim = new double[3];
         protected BoxPosition _boxPosition;
-        private Color[] _colors;
-        private List<Texture>[] _textureLists = new List<Texture>[6];
-        private int _noFlats = 0;
-        /// <summary>
-        /// Tape related properties
-        /// </summary>
-        private OptDouble _tapeWidth;
-        private Color _tapeColor;
-        /// <summary>
-        ///
-        /// </summary>
+        private readonly Packable _packable;
         private double _weight;
         private bool _showTopLabel;
-        /// <summary>
-        /// Packable object replacable with in memory built image
-        /// </summary>
-        private Packable _packable; 
         #endregion
 
         #region Constructor
         public Box(uint pickId, double length, double width, double height)
         {
-            _pickId = pickId;
+            PickId = pickId;
             // dimensions
             _dim[0] = length;
             _dim[1] = width;
             _dim[2] = height;
             // box position
-            _boxPosition = new BoxPosition(Vector3D.Zero);
+            BoxPosition = new BoxPosition(Vector3D.Zero);
             // colors & texturezs
-            _colors = new Color[6];
-            _colors[0] = Color.Red;
-            _colors[1] = Color.Red;
-            _colors[2] = Color.Green;
-            _colors[3] = Color.Green;
-            _colors[4] = Color.Blue;
-            _colors[5] = Color.Blue;
+            Colors = new Color[6];
+            Colors[0] = Color.Red;
+            Colors[1] = Color.Red;
+            Colors[2] = Color.Green;
+            Colors[3] = Color.Green;
+            Colors[4] = Color.Blue;
+            Colors[5] = Color.Blue;
 
             for (int i = 0; i < 6; ++i)
-                _textureLists[i] = null;
+                TextureLists[i] = null;
         }
         public Box(uint pickId, double length, double width, double height, BoxPosition boxPosition)
         {
-            _pickId = pickId;
+            PickId = pickId;
             // dimensions
             _dim[0] = length;
             _dim[1] = width;
             _dim[2] = height;
             // box position
-            _boxPosition = boxPosition;
+            BoxPosition = boxPosition;
             // colors & textures
-            _colors = new Color[6];
-            _colors[0] = Color.Red;
-            _colors[1] = Color.Red;
-            _colors[2] = Color.Green;
-            _colors[3] = Color.Green;
-            _colors[4] = Color.Blue;
-            _colors[5] = Color.Blue;
+            Colors = new Color[6];
+            Colors[0] = Color.Red;
+            Colors[1] = Color.Red;
+            Colors[2] = Color.Green;
+            Colors[3] = Color.Green;
+            Colors[4] = Color.Blue;
+            Colors[5] = Color.Blue;
 
             for (int i = 0; i < 6; ++i)
-                _textureLists[i] = null;
+                TextureLists[i] = null;
 
         }
         public Box(uint pickId, PackableBrick packable)
         {
-            _pickId = pickId;
+            PickId = pickId;
             // dimensions
             _dim[0] = packable.Length;
             _dim[1] = packable.Width;
@@ -95,9 +80,9 @@ namespace treeDiM.StackBuilder.Graphics
             // weight
             _weight = packable.Weight;
             // box position
-            _boxPosition = new BoxPosition(Vector3D.Zero, HalfAxis.HAxis.AXIS_X_P, HalfAxis.HAxis.AXIS_Y_P);
+            BoxPosition = new BoxPosition(Vector3D.Zero, HalfAxis.HAxis.AXIS_X_P, HalfAxis.HAxis.AXIS_Y_P);
             // colors & textures
-            _colors = Enumerable.Repeat<Color>(Color.Chocolate, 6).ToArray();
+            Colors = Enumerable.Repeat(Color.Chocolate, 6).ToArray();
 
             if (packable is LoadedPallet)
             {
@@ -105,69 +90,71 @@ namespace treeDiM.StackBuilder.Graphics
             }
             else
             {
-                BProperties bProperties = PackableToBProperties(packable);
+                var bProperties = PackableToBProperties(packable);
                 if (null != bProperties)
                 {
-                    _colors = bProperties.Colors;
+                    Colors = bProperties.Colors;
                     // IsBundle ?
                     IsBundle = bProperties.IsBundle;
                     if (IsBundle)
-                        _noFlats = (bProperties as BundleProperties).NoFlats;
+                        BundleFlats = (bProperties as BundleProperties).NoFlats;
                     // textures
-                    BoxProperties boxProperties = bProperties as BoxProperties;
-                    if (null != boxProperties)
+                    if (bProperties is BoxProperties boxProperties)
                     {
                         List<Pair<HalfAxis.HAxis, Texture>> textures = boxProperties.TextureList;
                         foreach (Pair<HalfAxis.HAxis, Texture> tex in textures)
                         {
                             int iIndex = (int)tex.first;
-                            if (null == _textureLists[iIndex])
-                                _textureLists[iIndex] = new List<Texture>();
-                            _textureLists[iIndex].Add(tex.second);
+                            if (null == TextureLists[iIndex])
+                                TextureLists[iIndex] = new List<Texture>();
+                            TextureLists[iIndex].Add(tex.second);
                         }
                         // tape
-                        _tapeWidth = boxProperties.TapeWidth;
-                        _tapeColor = boxProperties.TapeColor;
+                        TapeWidth = boxProperties.TapeWidth;
+                        TapeColor = boxProperties.TapeColor;
 
-                        _showTopLabel = boxProperties.ShowTopLabel;
+			_showTopLabel = boxProperties.ShowTopLabel;
                     }
+
+                    if (null != bProperties.Strappers)
+                        StrapperList = new List<Strapper>(bProperties.Strappers.Strappers);
                 }
             }
         }
         public Box(uint pickId, PalletCapProperties capProperties, Vector3D position)
         {
-            _pickId = pickId;
+            PickId = pickId;
             // dimensions
             _dim[0] = capProperties.Length;
             _dim[1] = capProperties.Width;
             _dim[2] = capProperties.Height;
             // box position
-            _boxPosition = new BoxPosition(position, HalfAxis.HAxis.AXIS_X_P, HalfAxis.HAxis.AXIS_Y_P);
+            BoxPosition = new BoxPosition(position, HalfAxis.HAxis.AXIS_X_P, HalfAxis.HAxis.AXIS_Y_P);
             // colors & textures
-            _colors = new Color[6];
-            this.SetAllFacesColor(capProperties.Color);
+            Colors = new Color[6];
+            SetAllFacesColor(capProperties.Color);
         }
         public Box(uint pickId, PackableBrick packable, BoxPosition bPosition)
         {
             // sanity checks
             CheckPosition(bPosition);
             // dimensions
-            _pickId = pickId;
+            PickId = pickId;
             _dim[0] = packable.Length;
             _dim[1] = packable.Width;
             _dim[2] = packable.Height;
             // weight
             _weight = packable.Weight;
             // set position
-            _boxPosition = bPosition;
+            BoxPosition = bPosition;
             // colors
-            _colors = Enumerable.Repeat<Color>(Color.Chocolate, 6).ToArray();
+            Colors = Enumerable.Repeat(Color.Chocolate, 6).ToArray();
 
             BProperties bProperties = PackableToBProperties(packable);
             if (null == bProperties)
                 throw new Exception(string.Format("Type {0} cannot be handled by Box constructor", packable.GetType().ToString() ));
 
-            _colors = bProperties.Colors;
+            Colors = bProperties.Colors;
             IsBundle = bProperties.IsBundle;
              // is box ?
             BoxProperties boxProperties = bProperties as BoxProperties;
@@ -177,21 +164,20 @@ namespace treeDiM.StackBuilder.Graphics
                 foreach (Pair<HalfAxis.HAxis, Texture> tex in textures)
                 {
                     int iIndex = (int)tex.first;
-                    if (null == _textureLists[iIndex])
-                        _textureLists[iIndex] = new List<Texture>();
-                    _textureLists[iIndex].Add(tex.second);
+                    if (null == TextureLists[iIndex])
+                        TextureLists[iIndex] = new List<Texture>();
+                    TextureLists[iIndex].Add(tex.second);
                 }
-                _tapeWidth = boxProperties.TapeWidth;
-                _tapeColor = boxProperties.TapeColor;
+                TapeWidth = boxProperties.TapeWidth;
+                TapeColor = boxProperties.TapeColor;
 
                 _showTopLabel = boxProperties.ShowTopLabel;
             }
             // is bundle ?
             else if (bProperties.IsBundle)
             {
-                BundleProperties bundleProp = bProperties as BundleProperties;
-                if (null != bundleProp)
-                    _noFlats = bundleProp.NoFlats;
+                if (bProperties is BundleProperties bundleProp)
+                    BundleFlats = bundleProp.NoFlats;
             }
         }
 
@@ -200,35 +186,34 @@ namespace treeDiM.StackBuilder.Graphics
             // sanity checks
             CheckPosition(bPosition);
             // dimensions
-            _pickId = pickId;
+            PickId = pickId;
             _dim[0] = packable.Length;
             _dim[1] = packable.Width;
             _dim[2] = packable.Height;
             // weight
             _weight = packable.Weight;
             // set position
-            _boxPosition = new BoxPosition( bPosition.Position, bPosition.LengthAxis, bPosition.WidthAxis);
+            BoxPosition = new BoxPosition( bPosition.Position, bPosition.LengthAxis, bPosition.WidthAxis);
             // colors
-            _colors = Enumerable.Repeat<Color>(Color.Chocolate, 6).ToArray();
+            Colors = Enumerable.Repeat<Color>(Color.Chocolate, 6).ToArray();
 
             BProperties bProperties = PackableToBProperties(packable);
             if (null != bProperties)
             {
-                _colors = bProperties.Colors;
+                Colors = bProperties.Colors;
 
-                BoxProperties boxProperties = bProperties as BoxProperties;
-                if (null != boxProperties)
+                if (bProperties is BoxProperties boxProperties)
                 {
                     List<Pair<HalfAxis.HAxis, Texture>> textures = boxProperties.TextureList;
                     foreach (Pair<HalfAxis.HAxis, Texture> tex in textures)
                     {
                         int iIndex = (int)tex.first;
-                        if (null == _textureLists[iIndex])
-                            _textureLists[iIndex] = new List<Texture>();
-                        _textureLists[iIndex].Add(tex.second);
+                        if (null == TextureLists[iIndex])
+                            TextureLists[iIndex] = new List<Texture>();
+                        TextureLists[iIndex].Add(tex.second);
                     }
-                    _tapeWidth = boxProperties.TapeWidth;
-                    _tapeColor = boxProperties.TapeColor;
+                    TapeWidth = boxProperties.TapeWidth;
+                    TapeColor = boxProperties.TapeColor;
 
                     _showTopLabel = boxProperties.ShowTopLabel;
                 }
@@ -238,7 +223,7 @@ namespace treeDiM.StackBuilder.Graphics
                 {
                     BundleProperties bundleProp = packable as BundleProperties;
                     if (null != bundleProp)
-                        _noFlats = bundleProp.NoFlats;
+                        BundleFlats = bundleProp.NoFlats;
                 }
             }
             if (packable is PackProperties packProperties)
@@ -251,57 +236,57 @@ namespace treeDiM.StackBuilder.Graphics
             // sanity checks
             CheckPosition(bPosition);
             // dimensions
-            _pickId = pickId;
+            PickId = pickId;
             _dim[0] = packProperties.Length;
             _dim[1] = packProperties.Width;
             _dim[2] = packProperties.Height;
             // box position
-            _boxPosition = new BoxPosition(Vector3D.Zero, HalfAxis.HAxis.AXIS_X_P, HalfAxis.HAxis.AXIS_Y_P);
+            BoxPosition = new BoxPosition(Vector3D.Zero, HalfAxis.HAxis.AXIS_X_P, HalfAxis.HAxis.AXIS_Y_P);
             // colors
-            _colors = Enumerable.Repeat<Color>(Color.Chocolate, 6).ToArray();
+            Colors = Enumerable.Repeat<Color>(Color.Chocolate, 6).ToArray();
             // set position
-            _boxPosition = bPosition;
+            BoxPosition = bPosition;
         }
 
         public Box(uint pickId, InterlayerProperties interlayerProperties)
         {
             // dimensions
-            _pickId = pickId;
+            PickId = pickId;
             _dim[0] = interlayerProperties.Length;
             _dim[1] = interlayerProperties.Width;
             _dim[2] = interlayerProperties.Thickness;
             // box position
-            _boxPosition = new BoxPosition(Vector3D.Zero, HalfAxis.HAxis.AXIS_X_P, HalfAxis.HAxis.AXIS_Y_P);
+            BoxPosition = new BoxPosition(Vector3D.Zero, HalfAxis.HAxis.AXIS_X_P, HalfAxis.HAxis.AXIS_Y_P);
             // colors
-            _colors = Enumerable.Repeat<Color>(interlayerProperties.Color, 6).ToArray();
+            Colors = Enumerable.Repeat<Color>(interlayerProperties.Color, 6).ToArray();
         }
 
         public Box(uint pickId, InterlayerProperties interlayerProperties, BoxPosition bPosition)
         {
             // dimensions
-            _pickId = pickId;
+            PickId = pickId;
             _dim[0] = interlayerProperties.Length;
             _dim[1] = interlayerProperties.Width;
             _dim[2] = interlayerProperties.Thickness;
             // colors
-            _colors = Enumerable.Repeat<Color>(interlayerProperties.Color, 6).ToArray();
+            Colors = Enumerable.Repeat<Color>(interlayerProperties.Color, 6).ToArray();
             // set position
-            _boxPosition = bPosition;
+            BoxPosition = bPosition;
         }
 
         public Box(uint pickId, BundleProperties bundleProperties)
         {
             // dimensions
-            _pickId = pickId;
+            PickId = pickId;
             _dim[0] = bundleProperties.Length;
             _dim[1] = bundleProperties.Width;
             _dim[2] = bundleProperties.Height;
             // box position
-            _boxPosition = new BoxPosition(Vector3D.Zero, HalfAxis.HAxis.AXIS_X_P, HalfAxis.HAxis.AXIS_Y_P);
+            BoxPosition = new BoxPosition(Vector3D.Zero, HalfAxis.HAxis.AXIS_X_P, HalfAxis.HAxis.AXIS_Y_P);
             // colors
-            _colors = Enumerable.Repeat<Color>(bundleProperties.Color, 6).ToArray();
+            Colors = Enumerable.Repeat<Color>(bundleProperties.Color, 6).ToArray();
             // specific
-            _noFlats = bundleProperties.NoFlats;
+            BundleFlats = bundleProperties.NoFlats;
             IsBundle = bundleProperties.IsBundle;
         }
         #endregion
@@ -330,22 +315,23 @@ namespace treeDiM.StackBuilder.Graphics
         #endregion
 
         #region Public properties
-        public uint PickId => _pickId;
+        public uint PickId { get; set; } = 0;
         public double Length => _dim[0];
         public double Width => _dim[1];
         public double Height => _dim[2];
         public double Weight => _weight;
         public bool ShowTopLabel => _showTopLabel;
-
+        protected BoxPosition BoxPosition { get => _boxPosition; set => _boxPosition = value; }
+        public List<Texture>[] TextureLists { get; } = new List<Texture>[6];
         public Vector3D Position
         {
             get { return _boxPosition.Position; }
             set { _boxPosition.Position = value; }
         }
-        public BoxPosition BPosition => _boxPosition;
+        public BoxPosition BPosition => BoxPosition;
         public HalfAxis.HAxis HLengthAxis
         {
-            get { return _boxPosition.DirectionLength;  }
+            get { return BoxPosition.DirectionLength;  }
             set { _boxPosition.DirectionLength = value; }
         }
         public HalfAxis.HAxis HWidthAxis
@@ -354,18 +340,17 @@ namespace treeDiM.StackBuilder.Graphics
             set { _boxPosition.DirectionWidth = value; }
         }
         public Vector3D LengthAxis
-        {   get { return HalfAxis.ToVector3D(_boxPosition.DirectionLength); } }
+        {   get { return HalfAxis.ToVector3D(BoxPosition.DirectionLength); } }
         public Vector3D WidthAxis
-        {   get { return HalfAxis.ToVector3D(_boxPosition.DirectionWidth); } }
+        {   get { return HalfAxis.ToVector3D(BoxPosition.DirectionWidth); } }
         public Vector3D HeightAxis
         { get { return Vector3D.CrossProduct(LengthAxis, WidthAxis); } }
 
-        public Color[] Colors => _colors;
+        public Color[] Colors { get; }
 
         public bool IsBundle { get; set; } = false;
 
-        public int BundleFlats
-        {   get { return _noFlats;  } }
+        public int BundleFlats { get; } = 0;
 
         public Face TopFace
         {
@@ -373,13 +358,12 @@ namespace treeDiM.StackBuilder.Graphics
             {
                 Face[] faces = Faces;
                 Face topFace = faces[0];
-                foreach (Face face in faces)
+                foreach (var face in faces)
                     if (face.Center.Z > topFace.Center.Z)
                         topFace = face;
                 return topFace;
             }
         }
-
         public Vector3D[] Oriented(Vector3D pt0, Vector3D pt1, Vector3D pt2, Vector3D pt3, Vector3D pt)
         {
             Vector3D crossProduct = Vector3D.CrossProduct(pt1 - pt0, pt2 - pt0);
@@ -388,24 +372,20 @@ namespace treeDiM.StackBuilder.Graphics
             else
                 return new Vector3D[] { pt3, pt2, pt1, pt0 };
         }
-
         public Vector3D Center
         {
             get
             {
-                return _boxPosition.Position
+                return BoxPosition.Position
                     + 0.5 * _dim[0] * LengthAxis
                     + 0.5 * _dim[1] * WidthAxis
                     + 0.5 * _dim[2] * HeightAxis;
             }
         }
         public bool ShowTape
-        { get { return _tapeWidth.Activated; } }
-        public OptDouble TapeWidth
-        {   get { return _tapeWidth; } }
-        public Color TapeColor
-        {   get { return _tapeColor; } }
-
+        { get { return TapeWidth.Activated; } }
+        public OptDouble TapeWidth { get; }
+        public Color TapeColor { get; }
         public Vector3D[] TapePoints
         {
             get
@@ -413,14 +393,36 @@ namespace treeDiM.StackBuilder.Graphics
                 Vector3D lengthAxis = LengthAxis;
                 Vector3D widthAxis  = WidthAxis;
                 Vector3D heightAxis = HeightAxis;
-                Vector3D[] points = new Vector3D[4];
-                points[0] = Position + 0.0 * lengthAxis     + 0.5 * (_dim[1] - _tapeWidth) * widthAxis + _dim[2] * heightAxis;
-                points[1] = Position + _dim[0] * lengthAxis + 0.5 * (_dim[1] - _tapeWidth) * widthAxis + _dim[2] * heightAxis;
-                points[2] = Position + _dim[0] * lengthAxis + 0.5 * (_dim[1] + _tapeWidth) * widthAxis + _dim[2] * heightAxis;
-                points[3] = Position + 0.0 * lengthAxis     + 0.5 * (_dim[1] + _tapeWidth) * widthAxis + _dim[2] * heightAxis;
+                var points = new Vector3D[4];
+                points[0] = Position + 0.0 * lengthAxis     + 0.5 * (_dim[1] - TapeWidth) * widthAxis + _dim[2] * heightAxis;
+                points[1] = Position + _dim[0] * lengthAxis + 0.5 * (_dim[1] - TapeWidth) * widthAxis + _dim[2] * heightAxis;
+                points[2] = Position + _dim[0] * lengthAxis + 0.5 * (_dim[1] + TapeWidth) * widthAxis + _dim[2] * heightAxis;
+                points[3] = Position + 0.0 * lengthAxis     + 0.5 * (_dim[1] + TapeWidth) * widthAxis + _dim[2] * heightAxis;
                 return points;
             }
         }
+        public Face[] StrapperFaces
+        {
+            get
+            {
+                Vector3D lengthAxis = LengthAxis;
+                Vector3D widthAxis = WidthAxis;
+                Vector3D heightAxis = HeightAxis;
+                List<Face> faces = new List<Face>();
+                foreach (var s in StrapperList)
+                {
+                    switch (s.Axis)
+                    {
+                        case 0: break;
+                        case 1: break;
+                        case 2: break;
+                        default: break;
+                    }
+                }
+                return faces.ToArray();
+            }
+        }
+        public List<Strapper> StrapperList { get; } = new List<Strapper>();
         #endregion
 
         #region XMin / XMax / YMin / YMax / ZMin
@@ -473,7 +475,7 @@ namespace treeDiM.StackBuilder.Graphics
         {
             get
             {
-                Vector3D position = _boxPosition.Position;
+                Vector3D position = BoxPosition.Position;
                 Vector3D lengthAxis = LengthAxis;
                 Vector3D widthAxis = WidthAxis;
                 Vector3D heightAxis = HeightAxis;
@@ -491,16 +493,16 @@ namespace treeDiM.StackBuilder.Graphics
                 return points;
             }
         }
-
         public Vector3D[] PointsSmallOffset
         {
             get
             {
+                Vector3D position = BoxPosition.Position;
                 Vector3D lengthAxis = LengthAxis;
                 Vector3D widthAxis = WidthAxis;
                 Vector3D heightAxis = HeightAxis;
-                const double offset = 3.0;
                 Vector3D[] points = new Vector3D[8];
+                const double offset = 3.0;
                 Vector3D origin = new Vector3D(offset, offset, offset);
                 points[0] = origin;
                 points[1] = origin + (_dim[0] - 2.0 * offset) * lengthAxis;
@@ -515,7 +517,6 @@ namespace treeDiM.StackBuilder.Graphics
                 return points;
             }
         }
-
         public Vector3D[] Normals
         {
             get
@@ -542,7 +543,6 @@ namespace treeDiM.StackBuilder.Graphics
                 return uvs;
             }
         }
-
         public TriangleIndices[] TriangleIndices
         {
             get
@@ -609,22 +609,90 @@ namespace treeDiM.StackBuilder.Graphics
         {
             get
             {
+                //
+                //
+                //
+                //
                 Vector3D[] points = Points;
-                return new Triangle[]
+                if (ShowTape)
                 {
-                    new Triangle(PickId, points[0], points[4], points[3], _colors[0]),
-                    new Triangle(PickId, points[3], points[4], points[7], _colors[0]),
-                    new Triangle(PickId, points[1], points[2], points[5], _colors[1]),
-                    new Triangle(PickId, points[5], points[2], points[6], _colors[1]),
-                    new Triangle(PickId, points[0], points[1], points[4], _colors[2]),
-                    new Triangle(PickId, points[4], points[1], points[5], _colors[2]),
-                    new Triangle(PickId, points[7], points[6], points[2], _colors[3]),
-                    new Triangle(PickId, points[7], points[2], points[3], _colors[3]),
-                    new Triangle(PickId, points[0], points[3], points[1], _colors[4]),
-                    new Triangle(PickId, points[1], points[3], points[2], _colors[4]),
-                    new Triangle(PickId, points[4], points[5], points[7], _colors[5]),
-                    new Triangle(PickId, points[7], points[5], points[6], _colors[5])
-                };
+                    Vector3D[] tapePoints = TapePoints;
+                    return new Triangle[]
+                    {
+                        // XN
+                        //
+                        // 7 ------- 4
+                        // |         |
+                        // 3 ------- 0
+                        //
+                        new Triangle(PickId, points[0], true, points[4], false, points[3], true, Colors[0]),
+                        new Triangle(PickId, points[3], false, points[4], true, points[7], true, Colors[0]),
+                        // XP
+                        //
+                        // 5 ------- 6
+                        // |         |
+                        // 1 ------- 2
+                        //
+                        new Triangle(PickId, points[1], true, points[2], false, points[5], true, Colors[1]),
+                        new Triangle(PickId, points[5], false, points[2], true, points[6], true, Colors[1]),
+                        // YN
+                        //
+                        // 4 -------- 5
+                        // |          |
+                        // 0 -------- 1
+                        //
+                        new Triangle(PickId, points[0], true, points[1], false, points[4], true, Colors[2]),
+                        new Triangle(PickId, points[4], false, points[1], true, points[5], true, Colors[2]),
+                        // YP
+                        //
+                        // 6 -------- 7
+                        // |          | 
+                        // 2 -------- 3
+                        //
+                        new Triangle(PickId, points[7], true, points[6], true, points[2], false, Colors[3]),
+                        new Triangle(PickId, points[7], false, points[2], true, points[3], true, Colors[3]),
+                        // ZN
+                        //
+                        // 3 -------- 2
+                        // |          | 
+                        // 0 -------- 1
+                        //
+                        new Triangle(PickId, points[0], true, points[3], false, points[1], true, Colors[4]),
+                        new Triangle(PickId, points[1], false, points[3], true, points[2], true, Colors[4]),
+                        // ZP
+                        //
+                        // 7-----------6
+                        // |           |
+                        // t3          t2
+                        // |           |
+                        // t0          t1
+                        // |           |
+                        // 4-----------5
+
+                        new Triangle(PickId, points[4], true, points[5], false, tapePoints[0], true, Colors[5]),
+                        new Triangle(PickId, tapePoints[0], false, points[5], true, tapePoints[1], true, Colors[5]),
+                        new Triangle(PickId, tapePoints[0], true, tapePoints[1], true, tapePoints[2], false, TapeColor),
+                        new Triangle(PickId, tapePoints[0], false, tapePoints[2], true, tapePoints[3], true, TapeColor),
+                        new Triangle(PickId, tapePoints[3], true, tapePoints[2], true, points[6], false, Colors[5]),
+                        new Triangle(PickId, tapePoints[3], false, points[6], true, points[7], true, Colors[5])
+                    };
+                }
+                else
+                    return new Triangle[]
+                    {
+                        new Triangle(PickId, points[0], true, points[4], false, points[3], true, Colors[0]),
+                        new Triangle(PickId, points[3], false, points[4], true, points[7], true, Colors[0]),
+                        new Triangle(PickId, points[1], true, points[2], false, points[5], true, Colors[1]),
+                        new Triangle(PickId, points[5], false, points[2], true, points[6], true, Colors[1]),
+                        new Triangle(PickId, points[0], true, points[1], false, points[4], true, Colors[2]),
+                        new Triangle(PickId, points[4], false, points[1], true, points[5], true, Colors[2]),
+                        new Triangle(PickId, points[7], true, points[6], true, points[2], false, Colors[3]),
+                        new Triangle(PickId, points[7], false, points[2], true, points[3], true, Colors[3]),
+                        new Triangle(PickId, points[0], true, points[3], false, points[1], true, Colors[4]),
+                        new Triangle(PickId, points[1], false, points[3], true, points[2], true, Colors[4]),
+                        new Triangle(PickId, points[4], true, points[5], false, points[7], true, Colors[5]),
+                        new Triangle(PickId, points[7], false, points[5], true, points[6], true, Colors[5])
+                    };
             }
         }
         public Face[] Faces
@@ -636,7 +704,7 @@ namespace treeDiM.StackBuilder.Graphics
                 Vector3D widthAxis = WidthAxis;
                 Vector3D heightAxis = HeightAxis;
 
-                Vector3D[] points = new Vector3D[8];
+                var points = new Vector3D[8];
                 points[0] = position;
                 points[1] = position + _dim[0] * lengthAxis;
                 points[2] = position + _dim[0] * lengthAxis + _dim[1] * widthAxis;
@@ -647,19 +715,19 @@ namespace treeDiM.StackBuilder.Graphics
                 points[6] = position + _dim[2] * heightAxis + _dim[0] * lengthAxis + _dim[1] * widthAxis;
                 points[7] = position + _dim[2] * heightAxis + _dim[1] * widthAxis;
 
-                Face[] faces = new Face[6];
-                faces[0] = new Face(_pickId, new Vector3D[] { points[3], points[0], points[4], points[7] }, false); // AXIS_X_N
-                faces[1] = new Face(_pickId, new Vector3D[] { points[1], points[2], points[6], points[5] }, false); // AXIS_X_P
-                faces[2] = new Face(_pickId, new Vector3D[] { points[0], points[1], points[5], points[4] }, false); // AXIS_Y_N
-                faces[3] = new Face(_pickId, new Vector3D[] { points[2], points[3], points[7], points[6] }, false); // AXIS_Y_P
-                faces[4] = new Face(_pickId, new Vector3D[] { points[3], points[2], points[1], points[0] }, false); // AXIS_Z_N
-                faces[5] = new Face(_pickId, new Vector3D[] { points[4], points[5], points[6], points[7] }, false); // AXIS_Z_P
+                var faces = new Face[6];
+                faces[0] = new Face(PickId, new Vector3D[] { points[3], points[0], points[4], points[7] }, false); // AXIS_X_N
+                faces[1] = new Face(PickId, new Vector3D[] { points[1], points[2], points[6], points[5] }, false); // AXIS_X_P
+                faces[2] = new Face(PickId, new Vector3D[] { points[0], points[1], points[5], points[4] }, false); // AXIS_Y_N
+                faces[3] = new Face(PickId, new Vector3D[] { points[2], points[3], points[7], points[6] }, false); // AXIS_Y_P
+                faces[4] = new Face(PickId, new Vector3D[] { points[3], points[2], points[1], points[0] }, false); // AXIS_Z_N
+                faces[5] = new Face(PickId, new Vector3D[] { points[4], points[5], points[6], points[7] }, false); // AXIS_Z_P
 
                 int i = 0;
-                foreach (Face face in faces)
+                foreach (var face in faces)
                 {
-                    face.ColorFill = _colors[i];
-                    face.Textures = _textureLists[i];
+                    face.ColorFill = Colors[i];
+                    face.Textures = TextureLists[i];
                     ++i;
                 }
                 return faces;
@@ -676,7 +744,7 @@ namespace treeDiM.StackBuilder.Graphics
             Vector3D lengthAxis = LengthAxis;
             Vector3D widthAxis = WidthAxis;
             Vector3D heightAxis = HeightAxis;
-            Vector3D[] points = new Vector3D[8];
+            var points = new Vector3D[8];
             points[0] = position;
             points[1] = position + _dim[0] * lengthAxis;
             points[2] = position + _dim[0] * lengthAxis + _dim[1] * widthAxis;
@@ -701,7 +769,7 @@ namespace treeDiM.StackBuilder.Graphics
             vecI.Normalize();
             vecJ.Normalize();
 
-            Vector3D[] pts = new Vector3D[4];
+            var pts = new Vector3D[4];
             double cosAngle = Math.Cos(texture.Angle * Math.PI / 180.0);
             double sinAngle = Math.Sin(texture.Angle * Math.PI / 180.0);
 
@@ -733,19 +801,16 @@ namespace treeDiM.StackBuilder.Graphics
         public void SetAllFacesColor(Color color)
         {
             for (int i = 0; i < 6; ++i)
-                _colors[i] = color;
+                Colors[i] = color;
         }
-
         public void SetFaceColor(HalfAxis.HAxis iFace, Color color)
         {
-            _colors[(int)iFace] = color;
+            Colors[(int)iFace] = color;
         }
-
         public void SetFaceTextures(HalfAxis.HAxis iFace, List<Texture> textures)
         {
-            _textureLists[(int)iFace] = textures;
+            TextureLists[(int)iFace] = textures;
         }
-
         public bool PointInside(Vector3D pt)
         {
             foreach (Face face in Faces)
@@ -755,15 +820,13 @@ namespace treeDiM.StackBuilder.Graphics
             }
             return true;
         }
-
         public void ApplyElong(double d)
         {
             _dim[0] += d;
             _dim[1] += d;
             _dim[2] += d;
-            _boxPosition.Position = _boxPosition.Position - new Vector3D(-0.5 * d, -0.5 * d, -0.5 * d);
+            _boxPosition.Position = BoxPosition.Position - new Vector3D(-0.5 * d, -0.5 * d, -0.5 * d);
         }
-
         public bool RayIntersect(Ray ray, out Vector3D ptInter)
         {
             List<Vector3D> listIntersections = new List<Vector3D>();
@@ -788,8 +851,7 @@ namespace treeDiM.StackBuilder.Graphics
 
         #region Private helpers
         private void SetDimensions(PackableBrick packable)
-        { 
-            
+        {            
         }
         private void CheckPosition(BoxPosition bPosition)
         {
@@ -806,7 +868,7 @@ namespace treeDiM.StackBuilder.Graphics
         #region Objet overrides
         public override string ToString()
         {
-            return string.Format("BoxPosition={0} Dimensions=({1},{2},{3})", _boxPosition, _dim[0], _dim[1], _dim[2]);
+            return string.Format("BoxPosition={0} Dimensions=({1},{2},{3})", BoxPosition, _dim[0], _dim[1], _dim[2]);
         }
         #endregion
     }

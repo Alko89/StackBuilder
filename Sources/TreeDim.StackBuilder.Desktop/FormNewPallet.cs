@@ -1,10 +1,7 @@
 ﻿#region Using directives
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
 using Sharp3D.Math.Core;
@@ -149,6 +146,7 @@ namespace treeDiM.StackBuilder.Desktop
         private void OnPalletPropertyChanged(object sender, EventArgs e)
         {
             graphCtrl.Invalidate();
+            UpdateStatus(string.Empty);
         }
         private void OnPalletTypeChanged(object sender, EventArgs e)
         {

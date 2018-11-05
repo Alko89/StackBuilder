@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+     xmlns:util="http://schemas.microsoft.com/wix/UtilExtension"
+     xmlns:iis="http://schemas.microsoft.com/wix/IIsExtension"
+     >
+  <Fragment>
+    <DirectoryRef Id="INSTALLFOLDER">
+      <Component Id="StackBuilderWCFAppPool" Guid="" KeyPath="yes">
+        <iis:WebAppPool Id="StackBuilderWCFAppPool"
+                        Name="StackBuilderWCF"
+                        Identity="applicationPoolIdentity"
+                         ManagedPipelineMode="Integrated"
+                        ManagedRuntimeVersion="v4.0" />
+      </Component>
+      <Component Id="InstallWebsite" Guid="" KeyPath="yes">
+        <!-- Install to default web site -->
+        <iis:WebSite Id="StackBuilderWebsite" Description='StackBuilderWCF website' Directory='INSTALLFOLDER' AutoStart='yes' StartOnInstall='yes'>
+          <iis:WebAddress Id="AllUnassigned" Port="80" />
+          <iis:WebApplication Id="StackBuilderWCFApplication" Name="StackBuilder" WebAppPool="StackBuilderWCFAppPool"></iis:WebApplication>
+        </iis:WebSite>
+      </Component>
+    </DirectoryRef>
+  </Fragment>
+</Wix>

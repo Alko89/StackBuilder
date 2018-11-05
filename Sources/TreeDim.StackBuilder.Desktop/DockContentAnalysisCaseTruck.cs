@@ -1,21 +1,9 @@
 ﻿#region Using directives
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
-using System.Globalization;
 // Docking
-using WeifenLuo.WinFormsUI.Docking;
 // log4net
 using log4net;
-using Sharp3D.Math.Core;
 
 using treeDiM.StackBuilder.Basics;
-using treeDiM.StackBuilder.Graphics;
 using treeDiM.StackBuilder.Desktop.Properties;
 #endregion
 

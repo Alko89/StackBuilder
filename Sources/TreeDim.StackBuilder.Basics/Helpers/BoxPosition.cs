@@ -34,7 +34,26 @@ namespace treeDiM.StackBuilder.Basics
                 return HalfAxis.ToHalfAxis(Vector3D.CrossProduct(HalfAxis.ToVector3D(DirectionLength), HalfAxis.ToVector3D(DirectionWidth)));
             }
         }
-        public bool IsValid => DirectionLength != DirectionWidth; 
+        public bool IsValid => DirectionLength != DirectionWidth;
+        public BBox3D BBox(Vector3D dimensions)
+        {
+            BBox3D bbox = new BBox3D();
+            Vector3D vI = HalfAxis.ToVector3D(DirectionLength);
+            Vector3D vJ = HalfAxis.ToVector3D(DirectionWidth);
+            Vector3D vK = Vector3D.CrossProduct(vI, vJ);
+            Vector3D[] pts = new Vector3D[8];
+            pts[0] = Position;
+            pts[1] = Position + dimensions.X * vI;
+            pts[2] = Position + dimensions.Y * vJ;
+            pts[3] = Position + dimensions.X * vI + dimensions.Y * vJ;
+            pts[4] = Position + dimensions.Z * vK;
+            pts[5] = Position + dimensions.Y * vJ + dimensions.Z * vK;
+            pts[6] = Position + HalfAxis.ToVector3D(DirectionWidth) * dimensions.Y;
+            pts[7] = Position + HalfAxis.ToVector3D(DirectionLength) * dimensions.X + HalfAxis.ToVector3D(DirectionWidth) * dimensions.Y;
+            foreach (Vector3D pt in pts)
+                bbox.Extend(pt);
+            return bbox;
+        }
         #endregion
 
         #region Static properties

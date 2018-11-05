@@ -59,7 +59,7 @@
             this.checkBoxX.TabIndex = 1;
             this.checkBoxX.Text = "X";
             this.checkBoxX.UseVisualStyleBackColor = true;
-            this.checkBoxX.CheckedChanged += new System.EventHandler(this.onCheckedChanged);
+            this.checkBoxX.CheckedChanged += new System.EventHandler(this.OnCheckedChanged);
             // 
             // pictureBoxY
             // 
@@ -79,7 +79,7 @@
             this.checkBoxY.TabIndex = 3;
             this.checkBoxY.Text = "Y";
             this.checkBoxY.UseVisualStyleBackColor = true;
-            this.checkBoxY.CheckedChanged += new System.EventHandler(this.onCheckedChanged);
+            this.checkBoxY.CheckedChanged += new System.EventHandler(this.OnCheckedChanged);
             // 
             // checkBoxZ
             // 
@@ -91,7 +91,7 @@
             this.checkBoxZ.TabIndex = 4;
             this.checkBoxZ.Text = "Z";
             this.checkBoxZ.UseVisualStyleBackColor = true;
-            this.checkBoxZ.CheckedChanged += new System.EventHandler(this.onCheckedChanged);
+            this.checkBoxZ.CheckedChanged += new System.EventHandler(this.OnCheckedChanged);
             // 
             // pictureBoxZ
             // 
@@ -124,7 +124,7 @@
             this.Controls.Add(this.pictureBoxGlobal);
             this.Name = "uCtrlCaseOrientation";
             this.Size = new System.Drawing.Size(280, 110);
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.onPaint);
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.OnPaint);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxX)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxY)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxZ)).EndInit();

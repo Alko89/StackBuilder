@@ -46,6 +46,7 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonExportXML = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonExportCSV = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerHoriz)).BeginInit();
             this.splitContainerHoriz.Panel1.SuspendLayout();
             this.splitContainerHoriz.Panel2.SuspendLayout();
@@ -162,6 +163,7 @@
             // 
             this.toolStripAnalysis.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripButtonBack,
+            this.toolStripSeparator2,
             this.toolStripButtonReport,
             this.toolStripSeparator1,
             this.toolStripButtonExportXML,
@@ -201,6 +203,11 @@
             resources.ApplyResources(this.toolStripButtonExportCSV, "toolStripButtonExportCSV");
             this.toolStripButtonExportCSV.Name = "toolStripButtonExportCSV";
             this.toolStripButtonExportCSV.Click += new System.EventHandler(this.OnGenerateExport);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            resources.ApplyResources(this.toolStripSeparator2, "toolStripSeparator2");
             // 
             // DockContentAnalysisEdit
             // 
@@ -248,5 +255,6 @@
         private System.Windows.Forms.ToolStripButton toolStripButtonExportXML;
         private System.Windows.Forms.ToolStripButton toolStripButtonExportCSV;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
     }
 }

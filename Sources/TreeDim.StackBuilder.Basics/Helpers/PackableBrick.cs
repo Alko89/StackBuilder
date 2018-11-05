@@ -48,6 +48,8 @@ namespace treeDiM.StackBuilder.Basics
             }
         }
 
+        public double[] Dimensions => new double[] { Length, Width, Height };
+
         public override string ToString()
         {
             StringBuilder sBuilder = new StringBuilder();

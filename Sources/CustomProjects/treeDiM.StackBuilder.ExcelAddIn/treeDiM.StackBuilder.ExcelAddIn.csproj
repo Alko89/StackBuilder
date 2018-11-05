@@ -27,7 +27,7 @@
     <NoStandardLibraries>false</NoStandardLibraries>
     <RootNamespace>treeDiM.StackBuilder.ExcelAddIn</RootNamespace>
     <AssemblyName>treeDiM.StackBuilder.ExcelAddIn</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <DefineConstants>VSTO40</DefineConstants>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
@@ -185,6 +185,9 @@
     can be found.
   -->
   <ItemGroup>
+    <Compile Include="..\..\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="ExcelHelpers.cs" />
     <Compile Include="ExceptionCellReading.cs" />
     <Compile Include="FormSettingsPerRow.cs">
@@ -221,10 +224,16 @@
     <EmbeddedResource Include="FormSettingsPerRow.resx">
       <DependentUpon>FormSettingsPerRow.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormSettingsPerRow.tr.resx">
+      <DependentUpon>FormSettingsPerRow.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormSettingsPerSheet.fr.resx">
       <DependentUpon>FormSettingsPerSheet.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormSettingsPerSheet.resx">
+      <DependentUpon>FormSettingsPerSheet.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormSettingsPerSheet.tr.resx">
       <DependentUpon>FormSettingsPerSheet.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.de.resx" />
@@ -246,11 +255,15 @@
     </Compile>
     <EmbeddedResource Include="Properties\Resources.ru.resx" />
     <EmbeddedResource Include="Properties\Resources.sv.resx" />
+    <EmbeddedResource Include="Properties\Resources.tr.resx" />
     <EmbeddedResource Include="Properties\Resources.zh.resx" />
     <EmbeddedResource Include="RibbonStackBuilder.resx">
       <DependentUpon>RibbonStackBuilder.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="RibbonStackBuilder.ru.resx">
+      <DependentUpon>RibbonStackBuilder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RibbonStackBuilder.tr.resx">
       <DependentUpon>RibbonStackBuilder.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="RibbonStackBuilder.zh.resx">
@@ -262,16 +275,20 @@
     <EmbeddedResource Include="UCtrlPerRowAnalysis.resx">
       <DependentUpon>UCtrlPerRowAnalysis.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UCtrlPerRowAnalysis.tr.resx">
+      <DependentUpon>UCtrlPerRowAnalysis.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="UCtrlPerSheetAnalysis.resx">
+      <DependentUpon>UCtrlPerSheetAnalysis.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UCtrlPerSheetAnalysis.tr.resx">
       <DependentUpon>UCtrlPerSheetAnalysis.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
     <Content Include="Data\StackBuilderCalculator.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="packages.config">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
