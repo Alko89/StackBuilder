@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+	<Fragment>
+    <UI>
+      <UIRef Id="WixUI_ErrorProgressText"/>
+      <UIRef Id="WixUI_Common"/>
+      <UIRef Id="WixUI_FeatureTree"/>
+    </UI>
+	</Fragment>
+</Wix>

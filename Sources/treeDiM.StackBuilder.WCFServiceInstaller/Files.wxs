@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?include $(sys.CURRENTDIR)\Config.wxi?>
+
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  <Fragment>
+    <Icon Id="ShortcutIcon.ico" SourceFile="..\Test\treeDiM.StackBuilder.WCFService.Test\bin\Release\treeDiM.StackBuilder.WCFService.Test.exe" />
+    <DirectoryRef Id="INSTALLFOLDER"/>
+    <ComponentGroup Id="ServiceDefinition" Directory="INSTALLFOLDER">
+      <Component Id="StackBuilder.svc" Guid="{6D53F34C-CBCA-4941-9A47-46AF05D9D142}">
+        <File Source="..\treeDiM.StackBuilder.WCFAppServ\StackBuilder.svc"/>
+      </Component>
+      <Component Id="Web.config" Guid="{E9D8B7D1-EFA3-4DD5-AA1A-C8D21F8C2744}">
+        <File Source="..\treeDiM.StackBuilder.WCFAppServ\Web.config"/>
+      </Component>
+    </ComponentGroup>
+    <DirectoryRef Id="BIN"/>
+    <ComponentGroup Id="ServiceBinaries" Directory="BIN">
+      <Component Id="log4net.dll" Guid="{5D99E00C-F330-4ADD-97F8-E9D78117EE85}">
+        <File Source="..\treeDiM.StackBuilder.WCFAppServ\bin\release\log4net.dll"/>
+      </Component>
+      <Component Id="Cureos.Measures.dll" Guid="{3E465F27-406D-43DC-A465-53EB96500EA6}">
+        <File Source="..\treeDiM.StackBuilder.WCFAppServ\bin\release\Cureos.Measures.dll"/>
+      </Component>
+      <Component Id="Sharp3D.Math.dll" Guid="{701684BB-6AD7-4E02-8414-1CD90F9D146A}">
+        <File Source="..\treeDiM.StackBuilder.WCFAppServ\bin\release\Sharp3D.Math.dll"/>
+      </Component>
+      <Component Id="Sharp3DBinPacking.dll" Guid="{2D815BD0-7270-4184-A579-0E2CB19B5702}">
+        <File Source="..\treeDiM.StackBuilder.WCFAppServ\bin\release\Sharp3DBinPacking.dll"/>
+      </Component>
+      <Component Id="OfficePickers.dll" Guid="{ADD0331B-5B32-441E-BD55-1DB405A94F3E}">
+        <File Source="..\treeDiM.StackBuilder.WCFAppServ\bin\release\OfficePickers.dll"/>
+      </Component>
+      <Component Id="Microsoft.WindowsAzure" Guid="{A81001AA-7F67-4AE0-B7A6-8621527F1B44}">
+        <File Source="..\treeDiM.StackBuilder.WCFAppServ\bin\release\Microsoft.Azure.KeyVault.Core.dll"/>
+        <File Source="..\treeDiM.StackBuilder.WCFAppServ\bin\release\Microsoft.Data.Edm.dll"/>
+        <File Source="..\treeDiM.StackBuilder.WCFAppServ\bin\release\Microsoft.Data.OData.dll"/>
+        <File Source="..\treeDiM.StackBuilder.WCFAppServ\bin\release\Microsoft.Data.Services.Client.dll"/>
+        <File Source="..\treeDiM.StackBuilder.WCFAppServ\bin\release\Microsoft.WindowsAzure.Diagnostics.dll"/>
+        <File Source="..\treeDiM.StackBuilder.WCFAppServ\bin\release\Microsoft.WindowsAzure.Storage.dll"/>
+        <File Source="..\treeDiM.StackBuilder.WCFAppServ\bin\release\MonAgentListener.dll"/>
+        <File Source="..\treeDiM.StackBuilder.WCFAppServ\bin\release\netstandard.dll"/>
+        <File Source="..\treeDiM.StackBuilder.WCFAppServ\bin\release\System.Collections.Immutable.dll"/>
+        <File Source="..\treeDiM.StackBuilder.WCFAppServ\bin\release\Newtonsoft.Json.dll"/>
+        <File Source="..\treeDiM.StackBuilder.WCFAppServ\bin\release\System.Spatial.dll"/>
+      </Component>
+      <Component Id="treeDiM.StackBuilder" Guid="{C61D9742-6CF1-464F-9400-9DB6AF07E1D2}">
+        <File Source="..\treeDiM.StackBuilder.WCFAppServ\bin\release\treeDiM.EdgeCrushTest.dll"/>
+        <File Source="..\treeDiM.StackBuilder.WCFAppServ\bin\release\treeDiM.StackBuilder.Basics.dll"/>
+        <File Source="..\treeDiM.StackBuilder.WCFAppServ\bin\release\treeDiM.StackBuilder.Engine.dll"/>
+        <File Source="..\treeDiM.StackBuilder.WCFAppServ\bin\release\treeDiM.StackBuilder.Graphics.dll"/>
+        <File Source="..\treeDiM.StackBuilder.WCFAppServ\bin\release\treeDiM.StackBuilder.WCFAppServ.dll"/>
+        <File Source="..\treeDiM.StackBuilder.WCFAppServ\bin\release\treeDiM.StackBuilder.WCFAppServ.dll.config"/>
+      </Component>
+    </ComponentGroup>
+    <DirectoryRef Id="SAMPLECLIENT"/>
+    <ComponentGroup Id="SampleClientBinaries" Directory="SAMPLECLIENT">
+      <Component Id="treeDiM.StackBuilder.WCFService.Test.exe" Guid="{2992012D-9BD4-42CB-99B6-8C73846AECFD}">
+        <File Source="..\Test\treeDiM.StackBuilder.WCFService.Test\bin\Release\treeDiM.StackBuilder.WCFService.Test.exe"/>
+        <File Source="..\Test\treeDiM.StackBuilder.WCFService.Test\bin\Release\treeDiM.StackBuilder.WCFService.Test.exe.config"/>
+      </Component>
+    </ComponentGroup>
+    <DirectoryRef Id="DesktopFolder"/>
+    <ComponentGroup Id="SampleClientShortcut" Directory="DesktopFolder">
+      <Component Id="DesktopShortcutComp" Guid="{2B4BEA63-326B-40a3-9DF4-44E7E29EE4DC}">
+        <Shortcut Id="DesktopShortCut"
+                  Name="treeDiM.StackBuilder.WCFService.Test"
+                  Description="Sample client app"
+                  Target="[SAMPLECLIENT]treeDiM.StackBuilder.WCFService.Test.exe"
+                  Icon="ShortcutIcon.ico"
+                  WorkingDirectory="SAMPLECLIENT" />
+        <RemoveFolder Id="DesktopFolder" On="uninstall"/>
+        <RegistryValue Root="HKCU"
+                       Key="Software/$(var.Manufacturer)/SampleClient_Desktop"
+                       Name="installed"
+                       Type="integer"
+                       Value="1"
+                       KeyPath="yes" />
+      </Component>
+    </ComponentGroup>
+	</Fragment>
+</Wix>

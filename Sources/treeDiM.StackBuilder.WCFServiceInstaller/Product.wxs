@@ -1,59 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?include $(sys.CURRENTDIR)\Config.wxi?>
 
-<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-	<Product Id="*" Name="treeDiM.StackBuilder.WCFServiceInstaller"
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  <Product Id="*" Name="treeDiM.StackBuilder.WCFServiceInstaller"
            Language="1033"
-           Version="1.0.0.0"
+           Version="$(var.ProductVersion)"
            Manufacturer="$(var.Manufacturer)"
            UpgradeCode="38aeffc2-061f-43e4-9291-93fa30efe5c8">
-		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+    <Package Id="*"
+             InstallerVersion="200"
+             Compressed="yes"
+             InstallScope="perMachine"
+             ReadOnly="yes"
+             ShortNames="no"
+             />
+    <MediaTemplate EmbedCab="yes"/>
+    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    <Feature Id="ProductFeature"
+             Title="treeDiM.StackBuilder.WCFAppServ"
+             Level="1">
+      <ComponentGroupRef Id="ServiceDefinition" />
+      <ComponentGroupRef Id="ServiceBinaries"/>
+      <ComponentGroupRef Id="WebIISConfiguration"/>
+      <ComponentGroupRef Id="SampleClientBinaries"/>
+      <ComponentGroupRef Id="SampleClientShortcut"/>
+    </Feature>
 
-		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
-		<MediaTemplate />
-
-		<Feature Id="ProductFeature" Title="treeDiM.StackBuilder.WCFServiceInstaller" Level="1">
-			<ComponentGroupRef Id="ProductComponents" />
-		</Feature>
-	</Product>
-	<Fragment>
-		<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
-      <Component Id="log4net.dll" Guid="{5D99E00C-F330-4ADD-97F8-E9D78117EE85}">
-        <File Source="..\treeDiM.StackBuilder.WCFAppServ\bin\release\log4net.dll"/>
-      </Component>
-      <Component Id="Cureos.Measures.dll" Guid="{3E465F27-406D-43DC-A465-53EB96500EA6}">
-        <File Source="..\treeDiM.StackBuilder.WCFAppServ\bin\release\Cureos.Measures.dll"/>
-      </Component>
-      <Component Id="Sharp3D.Math.dll" Guid="{701684BB-6AD7-4E02-8414-1CD90F9D146A}">
-        <File Source="..\treeDiM.StackBuilder.WCFAppServ\bin\release\Sharp3D.Math.dll"/>
-      </Component>
-      <Component Id="Sharp3DBinPacking.dll" Guid="{2D815BD0-7270-4184-A579-0E2CB19B5702}">
-        <File Source="..\treeDiM.StackBuilder.WCFAppServ\bin\release\Sharp3DBinPacking.dll"/>
-      </Component>
-      <Component Id="OfficePickers.dll" Guid="{ADD0331B-5B32-441E-BD55-1DB405A94F3E}">
-        <File Source="..\treeDiM.StackBuilder.WCFAppServ\bin\release\OfficePickers.dll"/>
-      </Component>
-      <Component Id="Microsoft.WindowsAzure" Guid="{A81001AA-7F67-4AE0-B7A6-8621527F1B44}">
-        <File Source="..\treeDiM.StackBuilder.WCFAppServ\bin\release\Microsoft.Azure.KeyVault.Core.dll"/>
-        <File Source="..\treeDiM.StackBuilder.WCFAppServ\bin\release\Microsoft.Data.Edm.dll"/>
-        <File Source="..\treeDiM.StackBuilder.WCFAppServ\bin\release\Microsoft.Data.OData.dll"/>
-        <File Source="..\treeDiM.StackBuilder.WCFAppServ\bin\release\Microsoft.Data.Services.Client.dll"/>
-        <File Source="..\treeDiM.StackBuilder.WCFAppServ\bin\release\Microsoft.WindowsAzure.Diagnostics.dll"/>
-        <File Source="..\treeDiM.StackBuilder.WCFAppServ\bin\release\Microsoft.WindowsAzure.Storage.dll"/>
-        <File Source="..\treeDiM.StackBuilder.WCFAppServ\bin\release\MonAgentListener.dll"/>
-        <File Source="..\treeDiM.StackBuilder.WCFAppServ\bin\release\netstandard.dll"/>
-        <File Source="..\treeDiM.StackBuilder.WCFAppServ\bin\release\System.Collections.Immutable.dll"/>
-        <File Source="..\treeDiM.StackBuilder.WCFAppServ\bin\release\Newtonsoft.Json.dll"/>
-        <File Source="..\treeDiM.StackBuilder.WCFAppServ\bin\release\System.Spatial.dll"/>
-      </Component>
-      <Component Id="treeDiM.StackBuilder" Guid="{C61D9742-6CF1-464F-9400-9DB6AF07E1D2}">
-        <File Source="..\treeDiM.StackBuilder.WCFAppServ\bin\release\treeDiM.EdgeCrushTest.dll"/>
-        <File Source="..\treeDiM.StackBuilder.WCFAppServ\bin\release\treeDiM.StackBuilder.Basics.dll"/>
-        <File Source="..\treeDiM.StackBuilder.WCFAppServ\bin\release\treeDiM.StackBuilder.Engine.dll"/>
-        <File Source="..\treeDiM.StackBuilder.WCFAppServ\bin\release\treeDiM.StackBuilder.Graphics.dll"/>
-        <File Source="..\treeDiM.StackBuilder.WCFAppServ\bin\release\treeDiM.StackBuilder.WCFAppServ.dll"/>
-        <File Source="..\treeDiM.StackBuilder.WCFAppServ\bin\release\treeDiM.StackBuilder.WCFAppServ.dll.config"/>
-      </Component>
-		</ComponentGroup>
-	</Fragment>
+    <Property Id="VIRTUAL_DIR_VAL" Value="StackBuilderWebApp" />
+    <!-- check whether IIS is installed or not -->
+    <Property Id="IIS_MAJOR_VERSION">
+      <RegistrySearch Id="CheckIISVersion" Root="HKLM" Key="SOFTWARE\Microsoft\InetStp" Name="MajorVersion" Type="raw"/>
+    </Property>
+    <Condition Message="IIS must be installed">Installed OR IIS_MAJOR_VERSION</Condition>
+    <!-- check whether IIS is installed or not -->
+  </Product>
 </Wix>

@@ -1,24 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
-     xmlns:util="http://schemas.microsoft.com/wix/UtilExtension"
-     xmlns:iis="http://schemas.microsoft.com/wix/IIsExtension"
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs"
+     xmlns:util="http://wixtoolset.org/schemas/v4/wxs/UtilExtension"
+     xmlns:iis="http://wixtoolset.org/schemas/v4/wxs/iis"
      >
   <Fragment>
+    <PropertyRef Id="VIRTUAL_DIR_VAL"/>
+
+    <!-- Install to default web site -->
+    <iis:WebSite Id="DefaultWebSite" Description='Default Web Site'>
+      <iis:WebAddress Id="AllUnassigned" Port="80" />
+    </iis:WebSite>
+    
     <DirectoryRef Id="INSTALLFOLDER">
-      <Component Id="StackBuilderWCFAppPool" Guid="" KeyPath="yes">
+      <Component Id="WebAppPoolCmp" Guid="{B666438C-CFCB-434D-BB0B-CBFE247A6187}" KeyPath="yes">
         <iis:WebAppPool Id="StackBuilderWCFAppPool"
                         Name="StackBuilderWCF"
                         Identity="applicationPoolIdentity"
-                         ManagedPipelineMode="Integrated"
+                        ManagedPipelineMode="Integrated"
                         ManagedRuntimeVersion="v4.0" />
       </Component>
-      <Component Id="InstallWebsite" Guid="" KeyPath="yes">
+      <Component Id="WebVirtualDirCmp" Guid="{CD98CADA-C8AD-4DEF-9F31-61E62A3E4FC7}" KeyPath="yes">
         <!-- Install to default web site -->
-        <iis:WebSite Id="StackBuilderWebsite" Description='StackBuilderWCF website' Directory='INSTALLFOLDER' AutoStart='yes' StartOnInstall='yes'>
-          <iis:WebAddress Id="AllUnassigned" Port="80" />
-          <iis:WebApplication Id="StackBuilderWCFApplication" Name="StackBuilder" WebAppPool="StackBuilderWCFAppPool"></iis:WebApplication>
-        </iis:WebSite>
+        <iis:WebVirtualDir Id ="WebVirtualDir" Alias="[VIRTUAL_DIR_VAL]" Directory="INSTALLFOLDER" WebSite="DefaultWebSite">
+          <iis:WebDirProperties Id="WebDirProperties" AnonymousAccess="yes" BasicAuthentication="no" WindowsAuthentication="no"/>
+          <iis:WebApplication Id="WebApplication" Name="[VIRTUAL_DIR_VAL]"/>
+        </iis:WebVirtualDir>        
       </Component>
     </DirectoryRef>
+    <ComponentGroup Id="WebIISConfiguration">
+      <ComponentRef Id="WebAppPoolCmp"/>
+      <ComponentRef Id="WebVirtualDirCmp"/>
+    </ComponentGroup>
   </Fragment>
 </Wix>
