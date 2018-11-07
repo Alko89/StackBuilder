@@ -119,13 +119,13 @@
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="graphCtrlSolution.Size" type="System.Drawing.Size, System.Drawing">
-    <value>586, 411</value>
+    <value>672, 411</value>
   </data>
   <data name="&gt;&gt;graphCtrlSolution.Name" xml:space="preserve">
     <value>graphCtrlSolution</value>
   </data>
   <data name="&gt;&gt;graphCtrlSolution.Type" xml:space="preserve">
-    <value>treeDiM.StackBuilder.Graphics.Graphics3DControl, treeDiM.StackBuilder.Graphics, Version=3.0.0.58, Culture=neutral, PublicKeyToken=null</value>
+    <value>treeDiM.StackBuilder.Graphics.Graphics3DControl, treeDiM.StackBuilder.Graphics, Version=3.0.0.76, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;graphCtrlSolution.Parent" xml:space="preserve">
     <value>splitContainerVert.Panel1</value>
@@ -168,7 +168,7 @@
   <data name="uCtrlOptMaxNumber.Value" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFN0cmVlRGlNLlN0YWNrQnVpbGRlci5CYXNpY3MsIFZlcnNpb249
-        My4wLjAuNTgsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49bnVsbAUBAAAAInRyZWVEaU0u
+        My4wLjAuNzYsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49bnVsbAUBAAAAInRyZWVEaU0u
         U3RhY2tCdWlsZGVyLkJhc2ljcy5PcHRJbnQCAAAACl9hY3RpdmF0ZWQEX3ZhbAAAAQgCAAAAAAAAAAAL
 </value>
   </data>
@@ -176,7 +176,7 @@
     <value>uCtrlOptMaxNumber</value>
   </data>
   <data name="&gt;&gt;uCtrlOptMaxNumber.Type" xml:space="preserve">
-    <value>treeDiM.StackBuilder.Basics.UCtrlOptInt, treeDiM.StackBuilder.Basics, Version=3.0.0.58, Culture=neutral, PublicKeyToken=null</value>
+    <value>treeDiM.StackBuilder.Basics.UCtrlOptInt, treeDiM.StackBuilder.Basics, Version=3.0.0.76, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;uCtrlOptMaxNumber.Parent" xml:space="preserve">
     <value>gbStopCriterions</value>
@@ -202,7 +202,7 @@
   <data name="uCtrlOptMaximumWeight.Value" mimetype="application/x-microsoft.net.object.binary.base64">
     <value>
         AAEAAAD/////AQAAAAAAAAAMAgAAAFN0cmVlRGlNLlN0YWNrQnVpbGRlci5CYXNpY3MsIFZlcnNpb249
-        My4wLjAuNTgsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49bnVsbAUBAAAAJXRyZWVEaU0u
+        My4wLjAuNzYsIEN1bHR1cmU9bmV1dHJhbCwgUHVibGljS2V5VG9rZW49bnVsbAUBAAAAJXRyZWVEaU0u
         U3RhY2tCdWlsZGVyLkJhc2ljcy5PcHREb3VibGUCAAAACl9hY3RpdmF0ZWQEX3ZhbAAAAQYCAAAAAAAA
         AAAAAAAACw==
 </value>
@@ -211,7 +211,7 @@
     <value>uCtrlOptMaximumWeight</value>
   </data>
   <data name="&gt;&gt;uCtrlOptMaximumWeight.Type" xml:space="preserve">
-    <value>treeDiM.StackBuilder.Basics.UCtrlOptDouble, treeDiM.StackBuilder.Basics, Version=3.0.0.58, Culture=neutral, PublicKeyToken=null</value>
+    <value>treeDiM.StackBuilder.Basics.UCtrlOptDouble, treeDiM.StackBuilder.Basics, Version=3.0.0.76, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;uCtrlOptMaximumWeight.Parent" xml:space="preserve">
     <value>gbStopCriterions</value>
@@ -238,7 +238,7 @@
     <value>uCtrlMaxPalletHeight</value>
   </data>
   <data name="&gt;&gt;uCtrlMaxPalletHeight.Type" xml:space="preserve">
-    <value>treeDiM.StackBuilder.Basics.UCtrlDouble, treeDiM.StackBuilder.Basics, Version=3.0.0.58, Culture=neutral, PublicKeyToken=null</value>
+    <value>treeDiM.StackBuilder.Basics.UCtrlDouble, treeDiM.StackBuilder.Basics, Version=3.0.0.76, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;uCtrlMaxPalletHeight.Parent" xml:space="preserve">
     <value>gbStopCriterions</value>
@@ -328,7 +328,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="tabPagePalletCorners.Size" type="System.Drawing.Size, System.Drawing">
-    <value>307, 87</value>
+    <value>531, 87</value>
   </data>
   <data name="tabPagePalletCorners.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -403,7 +403,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="tabPagePalletCap.Size" type="System.Drawing.Size, System.Drawing">
-    <value>307, 87</value>
+    <value>531, 87</value>
   </data>
   <data name="tabPagePalletCap.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -478,7 +478,7 @@
     <value>3, 3, 3, 3</value>
   </data>
   <data name="tabPagePalletFilm.Size" type="System.Drawing.Size, System.Drawing">
-    <value>307, 87</value>
+    <value>531, 87</value>
   </data>
   <data name="tabPagePalletFilm.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -502,7 +502,7 @@
     <value>469, 8</value>
   </data>
   <data name="tabCtrl.Size" type="System.Drawing.Size, System.Drawing">
-    <value>315, 113</value>
+    <value>539, 113</value>
   </data>
   <data name="tabCtrl.TabIndex" type="System.Int32, mscorlib">
     <value>14</value>
@@ -530,6 +530,9 @@
   </data>
   <data name="&gt;&gt;splitContainerHoriz.Panel2.ZOrder" xml:space="preserve">
     <value>1</value>
+  </data>
+  <data name="splitContainerHoriz.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1008, 536</value>
   </data>
   <data name="&gt;&gt;splitContainerHoriz.Name" xml:space="preserve">
     <value>splitContainerHoriz</value>
@@ -567,8 +570,11 @@
   <data name="&gt;&gt;splitContainerVert.Panel2.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
+  <data name="splitContainerVert.Size" type="System.Drawing.Size, System.Drawing">
+    <value>1008, 411</value>
+  </data>
   <data name="splitContainerVert.SplitterDistance" type="System.Int32, mscorlib">
-    <value>586</value>
+    <value>672</value>
   </data>
   <data name="splitContainerVert.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -589,7 +595,7 @@
     <value>cbInterlayer</value>
   </data>
   <data name="&gt;&gt;cbInterlayer.Type" xml:space="preserve">
-    <value>treeDiM.StackBuilder.Graphics.Controls.CCtrlComboFiltered, treeDiM.StackBuilder.Graphics, Version=3.0.0.58, Culture=neutral, PublicKeyToken=null</value>
+    <value>treeDiM.StackBuilder.Graphics.Controls.CCtrlComboFiltered, treeDiM.StackBuilder.Graphics, Version=3.0.0.76, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;cbInterlayer.Parent" xml:space="preserve">
     <value>gbLayer</value>
@@ -598,7 +604,7 @@
     <value>1</value>
   </data>
   <data name="gridSolutions.Size" type="System.Drawing.Size, System.Drawing">
-    <value>194, 411</value>
+    <value>332, 411</value>
   </data>
   <data name="&gt;&gt;gridSolutions.Name" xml:space="preserve">
     <value>gridSolutions</value>
@@ -622,7 +628,7 @@
     <value>6, 13</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>784, 561</value>
+    <value>1008, 561</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -759,6 +765,6 @@
     <value>DockContentAnalysisCasePallet</value>
   </data>
   <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>treeDiM.StackBuilder.Desktop.DockContentAnalysisEdit, treeDiM.StackBuilder.Desktop, Version=3.0.0.58, Culture=neutral, PublicKeyToken=null</value>
+    <value>treeDiM.StackBuilder.Desktop.DockContentAnalysisEdit, treeDiM.StackBuilder.Desktop, Version=3.0.0.76, Culture=neutral, PublicKeyToken=null</value>
   </data>
 </root>

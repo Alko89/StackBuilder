@@ -739,4 +739,16 @@ Nadaljuj?</value>
   <data name="ID_CASECOUNTFORMATSTRING" xml:space="preserve">
     <value>{0} {1} x {2}</value>
   </data>
+  <data name="ID_LOADEDCASES" xml:space="preserve">
+    <value>Naloženih zabojev</value>
+  </data>
+  <data name="ID_LOADEDVOLUMEPERCENTAGE" xml:space="preserve">
+    <value>Naložen volumen procent</value>
+  </data>
+  <data name="ID_NUMBEROFPALLETS" xml:space="preserve">
+    <value>Število palet</value>
+  </data>
+  <data name="ID_UNLOADEDCASES" xml:space="preserve">
+    <value>Razloženi zaboji</value>
+  </data>
 </root>

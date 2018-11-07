@@ -3,6 +3,7 @@ using System;
 using System.Windows.Forms;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 
 using log4net;
 
@@ -398,13 +399,21 @@ namespace treeDiM.StackBuilder.Desktop
         {
             get
             {
-                List<ContentItem> contentItems = new List<ContentItem>();
-                foreach (BoxProperties boxProperties in _document.Bricks)
+                if (UseTempAnalysis)
                 {
-                    bool[] orientations = new bool[] { true, true, true };
-                    contentItems.Add(new ContentItem(boxProperties, 1, orientations));
+                    List<ContentItem> contentItems = new List<ContentItem>();
+                    foreach (BoxProperties boxProperties in _document.Bricks)
+                    {
+                        bool[] orientations = new bool[] { true, true, true };
+                        contentItems.Add(new ContentItem(boxProperties, 1, orientations));
+                    }
+                    return contentItems;
                 }
-                return contentItems;
+                else
+                {
+                    return _analysis.Content.ToList();
+                }
+
             }
         }
         private void UpdateSolItemIndexButtons()
